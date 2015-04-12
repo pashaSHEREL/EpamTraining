@@ -10,13 +10,17 @@ namespace Task_1
         static void Main(string[] args)
         {
 
-            LinearFunction f = new LinearFunction(-3, 4);
-            Console.WriteLine("Enter the number x");
+            LinearFunction linearFunction = new LinearFunction(-3, 4);
             double res;
-            var b = Double.TryParse(Console.ReadLine(), out res);
+            Console.WriteLine("Enter the number x");
+            bool b = Double.TryParse(Console.ReadLine(), out res);
 
-            double x = Convert.ToDouble(Console.ReadLine());
-            Console.WriteLine("Value of the function f={0}*x+{1}={2}", f.A,f.B,f.GetY(x));
+            while (!b)
+            {
+                Console.WriteLine("Enter the double number x");
+                b = Double.TryParse(Console.ReadLine(), out res);
+            }
+            Console.WriteLine("Value of the function linearFunction={0}*x+{1}={2}", linearFunction.A, linearFunction.B, linearFunction.GetY(res));
             Console.ReadLine();
         }
     }
