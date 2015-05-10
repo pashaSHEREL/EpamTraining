@@ -1,0 +1,10 @@
+E:\ws\VC#\CSharpProjects\ParkOfPassengerCars1\ParkOfPassengerCars1\bin\Debug\ParkOfPassengerCars1.exe
+E:\ws\VC#\CSharpProjects\ParkOfPassengerCars1\ParkOfPassengerCars1\bin\Debug\ParkOfPassengerCars1.pdb
+E:\ws\VC#\CSharpProjects\ParkOfPassengerCars1\ParkOfPassengerCars1\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\ws\VC#\CSharpProjects\ParkOfPassengerCars1\ParkOfPassengerCars1\obj\x86\Debug\ParkOfPassengerCars1.exe
+E:\ws\VC#\CSharpProjects\ParkOfPassengerCars1\ParkOfPassengerCars1\obj\x86\Debug\ParkOfPassengerCars1.pdb
+D:\ws\VC#\CSharpProjects\projects\ParkOfPassengerCars1\ParkOfPassengerCars1\obj\x86\Debug\ParkOfPassengerCars1.exe
+D:\ws\VC#\CSharpProjects\projects\ParkOfPassengerCars1\ParkOfPassengerCars1\obj\x86\Debug\ParkOfPassengerCars1.pdb
+D:\ws\VC#\CSharpProjects\projects\ParkOfPassengerCars1\ParkOfPassengerCars1\bin\Debug\ParkOfPassengerCars1.exe
+D:\ws\VC#\CSharpProjects\projects\ParkOfPassengerCars1\ParkOfPassengerCars1\bin\Debug\ParkOfPassengerCars1.pdb
+D:\ws\VC#\CSharpProjects\projects\ParkOfPassengerCars1\ParkOfPassengerCars1\obj\x86\Debug\ParkOfPassengerCars1.csprojResolveAssemblyReference.cache
