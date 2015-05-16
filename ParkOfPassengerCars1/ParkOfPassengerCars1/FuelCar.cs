@@ -6,7 +6,7 @@ using System.Text;
 namespace ParkOfPassengerCars1
 {
 
-    class FuelCar : IPassengerCar, IFuelCarProperties
+    public class FuelCar : IPassengerCar, IFuelCarProperties
     {
         public TypeOfFuel TypeOfEngine
         {

@@ -6,10 +6,15 @@ using System.Text;
 namespace ParkOfPassengerCars1
 {
 
-    class ElectroCar:IPassengerCar,IElectroCarProperties
+    public class ElectroCar:IPassengerCar,IElectroCarProperties
     {
         public int PowerReserv { get; set; }
         public TimeSpan ChargingTime { get; set; }
+
+        public double FuelConsumption
+        {
+            get { return 0; }
+        }
 
         public double EnergyConsumption
         {

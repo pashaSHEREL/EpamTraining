@@ -6,9 +6,9 @@ using System.Collections;
 
 namespace ParkOfPassengerCars1
 {
-    class TaxiStation : IList<ICar>
+    public class TaxiStation : ICollection<ICar>
     {
-        private IList<ICar> transport = new List<ICar>();
+        private List<ICar> transport = new List<ICar>();
 
         public void Display()
         {
@@ -34,46 +34,12 @@ namespace ParkOfPassengerCars1
         public void SortByFuelConsumption()
         {
 
-            transport = (from t in transport where t is IFuelCarProperties orderby ((IFuelCarProperties)t).FuelConsumption descending select t).
-                Concat(from t in transport where (t is IElectroCarProperties) && (!(t is IFuelCarProperties)) orderby ((IElectroCarProperties)t).EnergyConsumption descending select t).ToList<ICar>();
+            transport = (from t in transport orderby t.FuelConsumption descending select t).ToList();
         }
 
         public double GetTotalCost()
         {
-            double sum=0;
-
-            foreach (var item in transport)
-	        {
-		        sum+=item.Cost;
-	        }
-            return sum;
-        }
-        
-        public int IndexOf(ICar item)
-        {
-            return transport.IndexOf(item);
-        }
-
-        public void Insert(int index, ICar item)
-        {
-            transport.Insert(index,item);
-        }
-
-        public void RemoveAt(int index)
-        {
-            transport.RemoveAt(index);
-        }
-
-        public ICar this[int index]
-        {
-            get
-            {
-                return (transport.ToList())[index];
-            }
-            set
-            {
-                this.Insert(index, value);
-            }
+            return transport.Sum<ICar>(t=>t.Cost);
         }
 
         public void Add(ICar item)
@@ -93,7 +59,7 @@ namespace ParkOfPassengerCars1
 
         public void CopyTo(ICar[] array, int arrayIndex)
         {
-            transport.CopyTo(array, arrayIndex);
+            transport.CopyTo(array,arrayIndex);
         }
 
         public int Count

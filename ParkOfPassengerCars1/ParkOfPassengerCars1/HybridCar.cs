@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ParkOfPassengerCars1
 { 
-    class HybridCar : IPassengerCar, IElectroCarProperties, IFuelCarProperties
+    public class HybridCar : IPassengerCar, IElectroCarProperties, IFuelCarProperties
     {
         public double EnergyConsumption
         {

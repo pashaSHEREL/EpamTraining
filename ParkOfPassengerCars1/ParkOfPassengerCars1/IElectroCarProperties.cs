@@ -1,7 +1,7 @@
 ﻿using System;
 namespace ParkOfPassengerCars1
 {
-    interface IElectroCarProperties
+    public interface IElectroCarProperties
     {
         TimeSpan ChargingTime { get; }
         int PowerReserv { get; }

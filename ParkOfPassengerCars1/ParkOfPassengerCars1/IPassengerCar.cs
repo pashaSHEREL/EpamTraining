@@ -5,9 +5,7 @@ using System.Text;
 
 namespace ParkOfPassengerCars1
 {
-    
-
-    interface IPassengerCar:ICar
+    public interface IPassengerCar:ICar
     {
       ClassOfCar CarClass { get; }
       BodyTypeCar Body { get; }

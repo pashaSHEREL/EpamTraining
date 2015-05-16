@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ParkOfPassengerCars1
 {
-    enum CarBrand
+    public enum CarBrand
     {
         BMW, AUDI, KIA,
         FORD, OPEL, NISSAN,
@@ -15,7 +15,7 @@ namespace ParkOfPassengerCars1
         OTHER
     }
 
-    enum CarColor
+    public enum CarColor
     {
         RED, GREEN, BLUE,
         WHITE, BLACK, YELLOW,
@@ -23,14 +23,14 @@ namespace ParkOfPassengerCars1
         OTHER
     }
 
-    enum ClassOfCar
+    public enum ClassOfCar
     {
         LOW,
         AVERAGE,
         PREMIUM
     }
 
-    enum BodyTypeCar
+    public enum BodyTypeCar
     {
         SEDAN, WAGON, COUPE,
         HATCBACK, SUV, CROSSOVER,
@@ -38,7 +38,7 @@ namespace ParkOfPassengerCars1
         OTHER
     }
 
-    enum TypeOfFuel
+    public enum TypeOfFuel
     {
         GASOLINE,
         DIESEL,

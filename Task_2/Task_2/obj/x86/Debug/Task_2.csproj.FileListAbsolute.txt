@@ -1,4 +1,0 @@
-D:\ws\VC#\CSharpProjects\projects\Task_2\Task_2\bin\Debug\Task_2.exe
-D:\ws\VC#\CSharpProjects\projects\Task_2\Task_2\bin\Debug\Task_2.pdb
-D:\ws\VC#\CSharpProjects\projects\Task_2\Task_2\obj\x86\Debug\Task_2.exe
-D:\ws\VC#\CSharpProjects\projects\Task_2\Task_2\obj\x86\Debug\Task_2.pdb

@@ -1,5 +1,0 @@
-D:\ws\VC#\CSharpProjects\projects\Task3\Task3\bin\Debug\Task3.exe
-D:\ws\VC#\CSharpProjects\projects\Task3\Task3\bin\Debug\Task3.pdb
-D:\ws\VC#\CSharpProjects\projects\Task3\Task3\obj\x86\Debug\Task3.exe
-D:\ws\VC#\CSharpProjects\projects\Task3\Task3\obj\x86\Debug\Task3.pdb
-D:\ws\VC#\CSharpProjects\projects\Task3\Task3\obj\x86\Debug\Task3.csprojResolveAssemblyReference.cache

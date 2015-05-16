@@ -1,9 +1,8 @@
 ﻿using System;
 namespace ParkOfPassengerCars1
 {
-    interface IFuelCarProperties
+    public interface IFuelCarProperties
     {
         TypeOfFuel TypeOfEngine { get; }
-        double FuelConsumption { get; }
     }
 }
