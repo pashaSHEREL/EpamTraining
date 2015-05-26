@@ -1,0 +1,9 @@
+E:\ws\VC#\CSharpProjects\CheckPoint2Text\CheckPoint2Text\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\ws\VC#\CSharpProjects\CheckPoint2Text\CheckPoint2Text\bin\Debug\CheckPoint2Text.exe
+E:\ws\VC#\CSharpProjects\CheckPoint2Text\CheckPoint2Text\bin\Debug\CheckPoint2Text.pdb
+E:\ws\VC#\CSharpProjects\CheckPoint2Text\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.exe
+E:\ws\VC#\CSharpProjects\CheckPoint2Text\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint2Text\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.exe
+D:\ws\VC#\CSharpProjects\projects\CheckPoint2Text\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint2Text\CheckPoint2Text\bin\Debug\CheckPoint2Text.exe
+D:\ws\VC#\CSharpProjects\projects\CheckPoint2Text\CheckPoint2Text\bin\Debug\CheckPoint2Text.pdb
