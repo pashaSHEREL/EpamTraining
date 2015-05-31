@@ -7,7 +7,6 @@ using System.Reflection;
 
 namespace CheckPoint2Text
 {
-   
     class Program
     {
         static void Main(string[] args)
@@ -23,34 +22,61 @@ namespace CheckPoint2Text
             {
                 Console.WriteLine("Error file not found");
             }
-            
-            
-            StringBuilder f = new StringBuilder(str);
-         
-            Text g = new Text(f);
 
-            foreach (var item in g.Sentences)
+            StringBuilder f = new StringBuilder(str, 1000);
+            Parser parser = new Parser();
+            Text text = parser.Parse(f);
+            TextHandler textHandler = new TextHandler(text);
+            Console.WriteLine("{0}\n\n", f);
+
+            Console.WriteLine("----------GetListOfSentByNumOfWord------------\n\n");
+
+            foreach (var item in textHandler.GetListOfSentByNumOfWord())
             {
-               Console.WriteLine(item);
+                Console.WriteLine(item);
             }
 
-            Console.WriteLine("---------------------\n\n");
+            Console.WriteLine("---------GetListWordsInSent-------------\n\n");
 
-            StringBuilder concordance=new StringBuilder();
+            foreach (var item in textHandler.GetListWordsInSent(2, "?"))
+            {
+                Console.WriteLine(item);
+            }
 
-            var listOfKeys= g.GetConcordance().Keys.ToList();
+            Console.WriteLine("---------DelWordsWithConsonants-------------\n\n");
 
+            Console.WriteLine(text);
+            textHandler.DelWordsWithConsonants(3);
+            Console.WriteLine("\n\n");
+            Console.WriteLine(text);
+
+            Console.WriteLine("----------ReplacementWordsInSent------------\n\n");
+
+            textHandler.ReplacementWordsInSent(1, 3, "XAXAXA");
+            Console.WriteLine(text);
+
+            Console.WriteLine("----------GetConcordance------------\n\n");
+
+            Concordance(textHandler);
+
+            Console.ReadLine();
+        }
+
+        private static void Concordance(TextHandler textHandle)
+        {
+            StringBuilder concordance = new StringBuilder(1000);
+            var listOfKeys = textHandle.GetConcordance().Keys.ToList();
             int i = 1;
 
-            foreach (var item in g.GetConcordance())
+            foreach (var item in textHandle.GetConcordance())
             {
-                
                 if (i == 1)
                 {
+                    concordance.Append("      ");
                     concordance.Append(item.Key[0].ToString().ToUpper());
                     concordance.Append("\n\r");
                 }
-               
+
                 concordance.Append(item.Key);
                 concordance.Append("........");
                 concordance.Append(item.Value.Count);
@@ -68,6 +94,7 @@ namespace CheckPoint2Text
                 {
                     if (listOfKeys[i][0] != item.Key[0])
                     {
+                        concordance.Append("      ");
                         concordance.Append(listOfKeys[i][0].ToString().ToUpper());
                         concordance.Append("\n\r");
                     }
@@ -76,42 +103,8 @@ namespace CheckPoint2Text
             }
 
             string path2 = @"C:\Concordance.txt";
-
-            File.WriteAllText(path2,concordance.ToString());
-
+            File.WriteAllText(path2, concordance.ToString());
             Console.WriteLine(concordance);
-
-            Console.WriteLine("----------------------\n\n");
-
-            foreach (var item in g.GetListOFSentByNumOfWord())
-            {
-                Console.WriteLine(item);
-            }
-
-            Console.WriteLine("----------------------\n\n");
-
-            foreach (var item in g.GetListWordsInSent(2,new PunctuationMark("?")))
-            {
-                Console.WriteLine(item);
-            }
-
-            Console.WriteLine("----------------------\n\n");
-
-            Console.WriteLine(g);
-
-            g.DelWordsWithConsonants(3);
-
-            Console.WriteLine("----------------------\n\n");
-
-            Console.WriteLine(g);
-
-            g.ReplacementWordsInSent( 15, 4, "XAXAXA");
-
-            Console.WriteLine("----------------------\n\n");
-
-            Console.WriteLine(g);
-
-            Console.ReadLine();
         }
     }
 }

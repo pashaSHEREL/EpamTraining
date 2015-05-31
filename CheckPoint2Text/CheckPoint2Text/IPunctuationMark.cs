@@ -5,12 +5,11 @@ using System.Text;
 
 namespace CheckPoint2Text
 {
-    public class Symbol
+    public interface IPunctuationMark
     {
-        public char Value
+        bool SymbolEndOfSent
         {
             get;
-            set;
         }
     }
 }

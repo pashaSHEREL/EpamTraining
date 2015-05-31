@@ -5,34 +5,11 @@ using System.Text;
 
 namespace CheckPoint2Text
 {
-    public class PunctuationMark:Symbol
+    public class PunctuationMark:TextElement,IPunctuationMark
     {
-        public override string Value
+        public bool SymbolEndOfSent
         {
-            get
-            {
-                return base.value;
-            }
-            set
-            {
-                if (SymbolHelp.symbolsInSent.Contains(value) || SymbolHelp.symbolsEndOfSent.Contains(value))  
-                {
-                    base.value = value;
-                }
-                else
-                {
-                    throw new Exception("This is not a punctuation mark.");
-                }
-            }
-        }
-
-        public PunctuationMark(string value)
-        {
-                Value = value;
-        }
-
-        public PunctuationMark()
-        { 
+            get { return SymbolHelp.SymbolsEndOfSent.Contains(this.Value); }
         }
     }
 }

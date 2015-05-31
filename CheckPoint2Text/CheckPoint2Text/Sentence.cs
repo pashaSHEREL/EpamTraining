@@ -5,19 +5,19 @@ using System.Text;
 
 namespace CheckPoint2Text
 {
-    public class Sentence //: //ICollection<ITextElement>
+    public class Sentence
     {
-        private List<Symbol> elementsOfText=new List<Symbol>();
+        private List<ITextElement> elementsOfText = new List<ITextElement>();
 
-        public List<Symbol> ElementsOfText
+        public List<ITextElement> ElementsOfText
         {
-            get { return elementsOfText; }
+            get
+            {
+                return elementsOfText;
+            }
             set
             {
-                if (SymbolHelp.symbolsEndOfSent.Contains(value.Last().Value))
-                {
-                    elementsOfText = value;
-                }
+                elementsOfText = value;
             }
         }
 
@@ -39,7 +39,8 @@ namespace CheckPoint2Text
 
         public override string ToString()
         {
-            StringBuilder s=new StringBuilder();
+            StringBuilder s=new StringBuilder(1000);
+
             foreach (var item in elementsOfText)
             {
                 s.Append(item.Value);

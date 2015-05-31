@@ -5,12 +5,11 @@ using System.Text;
 
 namespace CheckPoint2Text
 {
-    public class Symbol
+    public interface IWord
     {
-        public char Value
+        int NumberOfPage
         {
             get;
-            set;
-        }
+        } 
     }
 }

@@ -7,3 +7,13 @@ D:\ws\VC#\CSharpProjects\projects\CheckPoint2Text\CheckPoint2Text\obj\x86\Debug\
 D:\ws\VC#\CSharpProjects\projects\CheckPoint2Text\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.pdb
 D:\ws\VC#\CSharpProjects\projects\CheckPoint2Text\CheckPoint2Text\bin\Debug\CheckPoint2Text.exe
 D:\ws\VC#\CSharpProjects\projects\CheckPoint2Text\CheckPoint2Text\bin\Debug\CheckPoint2Text.pdb
+g:\CheckPoint2Text2\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.exe
+g:\CheckPoint2Text2\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.pdb
+g:\CheckPoint2Text2\CheckPoint2Text\bin\Debug\CheckPoint2Text.exe
+g:\CheckPoint2Text2\CheckPoint2Text\bin\Debug\CheckPoint2Text.pdb
+g:\CheckPoint2Text2\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.csprojResolveAssemblyReference.cache
+D:\CheckPoint2Text2\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.exe
+D:\CheckPoint2Text2\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.pdb
+D:\CheckPoint2Text2\CheckPoint2Text\obj\x86\Debug\CheckPoint2Text.csprojResolveAssemblyReference.cache
+D:\CheckPoint2Text2\CheckPoint2Text\bin\Debug\CheckPoint2Text.exe
+D:\CheckPoint2Text2\CheckPoint2Text\bin\Debug\CheckPoint2Text.pdb

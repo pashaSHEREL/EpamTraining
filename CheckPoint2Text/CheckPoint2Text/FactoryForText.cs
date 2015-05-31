@@ -5,12 +5,11 @@ using System.Text;
 
 namespace CheckPoint2Text
 {
-    public class Symbol
+    public class FactoryForText
     {
-        public char Value
+        public Text Create(List<Sentence> sentences)
         {
-            get;
-            set;
+            return  new Text(){ Sentences=sentences};
         }
     }
 }
