@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 
 namespace CheckPoint2Text
 {
     public interface ITextElement
     {
-        List<Symbol> Chars { get; set; }
-        string Value { get;  }
-        int Lenght   { get;}
+        ReadOnlyCollection<Symbol>Chars { get; }
+        int Lenght { get;}
+        void Clear();
+        void Add(Symbol symbol);
     }
 }

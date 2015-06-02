@@ -9,7 +9,7 @@ namespace CheckPoint2Text
     {
         public Text Create(List<Sentence> sentences)
         {
-            return  new Text(){ Sentences=sentences};
+            return new Text(sentences);
         }
     }
 }

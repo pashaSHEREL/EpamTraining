@@ -9,13 +9,12 @@ namespace CheckPoint2Text
     {
         public Sentence Create(List<ITextElement> elementsOfText)
         {
-            Sentence sent= new Sentence();
+            Sentence sent;
             PunctuationMark punct = elementsOfText.Last() as PunctuationMark;
 
-            if (punct!=null&&punct.SymbolEndOfSent)
+            if (punct != null && punct.SymbolEndOfSent)
             {
-                sent.ElementsOfText = elementsOfText;
-                
+                sent = new Sentence(elementsOfText);
             }
             else
             {

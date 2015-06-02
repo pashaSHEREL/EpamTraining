@@ -9,7 +9,7 @@ namespace CheckPoint2Text
     {
         private FactoryForSentences factoryForSentences = new FactoryForSentences();
         private FactoryForText factoryForText = new FactoryForText();
-        private FactoryForTextElements factoryForWords = new FactoryForTextElements();
+        private FactoryForWords factoryForWords = new FactoryForWords();
         private const int Page = 1;
 
         public Text Parse(StringBuilder text)
@@ -18,13 +18,12 @@ namespace CheckPoint2Text
             List<Sentence> buffSentences = new List<Sentence>();
             List<Symbol> buffWordPunctuationMark = new List<Symbol>();
             int indexOfCaret = 1;
-
             DelExtraSymbols(text);
 
             for (int i = 0; i < text.Length - 1; i++)
             {
                 buffWordPunctuationMark.Add(new Symbol() { Value = text[i] });
-
+             
                 if ((!SymbolHelp.SymbolsInSent.Contains(text[i].ToString()) && !SymbolHelp.SymbolsEndOfSent.Contains(text[i].ToString()))
                         && (SymbolHelp.SymbolsInSent.Contains(text[i + 1].ToString())
                         || SymbolHelp.SymbolsEndOfSent.Contains(text[i + 1].ToString())))
@@ -64,17 +63,10 @@ namespace CheckPoint2Text
 
                 if (i + 1 == text.Length - 1)
                 {
-                    string lastItem = "";
-
                     buffWordPunctuationMark.Add(new Symbol() { Value = text[i + 1] });
                     buffTextElements.Add(factoryForWords.Create(buffWordPunctuationMark.ToList(), indexOfCaret / Page));
-
-                    foreach (var item in buffWordPunctuationMark)
-                    {
-                        lastItem += item.Value;
-                    }
-
-                    if (SymbolHelp.SymbolsEndOfSent.Contains(lastItem))
+                   
+                    if (SymbolHelp.SymbolsEndOfSent.Contains(buffTextElements.Last().ToString()))
                     {
                         buffSentences.Add(factoryForSentences.Create(buffTextElements.ToList()));
                     }
@@ -88,7 +80,7 @@ namespace CheckPoint2Text
         {
             for (int i = 0; i < text.Length - 1; i++)
             {
-                if (text[i] == ' ' && text[i + 1] == ' ' || text[i] == '\n')
+                if (text[i] == ' ' && text[i + 1] == ' ' || text[i] == '\n'||text[i]=='\t')
                 {
                     text.Remove(i, 1);
                     i--;

@@ -24,21 +24,20 @@ namespace CheckPoint2Text
             }
 
             StringBuilder f = new StringBuilder(str, 1000);
+            Console.WriteLine("{0}\n\n", f);
             Parser parser = new Parser();
             Text text = parser.Parse(f);
-            TextHandler textHandler = new TextHandler(text);
-            Console.WriteLine("{0}\n\n", f);
-
+            
             Console.WriteLine("----------GetListOfSentByNumOfWord------------\n\n");
 
-            foreach (var item in textHandler.GetListOfSentByNumOfWord())
+            foreach (var item in text.GetListOfSentByNumOfWord())
             {
                 Console.WriteLine(item);
             }
 
             Console.WriteLine("---------GetListWordsInSent-------------\n\n");
 
-            foreach (var item in textHandler.GetListWordsInSent(2, "?"))
+            foreach (var item in text.GetListWordsInSent(2, TypeSent.Voprositelnoe))
             {
                 Console.WriteLine(item);
             }
@@ -46,29 +45,29 @@ namespace CheckPoint2Text
             Console.WriteLine("---------DelWordsWithConsonants-------------\n\n");
 
             Console.WriteLine(text);
-            textHandler.DelWordsWithConsonants(3);
+            text.DelWordsWithConsonants(3);
             Console.WriteLine("\n\n");
             Console.WriteLine(text);
 
             Console.WriteLine("----------ReplacementWordsInSent------------\n\n");
 
-            textHandler.ReplacementWordsInSent(1, 3, "XAXAXA");
+            text.ReplacementWordsInSent(1, 3, "XAXAXA");
             Console.WriteLine(text);
 
             Console.WriteLine("----------GetConcordance------------\n\n");
-
-            Concordance(textHandler);
+            string nameFileForWrite=@"C:\Concordance.txt";
+            Concordance(text, nameFileForWrite);
 
             Console.ReadLine();
         }
 
-        private static void Concordance(TextHandler textHandle)
+        private static void Concordance(Text text, string nameFileForWrite)
         {
             StringBuilder concordance = new StringBuilder(1000);
-            var listOfKeys = textHandle.GetConcordance().Keys.ToList();
+            var listOfKeys = text.GetConcordance().Keys.ToList();
             int i = 1;
 
-            foreach (var item in textHandle.GetConcordance())
+            foreach (var item in text.GetConcordance())
             {
                 if (i == 1)
                 {
@@ -102,7 +101,7 @@ namespace CheckPoint2Text
                 i++;
             }
 
-            string path2 = @"C:\Concordance.txt";
+            string path2 = nameFileForWrite;
             File.WriteAllText(path2, concordance.ToString());
             Console.WriteLine(concordance);
         }

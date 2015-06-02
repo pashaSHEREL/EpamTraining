@@ -45,7 +45,7 @@
   <ItemGroup>
     <Compile Include="FactoryForSentences.cs" />
     <Compile Include="FactoryForText.cs" />
-    <Compile Include="FactoryForTextElements.cs" />
+    <Compile Include="FactoryForWords.cs" />
     <Compile Include="IPunctuationMark.cs" />
     <Compile Include="ITextElement.cs" />
     <Compile Include="IWord.cs" />
@@ -58,7 +58,6 @@
     <Compile Include="SymbolHelp.cs" />
     <Compile Include="Text.cs" />
     <Compile Include="TextElement.cs" />
-    <Compile Include="TextHandler.cs" />
     <Compile Include="Word.cs" />
   </ItemGroup>
   <ItemGroup>

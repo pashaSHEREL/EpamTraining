@@ -10,6 +10,6 @@ namespace CheckPoint2Text
         int NumberOfPage
         {
             get;
-        } 
+        }
     }
 }

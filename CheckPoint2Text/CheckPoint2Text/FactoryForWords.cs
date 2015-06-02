@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CheckPoint2Text
 {
-    public class FactoryForTextElements
+    public class FactoryForWords
     {
         public ITextElement Create(List<Symbol> symbols, int numOfPage)
         {
@@ -14,21 +14,18 @@ namespace CheckPoint2Text
             if (!SymbolHelp.SymbolsEndOfSent.Contains(symbols.Last().Value.ToString())
                     && !SymbolHelp.SymbolsInSent.Contains(symbols.Last().Value.ToString()))
             {
-                textElement = new Word();
-                textElement.Chars = symbols;
+                textElement = new Word(symbols);
                 ((Word)textElement).NumberOfPage = numOfPage;
             }
             else
             {
-                if (SymbolHelp.SymbolsInSent.Contains(symbols.Last().Value.ToString()) 
-                    || SymbolHelp.SymbolsEndOfSent.Contains(symbols.Last().Value.ToString()))
+                if (SymbolHelp.SymbolsInSent.Contains(symbols.Last().Value.ToString()) || SymbolHelp.SymbolsEndOfSent.Contains(symbols.Last().Value.ToString()))
                 {
-                    textElement = new PunctuationMark();
-                    textElement.Chars = symbols;
+                    textElement = new PunctuationMark(symbols);
                 }
                 else
                 {
-                    throw new Exception("Error in a textElement");
+                    throw new Exception("Incorrect date");
                 }
              
             }
