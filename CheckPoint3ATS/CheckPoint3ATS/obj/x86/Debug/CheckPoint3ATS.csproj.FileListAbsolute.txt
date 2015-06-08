@@ -1,0 +1,15 @@
+D:\CheckPoint3ATS\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.exe
+D:\CheckPoint3ATS\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.pdb
+D:\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.exe
+D:\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.pdb
+G:\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.exe
+G:\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.pdb
+G:\CheckPoint3ATS\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.exe
+G:\CheckPoint3ATS\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.pdb
+G:\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.csprojResolveAssemblyReference.cache
+d:\ws\VC#\CSharpProjects\projects\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.exe
+d:\ws\VC#\CSharpProjects\projects\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.pdb
+d:\ws\VC#\CSharpProjects\projects\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.csprojResolveAssemblyReference.cache
+d:\ws\VC#\CSharpProjects\projects\CheckPoint3ATS\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.exe
+d:\ws\VC#\CSharpProjects\projects\CheckPoint3ATS\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.pdb
