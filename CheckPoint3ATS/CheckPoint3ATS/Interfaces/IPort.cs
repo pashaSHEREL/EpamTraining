@@ -28,7 +28,7 @@ namespace CheckPoint3ATS
 
     interface IPort
     {
-        int Number { get; set; }
+        int Number { get; }
         int PhoneNumber { get; set; }
         PortStatus Status { get; set; }
         PortMode Mode { get; set; }

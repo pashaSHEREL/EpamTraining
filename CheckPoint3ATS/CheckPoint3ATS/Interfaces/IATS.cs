@@ -12,5 +12,6 @@ namespace CheckPoint3ATS
         int NumberOfATS { get;}
         bool FreePorts { get; }
         void RegistryTerminal(ISubscriber subscriber);
+        void UnRegistryTerminal(ISubscriber subscriber);
     }
 }

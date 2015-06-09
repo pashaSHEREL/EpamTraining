@@ -7,9 +7,9 @@ namespace CheckPoint3ATS
 {
     interface ITerminal
     {
-        string Model { get; set; }
-        int Cost { get; set; }
-        int TerminalId { get; set; }
+        string Model { get;}
+        int Cost { get;}
+        int TerminalId { get;}
 
         event Func<ISubscriber, int, PortMode> DialingEvent;
         event EventHandler<EventArgForEndCall> EndCallEvent;

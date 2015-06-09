@@ -63,38 +63,12 @@ namespace CheckPoint3ATS
             subscriber.Terminal.EndCallEvent += EndCallHandler;
         }
 
-        protected void EndCallHandler(object sender, EventArgForEndCall arg)
+        public void UnRegistryTerminal(ISubscriber subscriber)
         {
-            Dictionary<IPort, IPort> listOfConnectionsCopy = new Dictionary<IPort, IPort>();
-
-            foreach (var item in listOfConnections)
-	        {
-                listOfConnectionsCopy.Add(item.Key,item.Value);
-	        }
-
-            foreach (var item in listOfConnectionsCopy)
-            {
-                if (item.Key.PhoneNumber == arg.NumberPhone
-                    || item.Value.PhoneNumber == arg.NumberPhone)
-                {
-                    item.Key.Mode = PortMode.On;
-                    item.Value.Mode = PortMode.On;
-                    listOfConnections.Remove(item.Key);
-                    break;
-                }
-            }
-
-            foreach (var item in ports)
-            {
-                if (item.PhoneNumber == arg.NumberPhone)
-                {
-                    item.Mode = PortMode.On;
-                }
-            }
-            //timer.Stop();
+            subscriber.Terminal.PickUpEvent -= PickUpHandler;
+            subscriber.Terminal.DialingEvent -= DialingHandler;
+            subscriber.Terminal.EndCallEvent -= EndCallHandler;
         }
-
-        
 
         protected PortMode PickUpHandler(ISubscriber sender)
         {
@@ -116,26 +90,28 @@ namespace CheckPoint3ATS
                         {
                             try
                             {
-                                listOfConnections[item].Mode = PortMode.Connected;
-                                item.Mode = PortMode.Connected;
                                 listOfConnections[item].StopTimer();
                                 item.StopTimer();
+                                listOfConnections[item].Mode = PortMode.Connected;
+                                item.Mode = PortMode.Connected;
                             }
                             catch (Exception)
                             {
                                 Console.WriteLine("Operation is not available.");
                             }
                         }
+
                         portMode = item.Mode;
                     }
                 }
             }
+
             return portMode;
         }
 
         protected PortMode DialingHandler(ISubscriber sender, int phoneNumber)
         {
-            PortMode portMode =new PortMode();
+            PortMode portMode = new PortMode();
             IPort outgoingCallPort = new Port();
             IPort incomingCallPort = new Port();
 
@@ -160,12 +136,14 @@ namespace CheckPoint3ATS
                     outgoingCallPort.Mode = PortMode.NotAvailable;
                     portMode = outgoingCallPort.Mode;
                     break;
-                case PortMode.On:
-
+                case PortMode.On: 
                     outgoingCallPort.Mode = PortMode.LongBeeps;
                     incomingCallPort.Mode = PortMode.LongBeeps;
                     listOfConnections.Add(incomingCallPort,outgoingCallPort);
                     portMode = outgoingCallPort.Mode;
+
+                    incomingCallPort.StartTimer();
+                    outgoingCallPort.StartTimer();
 
                     incomingCallPort.FinishTimerEvent += (object o, EventArgs e) =>
                     {
@@ -175,24 +153,62 @@ namespace CheckPoint3ATS
                         }
                     };
 
-                    incomingCallPort.StartTimer();
-                    outgoingCallPort.StartTimer();
                     break;
                 case PortMode.Tone:
                     outgoingCallPort.Mode = PortMode.ShortBeeps;
                     portMode = outgoingCallPort.Mode;
+                    //будет отправляться биллингу сообщении о звонке с нулевым временем
+                    break;
+                case PortMode.Connected:
+                    outgoingCallPort.Mode = PortMode.ShortBeeps;
+                    portMode = outgoingCallPort.Mode;
+                    //будет отправляться биллингу сообщении о звонке с нулевым временем
                     break;
                 case PortMode.NoPort:
                     portMode = incomingCallPort.Mode;
-                    outgoingCallPort.Mode = PortMode.NoPort;
+                    outgoingCallPort.Mode = PortMode.On;
                     break;
                 default:
                     portMode = PortMode.NoPort;
-                    outgoingCallPort.Mode = PortMode.NoPort;
+                    outgoingCallPort.Mode = PortMode.On;
                     break;
             }
 
             return portMode; 
+        }
+
+        protected void EndCallHandler(object sender, EventArgForEndCall arg)
+        {
+            Dictionary<IPort, IPort> listOfConnectionsCopy = new Dictionary<IPort, IPort>();
+
+            foreach (var item in listOfConnections)
+            {
+                listOfConnectionsCopy.Add(item.Key, item.Value);
+            }
+
+            foreach (var item in listOfConnectionsCopy)
+            {
+                if (item.Key.PhoneNumber == arg.NumberPhone
+                    || item.Value.PhoneNumber == arg.NumberPhone)
+                {
+                    item.Key.StopTimer();
+                    item.Value.StopTimer();
+                    // будет передаваться информация о звонке в биллинг если порты в longbeep ,будет передаваться нулевое время, если connection будет передаваться информация с данными
+                    item.Key.Mode = PortMode.On;
+                    item.Value.Mode = PortMode.On;
+                    listOfConnections.Remove(item.Key);
+                    
+                    break;
+                }
+            }
+
+            foreach (var item in ports)
+            {
+                if (item.PhoneNumber == arg.NumberPhone)
+                {
+                    item.Mode = PortMode.On;
+                }
+            }
         }
     }
 }

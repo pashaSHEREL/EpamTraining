@@ -44,9 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ATS.cs" />
+    <Compile Include="BillingSystem.cs" />
     <Compile Include="CompanyOperator.cs" />
     <Compile Include="Contract.cs" />
     <Compile Include="EventArgForEndCall.cs" />
+    <Compile Include="Interfaces\ICallInfo.cs" />
     <Compile Include="Interfaces\ICompanyOperator.cs" />
     <Compile Include="Interfaces\IBillingSystem.cs" />
     <Compile Include="Interfaces\IATS.cs" />

@@ -8,41 +8,23 @@ namespace CheckPoint3ATS
 {
     class Port:IPort
     {
-        Timer timer = new Timer();
+        private int number;
+        private Timer timer = new Timer();
+
         public event EventHandler<EventArgs> FinishTimerEvent;
 
-        public void StartTimer()
-        {
-            timer.Interval = 10000;
-            timer.AutoReset = false;
-            timer.Elapsed += ElapsedHandler;
-            timer.Start();
+        public Port()
+        { 
         }
 
-        public void StopTimer()
+        public Port(int number)
         {
-            timer.Stop();
-        }
-
-        private void ElapsedHandler(object obj, ElapsedEventArgs e)
-        {
-            this.Mode = PortMode.On;
-            Console.WriteLine("Port {0} {1}", this.Number, this.Mode);
-            OnFinishTimerEvent(this,null);
-        }
-
-        private void OnFinishTimerEvent(object obj, EventArgs e)
-        {
-            if (FinishTimerEvent != null)
-            {
-                FinishTimerEvent(obj, e);
-            }   
+            this.number = number;
         }
 
         public int Number
         {
-            get;
-            set;
+            get { return number;}
         }
 
         public int PhoneNumber
@@ -63,6 +45,19 @@ namespace CheckPoint3ATS
             set;
         }
 
+        public void StartTimer()
+        {
+            timer.Interval = 100000;
+            timer.AutoReset = false;
+            timer.Elapsed += ElapsedHandler;
+            timer.Start();
+        }
+
+        public void StopTimer()
+        {
+            timer.Stop();
+        }
+
         public override bool Equals(object obj)
         {
             return ((IPort)obj).Number == this.Number;
@@ -71,6 +66,21 @@ namespace CheckPoint3ATS
         public override int GetHashCode()
         {
             return this.Number;
+        }
+
+        private void ElapsedHandler(object obj, ElapsedEventArgs e)
+        {
+            this.Mode = PortMode.On;
+            Console.WriteLine("Port {0} {1}", this.Number, this.Mode);
+            OnFinishTimerEvent(this, null);
+        }
+
+        private void OnFinishTimerEvent(object obj, EventArgs e)
+        {
+            if (FinishTimerEvent != null)
+            {
+                FinishTimerEvent(obj, e);
+            }
         }
     }
 }

@@ -7,8 +7,8 @@ namespace CheckPoint3ATS
 {
     class CompanyOperator:ICompanyOperator
     {
-        string name;
-        IATS ats = new ATS();
+        private string name;
+        private IATS ats = new ATS();
 
         List<IContract> contracts = new List<IContract>();
         List<ITerminal> terminals = new List<ITerminal>();
@@ -23,10 +23,9 @@ namespace CheckPoint3ATS
             this.name = name;
         }
 
-        public List<ITerminal> Terminals
+        public void AddTerminal(ITerminal terminal)
         {
-            get { return terminals; }
-            set { terminals = value; }
+            terminals.Add(terminal);
         }
 
         public string Name
@@ -41,7 +40,7 @@ namespace CheckPoint3ATS
             set;
         }
 
-        public void ConcludeContract(Subscriber subscriber, int phoneNumber)
+        public void ConcludeContract(ISubscriber subscriber, int phoneNumber)
         {
             if (ats.FreePorts && terminals.Count > 0 )
             {
@@ -56,6 +55,7 @@ namespace CheckPoint3ATS
                 });
 
                 subscriber.PhoneNumber = phoneNumber;
+                subscriber.Contract = contracts.Last();
                 subscriber.Terminal = terminals[0];
                 terminals.RemoveAt(0);
 
@@ -86,15 +86,33 @@ namespace CheckPoint3ATS
             
         }
 
-        public void TerminateContract()
+        public void TerminateContract(ISubscriber subscriber)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<IContract> Contracts
-        {
-            get { return contracts; }
-            set { contracts = value; }
+            for (int i = 0; i < contracts.Count; i++)
+			{
+                if (contracts[i].ContractId == subscriber.Contract.ContractId)
+                {
+                    foreach (var item in ats.Ports)
+                    {
+                        if (item.PhoneNumber == subscriber.PhoneNumber)
+                        {
+                            item.PhoneNumber = 0;
+                            item.Status = PortStatus.Free;
+                            item.Mode = PortMode.Off;
+                            break;
+                        }
+                        
+                    }
+                    subscriber.PhoneNumber = 0;
+                    subscriber.Contract = null;
+                    terminals.Add(subscriber.Terminal);
+                    subscriber.Terminal = null;
+                    contracts.RemoveAt(i);
+                    ats.UnRegistryTerminal(subscriber);
+                    break;
+                }
+			}
+           
         }
 
         public IBillingSystem BillingSystem

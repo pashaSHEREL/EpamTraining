@@ -45,14 +45,74 @@ namespace CheckPoint3ATS
 
         public ITerminal Terminal
         {
-            get;
+            get; 
             set;
         }
 
         public IContract Contract
         {
             get;
-            set;
+            set; 
+        }
+
+        public PortMode Call(int numberPhone)
+        {
+            PortMode portMode = PortMode.NoPort;
+
+            if (Contract!=null)
+            {
+                portMode = PickUp();
+
+                if (portMode == PortMode.Tone)
+                {
+                    portMode = Dialing(numberPhone);
+                }
+                else
+                {
+                    if (portMode == PortMode.LongBeeps)
+                    {
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Port disabled.");
+                    }
+                }
+            }
+            else 
+            {
+                Console.WriteLine("Enclose the first contract.");
+            }
+            return portMode;
+           
+        }
+
+        public PortMode Answer()
+        {
+            PortMode portMode = PortMode.NoPort;
+
+            if (Contract != null)
+            {
+                portMode=PickUp();
+            }
+            else 
+            {
+                Console.WriteLine("Enclose the first contract.");
+            }
+
+            return portMode;
+        }
+
+        public void EndCall()
+        {
+            if (Contract != null)
+            {
+                Terminal.EndCall(this, new EventArgForEndCall(PhoneNumber));
+            }
+            else
+            {
+                Console.WriteLine("Enclose the first contract.");
+            }
         }
 
         protected PortMode PickUp()
@@ -63,37 +123,6 @@ namespace CheckPoint3ATS
         protected PortMode Dialing(int phoneNumber)
         {
             return Terminal.Dialing(this, phoneNumber);
-        }
-        
-        public void Call(int numberPhone)
-        {
-            PortMode portMode=PickUp();
-            if (portMode == PortMode.Tone)
-            {
-                portMode=Dialing(numberPhone);  
-            }
-            else 
-            {
-                if (portMode == PortMode.LongBeeps)
-                {
-                   
-                }
-                else
-                {
-                    Console.WriteLine("Port disabled.");
-                }
-            }
-           
-        }
-
-        public void Answer()
-        {
-            PickUp();
-        }
-
-        public void EndCall()
-        {
-            Terminal.EndCall(this,new EventArgForEndCall(PhoneNumber));
         }
     }
 }

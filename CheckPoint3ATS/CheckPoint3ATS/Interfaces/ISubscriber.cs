@@ -13,8 +13,8 @@ namespace CheckPoint3ATS
         int PhoneNumber { get; set; }
         ITerminal Terminal { get; set; }
         IContract Contract { get; set; }
-        void Call(int number);
-        void Answer();
+        PortMode Call(int number);
+        PortMode Answer();
         void EndCall();
     }
 }

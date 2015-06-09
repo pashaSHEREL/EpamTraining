@@ -9,9 +9,9 @@ namespace CheckPoint3ATS
     {
         string Name { get; set; }
         IATS ATS { get; set; }
-        List<IContract> Contracts { get; set; }
         IBillingSystem BillingSystem { get; set; }
-        void ConcludeContract(Subscriber subscriber, int phoneNumber);
-        void TerminateContract();
+        void AddTerminal(ITerminal terminal);
+        void ConcludeContract(ISubscriber subscriber, int phoneNumber);
+        void TerminateContract(ISubscriber subscriber);
     }
 }
