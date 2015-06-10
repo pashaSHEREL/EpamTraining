@@ -13,7 +13,7 @@ namespace CheckPoint3ATS
 
         public event Func<ISubscriber, PortMode> PickUpEvent;
         public event Func<ISubscriber, int, PortMode> DialingEvent;
-        public event EventHandler<EventArgForEndCall> EndCallEvent;
+        public event EventHandler<EventArgForTerminalEndCall> EndCallEvent;
 
         public Terminal()
         { 
@@ -53,7 +53,7 @@ namespace CheckPoint3ATS
             return OnDialing(sender, phoneNumber);
         }
 
-        public void EndCall(object sender, EventArgForEndCall arg)
+        public void EndCall(object sender, EventArgForTerminalEndCall arg)
         {
             OnEndCall(sender, arg);
         }
@@ -82,7 +82,7 @@ namespace CheckPoint3ATS
             return portMode;
         }
 
-        protected void OnEndCall(object sender, EventArgForEndCall arg)
+        protected void OnEndCall(object sender, EventArgForTerminalEndCall arg)
         {
             if (EndCallEvent != null)
             {

@@ -107,7 +107,7 @@ namespace CheckPoint3ATS
         {
             if (Contract != null)
             {
-                Terminal.EndCall(this, new EventArgForEndCall(PhoneNumber));
+                Terminal.EndCall(this, new EventArgForTerminalEndCall(PhoneNumber));
             }
             else
             {

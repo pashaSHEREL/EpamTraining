@@ -8,17 +8,42 @@ namespace CheckPoint3ATS
 {
     class BillingSystem:IBillingSystem
     {
-        List<ICallInfo> callsInfo = new List<ICallInfo>();
-
-        protected void AddCallInfo(ICallInfo callInfo)
+        private List<ISubscriberStatistics> subscribersStatistics = new List<ISubscriberStatistics>();
+        private DateTime time = DateTime.Now;
+        public ReadOnlyCollection<ISubscriberStatistics> SubscribersStatistics
         {
-            callsInfo.Add(callInfo);
+            get 
+            {
+                ReadOnlyCollection<ISubscriberStatistics> rColl=new ReadOnlyCollection<ISubscriberStatistics>(subscribersStatistics);
+                return rColl;
+            }
         }
 
-        public ReadOnlyCollection<ICallInfo> CallsInfo
+        public void RegistrationATS(IATS ats)
         {
-            get { return new ReadOnlyCollection<ICallInfo>(callsInfo); }
+            ats.FinishCallEvent += this.EventHadlerEndCallOnATS;
         }
 
+        protected void EventHadlerEndCallOnATS(object obj, EventArgsForATSFinishCall args)
+        {
+            //будет дозаполняться subscribersStatistics, смоделировать течение времени????
+        }
+
+        public void AddSubscriber(ISubscriberStatistics subcriberStat)
+        {
+            subscribersStatistics.Add(subcriberStat);
+        }
+
+        public void DelSubscriber(int contractNumber)
+        {
+            for (int i = 0; i < subscribersStatistics.Count; i++)
+            {
+                if (subscribersStatistics[i].AccountNumber==contractNumber)
+                {
+                    subscribersStatistics.RemoveAt(i);
+                    break;
+                }
+            }
+        }
     }
 }

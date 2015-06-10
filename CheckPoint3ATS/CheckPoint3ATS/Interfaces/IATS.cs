@@ -13,5 +13,6 @@ namespace CheckPoint3ATS
         bool FreePorts { get; }
         void RegistryTerminal(ISubscriber subscriber);
         void UnRegistryTerminal(ISubscriber subscriber);
+        event EventHandler<EventArgsForATSFinishCall> FinishCallEvent;
     }
 }

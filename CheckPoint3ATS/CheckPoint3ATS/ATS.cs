@@ -13,6 +13,9 @@ namespace CheckPoint3ATS
         private List<IPort> ports = new List<IPort>();
         private Dictionary<IPort, IPort> listOfConnections = new Dictionary<IPort, IPort>();
         private int numberOfATS;
+        private DateTime time = DateTime.Now;
+
+        public event EventHandler<EventArgsForATSFinishCall> FinishCallEvent;
 
         public ATS()
         { 
@@ -130,6 +133,8 @@ namespace CheckPoint3ATS
                 }
             }
 
+            CallInfoForATS call = new CallInfoForATS() { NumberOfIncomingCall=incomingCallPort.PhoneNumber, NumberOfOutgoingCall=outgoingCallPort.PhoneNumber };
+
             switch (incomingCallPort.Mode)
             {
                 case PortMode.Off:
@@ -157,11 +162,13 @@ namespace CheckPoint3ATS
                 case PortMode.Tone:
                     outgoingCallPort.Mode = PortMode.ShortBeeps;
                     portMode = outgoingCallPort.Mode;
+                    FinishCallEvent(this, new EventArgsForATSFinishCall(call));
                     //будет отправляться биллингу сообщении о звонке с нулевым временем
                     break;
                 case PortMode.Connected:
                     outgoingCallPort.Mode = PortMode.ShortBeeps;
                     portMode = outgoingCallPort.Mode;
+                    FinishCallEvent(this, new EventArgsForATSFinishCall(call));
                     //будет отправляться биллингу сообщении о звонке с нулевым временем
                     break;
                 case PortMode.NoPort:
@@ -177,7 +184,7 @@ namespace CheckPoint3ATS
             return portMode; 
         }
 
-        protected void EndCallHandler(object sender, EventArgForEndCall arg)
+        protected void EndCallHandler(object sender, EventArgForTerminalEndCall arg)
         {
             Dictionary<IPort, IPort> listOfConnectionsCopy = new Dictionary<IPort, IPort>();
 
@@ -193,6 +200,8 @@ namespace CheckPoint3ATS
                 {
                     item.Key.StopTimer();
                     item.Value.StopTimer();
+                    CallInfoForATS call = new CallInfoForATS();
+                    FinishCallEvent(this,new EventArgsForATSFinishCall(call));
                     // будет передаваться информация о звонке в биллинг если порты в longbeep ,будет передаваться нулевое время, если connection будет передаваться информация с данными
                     item.Key.Mode = PortMode.On;
                     item.Value.Mode = PortMode.On;

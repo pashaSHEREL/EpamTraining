@@ -9,6 +9,7 @@ namespace CheckPoint3ATS
     {
         private string name;
         private IATS ats = new ATS();
+        IBillingSystem billingSystem = new BillingSystem();
 
         List<IContract> contracts = new List<IContract>();
         List<ITerminal> terminals = new List<ITerminal>();
@@ -21,6 +22,7 @@ namespace CheckPoint3ATS
         {
             this.ats = ats;
             this.name = name;
+            this.billingSystem.RegistrationATS(this.ats);
         }
 
         public void AddTerminal(ITerminal terminal)
@@ -71,6 +73,10 @@ namespace CheckPoint3ATS
                 }
 
                 ats.RegistryTerminal(subscriber);
+                billingSystem.AddSubscriber(new SubscriberStatistics(contracts.Last().ContractId,
+                    contracts.Last().PhoneNumber,
+                    contracts.Last().TP));
+
             }
             else 
             {
@@ -109,16 +115,11 @@ namespace CheckPoint3ATS
                     subscriber.Terminal = null;
                     contracts.RemoveAt(i);
                     ats.UnRegistryTerminal(subscriber);
+                    billingSystem.DelSubscriber(contracts[i].ContractId);
                     break;
                 }
 			}
            
-        }
-
-        public IBillingSystem BillingSystem
-        {
-            get;
-            set;
         }
     }
 }

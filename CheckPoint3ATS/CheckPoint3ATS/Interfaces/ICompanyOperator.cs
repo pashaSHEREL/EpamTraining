@@ -9,7 +9,6 @@ namespace CheckPoint3ATS
     {
         string Name { get; set; }
         IATS ATS { get; set; }
-        IBillingSystem BillingSystem { get; set; }
         void AddTerminal(ITerminal terminal);
         void ConcludeContract(ISubscriber subscriber, int phoneNumber);
         void TerminateContract(ISubscriber subscriber);

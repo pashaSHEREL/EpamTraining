@@ -12,11 +12,11 @@ namespace CheckPoint3ATS
         int TerminalId { get;}
 
         event Func<ISubscriber, int, PortMode> DialingEvent;
-        event EventHandler<EventArgForEndCall> EndCallEvent;
+        event EventHandler<EventArgForTerminalEndCall> EndCallEvent;
         event Func<ISubscriber, PortMode> PickUpEvent;
 
         PortMode Dialing(ISubscriber sender, int phoneNumber);
         PortMode PickUp(ISubscriber sender);
-        void EndCall(object sender, EventArgForEndCall arg);
+        void EndCall(object sender, EventArgForTerminalEndCall arg);
     }
 }

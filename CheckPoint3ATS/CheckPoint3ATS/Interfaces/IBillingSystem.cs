@@ -8,6 +8,9 @@ namespace CheckPoint3ATS
 {
     interface IBillingSystem
     {
-        ReadOnlyCollection<ICallInfo> CallsInfo { get; }
+        ReadOnlyCollection<ISubscriberStatistics> SubscribersStatistics { get; }
+        void RegistrationATS(IATS ats);
+        void AddSubscriber(ISubscriberStatistics subcriberStat);
+        void DelSubscriber(int contractNumber); 
     }
 }

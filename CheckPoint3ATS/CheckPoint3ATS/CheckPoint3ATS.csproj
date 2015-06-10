@@ -45,22 +45,31 @@
   <ItemGroup>
     <Compile Include="ATS.cs" />
     <Compile Include="BillingSystem.cs" />
+    <Compile Include="CallInfoForATS.cs" />
+    <Compile Include="CallInfoForBilling.cs" />
     <Compile Include="CompanyOperator.cs" />
     <Compile Include="Contract.cs" />
-    <Compile Include="EventArgForEndCall.cs" />
+    <Compile Include="EventArgForTerminalEndCall.cs" />
+    <Compile Include="EventArgsForATSFinishCall.cs" />
     <Compile Include="Interfaces\ICallInfo.cs" />
+    <Compile Include="Interfaces\ICallInfoForATS.cs" />
+    <Compile Include="Interfaces\ICallInfoForBilling.cs" />
     <Compile Include="Interfaces\ICompanyOperator.cs" />
     <Compile Include="Interfaces\IBillingSystem.cs" />
     <Compile Include="Interfaces\IATS.cs" />
     <Compile Include="Interfaces\IContract.cs" />
+    <Compile Include="Interfaces\IPayment.cs" />
     <Compile Include="Interfaces\IPort.cs" />
     <Compile Include="Interfaces\ISubscriber.cs" />
+    <Compile Include="Interfaces\ISubscriberStatistics.cs" />
     <Compile Include="Interfaces\ITariffPlan.cs" />
     <Compile Include="Interfaces\ITerminal.cs" />
+    <Compile Include="Payment.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subscriber.cs" />
+    <Compile Include="SubscriberStatistics.cs" />
     <Compile Include="Terminal.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
