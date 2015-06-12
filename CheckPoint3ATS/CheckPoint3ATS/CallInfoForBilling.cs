@@ -14,7 +14,7 @@ namespace CheckPoint3ATS
             set;
         }
 
-        public int CallCharges
+        public int CostCall
         {
             get;
             set;

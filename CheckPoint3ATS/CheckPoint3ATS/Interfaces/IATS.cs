@@ -11,6 +11,8 @@ namespace CheckPoint3ATS
         ReadOnlyCollection<IPort>  Ports { get; }
         int NumberOfATS { get;}
         bool FreePorts { get; }
+        void InstallTime(Time time);
+        void RegistryBilling(IBillingSystem billingSystem);
         void RegistryTerminal(ISubscriber subscriber);
         void UnRegistryTerminal(ISubscriber subscriber);
         event EventHandler<EventArgsForATSFinishCall> FinishCallEvent;

@@ -23,3 +23,8 @@ G:\CheckPoint3ATS2\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.pdb
 G:\CheckPoint3ATS2\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.exe
 G:\CheckPoint3ATS2\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.pdb
 G:\CheckPoint3ATS2\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.csprojResolveAssemblyReference.cache
+d:\repos\EpamTraining\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.exe
+d:\repos\EpamTraining\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.pdb
+d:\repos\EpamTraining\CheckPoint3ATS\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.exe
+d:\repos\EpamTraining\CheckPoint3ATS\CheckPoint3ATS\bin\Debug\CheckPoint3ATS.pdb
+d:\repos\EpamTraining\CheckPoint3ATS\CheckPoint3ATS\obj\x86\Debug\CheckPoint3ATS.csprojResolveAssemblyReference.cache

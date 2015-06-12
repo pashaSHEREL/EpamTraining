@@ -7,27 +7,32 @@ namespace CheckPoint3ATS
 {
     class CompanyOperator:ICompanyOperator
     {
-        private string name;
-        private IATS ats = new ATS();
-        IBillingSystem billingSystem = new BillingSystem();
+        private string _name;
+        private IATS _ats = new ATS();
+        IBillingSystem _billingSystem = new BillingSystem();
 
-        List<IContract> contracts = new List<IContract>();
-        List<ITerminal> terminals = new List<ITerminal>();
+        List<IContract> _contracts = new List<IContract>();
+        List<ITerminal> _terminals = new List<ITerminal>();
 
         public CompanyOperator()
         { 
         }
 
-        public CompanyOperator(IATS ats, string name)
+        public CompanyOperator(IATS ats, string name, Time time)
         {
-            this.ats = ats;
-            this.name = name;
-            this.billingSystem.RegistrationATS(this.ats);
+            _ats = ats;
+            _name = name;
+            _billingSystem.RegistrationATS(_ats);
+            _billingSystem.Date = time.Days;
+            _billingSystem.InstallTime(time);
+             _ats.RegistryBilling(_billingSystem);
+            _ats.InstallTime(time);
+           
         }
 
         public void AddTerminal(ITerminal terminal)
         {
-            terminals.Add(terminal);
+            _terminals.Add(terminal);
         }
 
         public string Name
@@ -44,24 +49,26 @@ namespace CheckPoint3ATS
 
         public void ConcludeContract(ISubscriber subscriber, int phoneNumber)
         {
-            if (ats.FreePorts && terminals.Count > 0 )
+            if (_ats.FreePorts && _terminals.Count > 0 )
             {
-                contracts.Add(new Contract()
+                _contracts.Add(new Contract()
                 {
                     NameLSubscriber = subscriber.NameL,
                     NameFSubscriber = subscriber.NameF,
                     AddressSubscriber = subscriber.Address,
                     PhoneNumber = phoneNumber,
                     Connected = false,
-                    ContractId = contracts.Count + 1
+                    ContractId = _contracts.Count + 1
                 });
 
-                subscriber.PhoneNumber = phoneNumber;
-                subscriber.Contract = contracts.Last();
-                subscriber.Terminal = terminals[0];
-                terminals.RemoveAt(0);
 
-                foreach (var item in ats.Ports)
+                subscriber.PhoneNumber = phoneNumber;
+                subscriber.Contract = _contracts.Last();
+                subscriber.Terminal = _terminals[0];
+                subscriber.GetStatisticEvent += GetStatisticEventHandler;
+                _terminals.RemoveAt(0);
+
+                foreach (var item in _ats.Ports)
                 {
                     if (item.Status == PortStatus.Free)
                     {
@@ -72,15 +79,16 @@ namespace CheckPoint3ATS
                     }
                 }
 
-                ats.RegistryTerminal(subscriber);
-                billingSystem.AddSubscriber(new SubscriberStatistics(contracts.Last().ContractId,
-                    contracts.Last().PhoneNumber,
-                    contracts.Last().TP));
+                _ats.RegistryTerminal(subscriber);
+                _billingSystem.AddSubscriber(new SubscriberStatistics(
+                    _contracts.Last().ContractId,
+                    _contracts.Last().PhoneNumber,
+                    _contracts.Last().TP));
 
             }
             else 
             {
-                if (terminals.Count == 0)
+                if (_terminals.Count == 0)
                 {
                     throw new Exception("Terminals ended");
                 }
@@ -92,13 +100,27 @@ namespace CheckPoint3ATS
             
         }
 
+        protected List<ICallInfo> GetStatisticEventHandler(ISubscriber sender)
+        {
+            List<ICallInfo> listCallInfo=new List<ICallInfo>();
+            foreach (var variable in _billingSystem.SubscribersStatistics)
+            {
+                if (sender.Contract.ContractId==variable.AccountNumber)
+                {
+                    listCallInfo = variable.CallsInfo;
+                }
+            }
+
+            return listCallInfo;
+        }
+
         public void TerminateContract(ISubscriber subscriber)
         {
-            for (int i = 0; i < contracts.Count; i++)
+            for (int i = 0; i < _contracts.Count; i++)
 			{
-                if (contracts[i].ContractId == subscriber.Contract.ContractId)
+                if (_contracts[i].ContractId == subscriber.Contract.ContractId)
                 {
-                    foreach (var item in ats.Ports)
+                    foreach (var item in _ats.Ports)
                     {
                         if (item.PhoneNumber == subscriber.PhoneNumber)
                         {
@@ -111,11 +133,11 @@ namespace CheckPoint3ATS
                     }
                     subscriber.PhoneNumber = 0;
                     subscriber.Contract = null;
-                    terminals.Add(subscriber.Terminal);
+                    _terminals.Add(subscriber.Terminal);
                     subscriber.Terminal = null;
-                    contracts.RemoveAt(i);
-                    ats.UnRegistryTerminal(subscriber);
-                    billingSystem.DelSubscriber(contracts[i].ContractId);
+                    _contracts.RemoveAt(i);
+                    _ats.UnRegistryTerminal(subscriber);
+                    _billingSystem.DelSubscriber(_contracts[i].ContractId);
                     break;
                 }
 			}

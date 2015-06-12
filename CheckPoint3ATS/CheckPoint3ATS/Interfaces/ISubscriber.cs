@@ -15,6 +15,8 @@ namespace CheckPoint3ATS
         IContract Contract { get; set; }
         PortMode Call(int number);
         PortMode Answer();
-        void EndCall();
+        void HangUpPhone();
+        List<ICallInfo> GetStatistic(DateTime firstDay, DateTime lastDay);
+        event Func<ISubscriber, List<ICallInfo>> GetStatisticEvent; 
     }
 }

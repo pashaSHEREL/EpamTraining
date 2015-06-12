@@ -7,13 +7,14 @@ namespace CheckPoint3ATS
 {
     class Terminal : ITerminal
     {
-        private string model;
-        private int cost;
-        private int terminalId;
+        private readonly string _model;
+        private readonly int _cost;
+        private readonly int _terminalId;
 
         public event Func<ISubscriber, PortMode> PickUpEvent;
         public event Func<ISubscriber, int, PortMode> DialingEvent;
-        public event EventHandler<EventArgForTerminalEndCall> EndCallEvent;
+        public event EventHandler<EventArgForTerminalEndCall> HangUpPhoneEvent;
+        public event EventHandler<EventArgs> DisconnectFromPortEvent;
 
         public Terminal()
         { 
@@ -21,44 +22,57 @@ namespace CheckPoint3ATS
 
         public Terminal(string model, int cost, int terminalId)
         {
-            this.model = model;
-            this.cost = cost;
-            this.terminalId = terminalId;
+            _model = model;
+            _cost = cost;
+            _terminalId = terminalId;
         }
 
         public string Model
         {
-            get { return model; }
+            get { return _model; }
         }
 
         public int Cost
         {
-            get { return cost;}
+            get { return _cost;}
             
         }
 
         public int TerminalId
         {
-            get {return terminalId ;}
+            get {return _terminalId ;}
             
+        }
+
+        public void DisconnectFromPort(ISubscriber sender)
+        {
+            OnDisconnectFromPort(sender);
         }
 
         public PortMode PickUp(ISubscriber sender)
         {
-            return OnPickUp(sender);
+            return OnPickUpEvent(sender);
         }
 
         public PortMode Dialing(ISubscriber sender, int phoneNumber)
         {
-            return OnDialing(sender, phoneNumber);
+            return OnDialingEvent(sender, phoneNumber);
         }
 
-        public void EndCall(object sender, EventArgForTerminalEndCall arg)
+        public void HangUpPhone(object sender, EventArgForTerminalEndCall arg)
         {
-            OnEndCall(sender, arg);
+            OnHangUpPhoneEvent(sender, arg);
         }
 
-        protected PortMode OnPickUp(ISubscriber sender)
+        protected void OnDisconnectFromPort(ISubscriber sender)
+        {
+            if (DisconnectFromPortEvent != null)
+            {
+                DisconnectFromPortEvent(sender, null);
+            }
+        }
+
+        protected PortMode OnPickUpEvent(ISubscriber sender)
         {
             PortMode portMode = PortMode.NoPort;
 
@@ -70,7 +84,7 @@ namespace CheckPoint3ATS
             return portMode;
         }
 
-        protected PortMode OnDialing(ISubscriber sender, int phoneNumber)
+        protected PortMode OnDialingEvent(ISubscriber sender, int phoneNumber)
         {
             PortMode portMode = PortMode.NoPort;
 
@@ -82,11 +96,11 @@ namespace CheckPoint3ATS
             return portMode;
         }
 
-        protected void OnEndCall(object sender, EventArgForTerminalEndCall arg)
+        protected void OnHangUpPhoneEvent(object sender, EventArgForTerminalEndCall arg)
         {
-            if (EndCallEvent != null)
+            if (HangUpPhoneEvent != null)
             {
-                EndCallEvent(sender, arg);
+                HangUpPhoneEvent(sender, arg);
             }
         }
     }

@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Timers;
 
 namespace CheckPoint3ATS
 {
     class Port:IPort
     {
-        private int number;
-        private Timer timer = new Timer();
+        private int _number;
+        private Timer _timer = new Timer(10000);
 
         public event EventHandler<EventArgs> FinishTimerEvent;
 
@@ -19,12 +16,12 @@ namespace CheckPoint3ATS
 
         public Port(int number)
         {
-            this.number = number;
+            _number = number;
         }
 
         public int Number
         {
-            get { return number;}
+            get { return _number;}
         }
 
         public int PhoneNumber
@@ -47,31 +44,30 @@ namespace CheckPoint3ATS
 
         public void StartTimer()
         {
-            timer.Interval = 100000;
-            timer.AutoReset = false;
-            timer.Elapsed += ElapsedHandler;
-            timer.Start();
+            _timer.AutoReset = false;
+            _timer.Elapsed += ElapsedHandler;
+            _timer.Start();
         }
 
         public void StopTimer()
         {
-            timer.Stop();
+            _timer.Stop();
         }
 
         public override bool Equals(object obj)
         {
-            return ((IPort)obj).Number == this.Number;
+            return ((IPort)obj).Number == Number;
         }
 
         public override int GetHashCode()
         {
-            return this.Number;
+            return Number;
         }
 
         private void ElapsedHandler(object obj, ElapsedEventArgs e)
         {
-            this.Mode = PortMode.On;
-            Console.WriteLine("Port {0} {1}", this.Number, this.Mode);
+            Mode = PortMode.On;
+            Console.WriteLine("Port {0} {1}", Number, Mode);
             OnFinishTimerEvent(this, null);
         }
 

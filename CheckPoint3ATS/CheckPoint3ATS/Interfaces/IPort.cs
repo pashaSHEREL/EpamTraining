@@ -23,7 +23,8 @@ namespace CheckPoint3ATS
         LongBeeps,
         NoPort,
         NotAvailable,
-        Connected
+        Connected,
+        Pause
     }
 
     interface IPort

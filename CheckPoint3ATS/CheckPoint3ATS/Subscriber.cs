@@ -5,61 +5,72 @@ using System.Text;
 
 namespace CheckPoint3ATS
 {
-    class Subscriber:ISubscriber
+    internal class Subscriber : ISubscriber
     {
-        string nameL;
-        string nameF;
-        string address;
+        private readonly string _nameL;
+        private readonly string _nameF;
+        private readonly string _address;
+
+        public event Func<ISubscriber, List<ICallInfo>> GetStatisticEvent;
 
         public Subscriber()
-        { 
+        {
         }
 
         public Subscriber(string nameL, string nameF, string address)
         {
-            this.nameL = nameL;
-            this.nameF = nameF;
-            this.address = address;
+            _nameL = nameL;
+            _nameF = nameF;
+            _address = address;
         }
 
         public string NameL
         {
-            get { return nameL; }
+            get { return _nameL; }
         }
 
         public string NameF
         {
-            get { return nameF; }
+            get { return _nameF; }
         }
 
         public string Address
         {
-            get { return address; }
+            get { return _address; }
         }
 
-        public int PhoneNumber
+        public int PhoneNumber { get; set; }
+
+        public ITerminal Terminal { get; set; }
+
+        public IContract Contract { get; set; }
+
+        public List<ICallInfo> GetStatistic(DateTime firstDay, DateTime lastDay)
         {
-            get;
-            set;
+            return OnGetStatisticEvent()
+                .Where(
+                    x => (((CallInfoForBilling) x).DayCall > firstDay) && (((CallInfoForBilling) x).DayCall < lastDay)).Select(x=>x).ToList();
         }
 
-        public ITerminal Terminal
+        protected List<ICallInfo> OnGetStatisticEvent()
         {
-            get; 
-            set;
+            return GetStatisticEvent!=null ? GetStatisticEvent(this) : null;
         }
 
-        public IContract Contract
+        public void DisconnectFromPort()
         {
-            get;
-            set; 
+            Terminal.DisconnectFromPort(this);
+        }
+
+        public void ConnectFromPort()
+        {
         }
 
         public PortMode Call(int numberPhone)
         {
             PortMode portMode = PortMode.NoPort;
 
-            if (Contract!=null)
+            if (Contract != null)
             {
                 portMode = PickUp();
 
@@ -69,22 +80,18 @@ namespace CheckPoint3ATS
                 }
                 else
                 {
-                    if (portMode == PortMode.LongBeeps)
-                    {
-
-                    }
-                    else
+                    if (portMode != PortMode.LongBeeps)
                     {
                         Console.WriteLine("Port disabled.");
                     }
                 }
             }
-            else 
+            else
             {
                 Console.WriteLine("Enclose the first contract.");
             }
+
             return portMode;
-           
         }
 
         public PortMode Answer()
@@ -93,9 +100,9 @@ namespace CheckPoint3ATS
 
             if (Contract != null)
             {
-                portMode=PickUp();
+                portMode = PickUp();
             }
-            else 
+            else
             {
                 Console.WriteLine("Enclose the first contract.");
             }
@@ -103,11 +110,11 @@ namespace CheckPoint3ATS
             return portMode;
         }
 
-        public void EndCall()
+        public void HangUpPhone()
         {
             if (Contract != null)
             {
-                Terminal.EndCall(this, new EventArgForTerminalEndCall(PhoneNumber));
+                Terminal.HangUpPhone(this, new EventArgForTerminalEndCall(PhoneNumber));
             }
             else
             {
