@@ -6,7 +6,7 @@ using System.Timers;
 
 namespace CheckPoint3ATS
 {
-    enum PortStatus
+    public enum PortStatus
     {
         Free,
         Busy,
@@ -14,7 +14,7 @@ namespace CheckPoint3ATS
         Beaten
     }
 
-    enum PortMode
+    public enum PortMode
     {
         Off,
         On,
@@ -27,14 +27,16 @@ namespace CheckPoint3ATS
         Pause
     }
 
-    interface IPort
+    public interface IPort
     {
         int Number { get; }
         int PhoneNumber { get; set; }
         PortStatus Status { get; set; }
         PortMode Mode { get; set; }
+
+        event EventHandler<EventArgs> FinishTimerEvent;
+
         void StartTimer();
         void StopTimer();
-        event EventHandler<EventArgs> FinishTimerEvent;
     }
 }

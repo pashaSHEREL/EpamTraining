@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CheckPoint3ATS
 {
-    interface ICallInfoForBilling:ICallInfo
+    public interface ICallInfoForBilling : ICallInfo
     {
         TimeSpan DurationCall { get; set; }
         int CostCall { get; set; }

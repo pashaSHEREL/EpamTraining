@@ -1,65 +1,86 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
+
 
 namespace CheckPoint3ATS
 {
-    class SubscriberStatistics:ISubscriberStatistics
+    public class SubscriberStatistics : ISubscriberStatistics
     {
-        List<ICallInfo> callsInfo = new List<ICallInfo>();
-        List<IPayment> payments = new List<IPayment>();
-        int accountNumber;
-        int phoneNumber;
-        ITariffPlan tariffPlan;
+        private readonly List<ICallInfo> _callsInfo = new List<ICallInfo>();
+        private List<IPayment> _payments = new List<IPayment>();
+        private readonly int _accountNumber;
+        private readonly int _phoneNumber;
+        private readonly ITariffPlan _tariffPlan;
+        private int _balance;
+
+        public event EventHandler<EventArgs> PaymentIsMade;
+
+        protected void OnPaymetIsMade()
+        {
+            if (PaymentIsMade!=null)
+            {
+                PaymentIsMade(this, null);
+            }
+        }
 
         public SubscriberStatistics()
         {
+            _tariffPlan = new TariffPlan();
         }
 
         public SubscriberStatistics(int accountNumber, int phoneNumber, ITariffPlan tariffPlan)
         {
-           this.accountNumber=accountNumber;
-           this.phoneNumber=phoneNumber;
-           this.tariffPlan=tariffPlan;
+            _accountNumber = accountNumber;
+            _phoneNumber = phoneNumber;
+            _tariffPlan = tariffPlan;
         }
 
         public int AccountNumber
         {
-            get { return accountNumber;}
+            get { return _accountNumber; }
         }
 
         public int Balance
         {
-            get;
-            set;
+            get { return _balance; }
+            set
+            {
+                _balance = value;
+                OnPaymetIsMade();
+            }
         }
 
         public int PhoneNumber
         {
-            get { return phoneNumber;}
+            get { return _phoneNumber; }
         }
 
         public ITariffPlan TariffPlan
         {
-            get { return tariffPlan;}
+            get { return _tariffPlan; }
         }
 
-        public List<ICallInfo> CallsInfo
+        public ReadOnlyCollection<ICallInfo> CallsInfo
         {
-            get { return callsInfo.ToList();}
+            get { return new ReadOnlyCollection<ICallInfo>(_callsInfo.ToList()); }
         }
 
-        public List<IPayment> Payments
+        public ReadOnlyCollection<IPayment> Payments
         {
-            get { return payments.ToList(); }
-
+            get { return new ReadOnlyCollection<IPayment>(_payments); }
         }
 
         public void AddCallInfo(ICallInfo callInfo)
         {
-            callsInfo.Add(callInfo);
+            _callsInfo.Add(callInfo);
         }
 
+        public void AddPayment(IPayment payment)
+        {
+            _payments.Add(payment);
+        }
     }
 }

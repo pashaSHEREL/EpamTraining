@@ -5,12 +5,11 @@ using System.Text;
 
 namespace CheckPoint3ATS
 {
-    internal interface ICompanyOperator
+    public interface ICompanyOperator
     {
-        string Name { get; set; }
-        IATS ATS { get; set; }
+        string Name { get; }
         void AddTerminal(ITerminal terminal);
-        void ConcludeContract(ISubscriber subscriber, int phoneNumber);
+        void ConcludeContract(ISubscriber subscriber, int phoneNumber, ITariffPlan tariffPlan);
         void TerminateContract(ISubscriber subscriber);
     }
 }

@@ -1,18 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.ObjectModel;
+
 
 namespace CheckPoint3ATS
 {
-    interface ISubscriberStatistics
+    public interface ISubscriberStatistics
     {
         int AccountNumber { get; }
-        int Balance{get;set;}
+        int Balance { get; set; }
         int PhoneNumber { get; }
         ITariffPlan TariffPlan { get; }
-        List<ICallInfo> CallsInfo { get; }
-        List<IPayment> Payments { get; }
+        ReadOnlyCollection<ICallInfo> CallsInfo { get; }
+        ReadOnlyCollection<IPayment> Payments { get; }
+
+        event EventHandler<EventArgs> PaymentIsMade;
+
         void AddCallInfo(ICallInfo callInfo);
+        void AddPayment(IPayment payment);
     }
 }

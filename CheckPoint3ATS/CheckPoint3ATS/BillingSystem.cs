@@ -5,28 +5,24 @@ using System.Collections.ObjectModel;
 
 namespace CheckPoint3ATS
 {
-    internal class BillingSystem : IBillingSystem
+    public class BillingSystem : IBillingSystem
     {
         private List<ISubscriberStatistics> _subscribersStatistics = new List<ISubscriberStatistics>();
-        private DateTime _date = new DateTime();
+        private DateTime _date;
         private const int PayDay = 25;
         private List<int> _listOfDebtors = new List<int>();
 
         public event EventHandler<EventArgs> PayDateEvent;
+        public event EventHandler<EventArgs> PaymentIsMade; 
 
         public ReadOnlyCollection<ISubscriberStatistics> SubscribersStatistics
         {
-            get
-            {
-                ReadOnlyCollection<ISubscriberStatistics> rColl =
-                    new ReadOnlyCollection<ISubscriberStatistics>(_subscribersStatistics);
-                return rColl;
-            }
+            get { return new ReadOnlyCollection<ISubscriberStatistics>(_subscribersStatistics); }
         }
 
-        public List<int> ListOfDebtors
+        public ReadOnlyCollection<int> ListOfDebtors
         {
-            get { return _listOfDebtors.ToList(); }
+            get { return new ReadOnlyCollection<int>(_listOfDebtors); }
         }
 
         public DateTime Date
@@ -40,9 +36,15 @@ namespace CheckPoint3ATS
             ats.FinishCallEvent += FinishCallOnAtsEventHadler;
         }
 
+        public void InstallTime(Time time)
+        {
+            time.ChangeTimeEvent += ChangeTimeEventHandler;
+        }
+
         public void AddSubscriber(ISubscriberStatistics subcriberStat)
         {
             _subscribersStatistics.Add(subcriberStat);
+            _subscribersStatistics.Last().PaymentIsMade += PaymentIsMadeEventHandler;
         }
 
         public void DelSubscriber(int contractNumber)
@@ -52,9 +54,23 @@ namespace CheckPoint3ATS
                 if (_subscribersStatistics[i].AccountNumber == contractNumber)
                 {
                     _subscribersStatistics.RemoveAt(i);
+                    _subscribersStatistics[i].PaymentIsMade -= PaymentIsMadeEventHandler;
                     break;
                 }
             }
+        }
+
+        protected void OnPaymentIsMade(object obj, EventArgs e)
+        {
+            if (PaymentIsMade!=null)
+            {
+                PaymentIsMade(obj, e);
+            }
+        }
+
+        protected void PaymentIsMadeEventHandler(object obj, EventArgs e)
+        {
+            OnPaymentIsMade(obj,e);
         }
 
         protected void FinishCallOnAtsEventHadler(object obj, EventArgsForATSFinishCall args)
@@ -80,20 +96,29 @@ namespace CheckPoint3ATS
         {
             TimeSpan durationCall = ((CallInfoForATS) args.CallInfo).StopCall -
                                     ((CallInfoForATS) args.CallInfo).StartCall;
-            item.CallsInfo.Add(new CallInfoForBilling()
+
+            int phoneNumber = outgoingCall
+                ? ((CallInfoForATS)args.CallInfo).NumberOfIncomingCall
+                : ((CallInfoForATS) args.CallInfo).NumberOfOutgoingCall;
+
+            int costCall = outgoingCall
+                ? GetCallCost(item, durationCall)
+                : 0;
+
+            item.AddCallInfo(new CallInfoForBilling()
             {
                 DayCall = args.CallInfo.DayCall,
                 StartCall = args.CallInfo.StartCall,
                 DurationCall = durationCall,
                 OutgoingCall = outgoingCall,
-                PhoneNumber = ((CallInfoForATS) args.CallInfo).NumberOfOutgoingCall,
-                CostCall = GetCallCost(item, durationCall)
+                PhoneNumber = phoneNumber,
+                CostCall = costCall
             });
         }
 
         protected int GetCallCost(ISubscriberStatistics item, TimeSpan durationCall)
         {
-            int costCall = 0;
+            int costCall;
 
             int sumMinutes =
                 item.CallsInfo.OfType<CallInfoForBilling>()
@@ -119,10 +144,6 @@ namespace CheckPoint3ATS
             return costCall;
         }
 
-        public void InstallTime(Time time)
-        {
-            time.ChangeTimeEvent += ChangeTimeEventHandler;
-        }
 
         protected void OnPayDateEvent()
         {

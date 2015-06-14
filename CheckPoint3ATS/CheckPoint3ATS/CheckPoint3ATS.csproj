@@ -51,6 +51,7 @@
     <Compile Include="Contract.cs" />
     <Compile Include="EventArgForTerminalEndCall.cs" />
     <Compile Include="EventArgsForATSFinishCall.cs" />
+    <Compile Include="EventArgsForSubscriberPay.cs" />
     <Compile Include="Interfaces\ICallInfo.cs" />
     <Compile Include="Interfaces\ICallInfoForATS.cs" />
     <Compile Include="Interfaces\ICallInfoForBilling.cs" />

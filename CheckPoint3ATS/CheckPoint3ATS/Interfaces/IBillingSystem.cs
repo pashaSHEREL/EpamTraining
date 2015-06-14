@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.ObjectModel;
 
 namespace CheckPoint3ATS
 {
-    interface IBillingSystem
+    public interface IBillingSystem
     {
         ReadOnlyCollection<ISubscriberStatistics> SubscribersStatistics { get; }
+        ReadOnlyCollection<int> ListOfDebtors { get; }
+        DateTime Date { get; set; }
+
         event EventHandler<EventArgs> PayDateEvent;
+        event EventHandler<EventArgs> PaymentIsMade;
+
         void RegistrationATS(IATS ats);
         void InstallTime(Time time);
-        List<int> ListOfDebtors { get; }
-        DateTime Date { get; set; }
         void AddSubscriber(ISubscriberStatistics subcriberStat);
-        void DelSubscriber(int contractNumber); 
+        void DelSubscriber(int contractNumber);
     }
 }

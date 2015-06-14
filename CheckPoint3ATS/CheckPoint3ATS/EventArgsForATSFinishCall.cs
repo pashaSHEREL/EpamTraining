@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
 
 namespace CheckPoint3ATS
 {
-    class EventArgsForATSFinishCall:EventArgs
+    public class EventArgsForATSFinishCall : EventArgs
     {
         public EventArgsForATSFinishCall()
         {
@@ -16,10 +14,6 @@ namespace CheckPoint3ATS
             CallInfo = callInfo;
         }
 
-        public ICallInfo CallInfo
-        {
-            get;
-            set;
-        }
+        public ICallInfo CallInfo { get; set; }
     }
 }

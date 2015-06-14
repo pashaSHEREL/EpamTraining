@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CheckPoint3ATS
 {
-    class Time
+    public class Time
     {
-        private DateTime _days=new DateTime();
+        private DateTime _days;
         public event EventHandler<EventArgs> ChangeTimeEvent;
 
         public Time(DateTime days)
@@ -22,13 +19,13 @@ namespace CheckPoint3ATS
 
         public void ChangeTime(int days)
         {
-            _days=_days.AddDays(days);
+            _days = _days.AddDays(days);
             OnChangeTImeEvent();
         }
 
         protected void OnChangeTImeEvent()
         {
-            if (ChangeTimeEvent!=null)
+            if (ChangeTimeEvent != null)
             {
                 ChangeTimeEvent(this, null);
             }

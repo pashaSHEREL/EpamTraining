@@ -3,15 +3,15 @@ using System.Timers;
 
 namespace CheckPoint3ATS
 {
-    class Port:IPort
+    public class Port : IPort
     {
-        private int _number;
-        private Timer _timer = new Timer(10000);
+        private readonly int _number;
+        private readonly Timer _timer = new Timer(1000000);
 
         public event EventHandler<EventArgs> FinishTimerEvent;
 
         public Port()
-        { 
+        {
         }
 
         public Port(int number)
@@ -21,26 +21,14 @@ namespace CheckPoint3ATS
 
         public int Number
         {
-            get { return _number;}
+            get { return _number; }
         }
 
-        public int PhoneNumber
-        {
-            get;
-            set;
-        }
+        public int PhoneNumber { get; set; }
 
-        public PortStatus Status
-        {
-            get;
-            set;
-        }
+        public PortStatus Status { get; set; }
 
-        public PortMode Mode
-        {
-            get;
-            set;
-        }
+        public PortMode Mode { get; set; }
 
         public void StartTimer()
         {
@@ -56,7 +44,7 @@ namespace CheckPoint3ATS
 
         public override bool Equals(object obj)
         {
-            return ((IPort)obj).Number == Number;
+            return ((IPort) obj).Number == Number;
         }
 
         public override int GetHashCode()

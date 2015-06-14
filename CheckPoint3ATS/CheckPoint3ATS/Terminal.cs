@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace CheckPoint3ATS
 {
-    class Terminal : ITerminal
+    public class Terminal : ITerminal
     {
         private readonly string _model;
         private readonly int _cost;
@@ -15,9 +12,10 @@ namespace CheckPoint3ATS
         public event Func<ISubscriber, int, PortMode> DialingEvent;
         public event EventHandler<EventArgForTerminalEndCall> HangUpPhoneEvent;
         public event EventHandler<EventArgs> DisconnectFromPortEvent;
+        public event EventHandler<EventArgs> ConnectFromPortEvent;
 
         public Terminal()
-        { 
+        {
         }
 
         public Terminal(string model, int cost, int terminalId)
@@ -34,19 +32,22 @@ namespace CheckPoint3ATS
 
         public int Cost
         {
-            get { return _cost;}
-            
+            get { return _cost; }
         }
 
         public int TerminalId
         {
-            get {return _terminalId ;}
-            
+            get { return _terminalId; }
         }
 
         public void DisconnectFromPort(ISubscriber sender)
         {
             OnDisconnectFromPort(sender);
+        }
+
+        public void ConnectFromPort(ISubscriber sender)
+        {
+            OnConnectFromPort(sender);
         }
 
         public PortMode PickUp(ISubscriber sender)
@@ -62,6 +63,14 @@ namespace CheckPoint3ATS
         public void HangUpPhone(object sender, EventArgForTerminalEndCall arg)
         {
             OnHangUpPhoneEvent(sender, arg);
+        }
+
+        protected void OnConnectFromPort(ISubscriber sender)
+        {
+            if (ConnectFromPortEvent != null)
+            {
+                ConnectFromPortEvent(sender, null);
+            }
         }
 
         protected void OnDisconnectFromPort(ISubscriber sender)

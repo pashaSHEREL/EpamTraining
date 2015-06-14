@@ -5,7 +5,9 @@ using System.Text;
 
 namespace CheckPoint3ATS
 {
-    interface IPayment
+    public interface IPayment
     {
+        int AmountOfMoney { get; set; }
+        DateTime PayDay { get; set; }
     }
 }

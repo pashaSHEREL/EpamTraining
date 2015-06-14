@@ -5,17 +5,16 @@ using System.Text;
 
 namespace CheckPoint3ATS
 {
-    class CompanyOperator:ICompanyOperator
+    public class CompanyOperator : ICompanyOperator
     {
-        private string _name;
-        private IATS _ats = new ATS();
-        IBillingSystem _billingSystem = new BillingSystem();
-
-        List<IContract> _contracts = new List<IContract>();
-        List<ITerminal> _terminals = new List<ITerminal>();
+        private readonly string _name;
+        private readonly IATS _ats = new ATS();
+        private readonly IBillingSystem _billingSystem = new BillingSystem();
+        private readonly List<IContract> _contracts = new List<IContract>();
+        private readonly List<ITerminal> _terminals = new List<ITerminal>();
 
         public CompanyOperator()
-        { 
+        {
         }
 
         public CompanyOperator(IATS ats, string name, Time time)
@@ -25,9 +24,8 @@ namespace CheckPoint3ATS
             _billingSystem.RegistrationATS(_ats);
             _billingSystem.Date = time.Days;
             _billingSystem.InstallTime(time);
-             _ats.RegistryBilling(_billingSystem);
+            _ats.RegistryBilling(_billingSystem);
             _ats.InstallTime(time);
-           
         }
 
         public void AddTerminal(ITerminal terminal)
@@ -37,19 +35,19 @@ namespace CheckPoint3ATS
 
         public string Name
         {
-            get;
-            set;
+            get { return _name; }
         }
 
-        public IATS ATS
+        public void ConcludeContract(ISubscriber subscriber, int phoneNumber, ITariffPlan tariffPlan)
         {
-            get;
-            set;
-        }
+            if (_contracts.Any(x => x.PhoneNumber == phoneNumber))
+            {
+                throw new Exception("This number is already in use.");
+            }
 
-        public void ConcludeContract(ISubscriber subscriber, int phoneNumber)
-        {
-            if (_ats.FreePorts && _terminals.Count > 0 )
+            PhoneVerification(phoneNumber);
+
+            if (_ats.FreePorts && _terminals.Count > 0)
             {
                 _contracts.Add(new Contract()
                 {
@@ -58,14 +56,15 @@ namespace CheckPoint3ATS
                     AddressSubscriber = subscriber.Address,
                     PhoneNumber = phoneNumber,
                     Connected = false,
-                    ContractId = _contracts.Count + 1
+                    ContractId = _contracts.Count + 1,
+                    TariffPlan = tariffPlan
                 });
-
 
                 subscriber.PhoneNumber = phoneNumber;
                 subscriber.Contract = _contracts.Last();
                 subscriber.Terminal = _terminals[0];
                 subscriber.GetStatisticEvent += GetStatisticEventHandler;
+                subscriber.PayEvent += PayEventHandler;
                 _terminals.RemoveAt(0);
 
                 foreach (var item in _ats.Ports)
@@ -83,10 +82,9 @@ namespace CheckPoint3ATS
                 _billingSystem.AddSubscriber(new SubscriberStatistics(
                     _contracts.Last().ContractId,
                     _contracts.Last().PhoneNumber,
-                    _contracts.Last().TP));
-
+                    _contracts.Last().TariffPlan));
             }
-            else 
+            else
             {
                 if (_terminals.Count == 0)
                 {
@@ -97,27 +95,12 @@ namespace CheckPoint3ATS
                     throw new Exception("No free ports");
                 }
             }
-            
-        }
-
-        protected List<ICallInfo> GetStatisticEventHandler(ISubscriber sender)
-        {
-            List<ICallInfo> listCallInfo=new List<ICallInfo>();
-            foreach (var variable in _billingSystem.SubscribersStatistics)
-            {
-                if (sender.Contract.ContractId==variable.AccountNumber)
-                {
-                    listCallInfo = variable.CallsInfo;
-                }
-            }
-
-            return listCallInfo;
         }
 
         public void TerminateContract(ISubscriber subscriber)
         {
             for (int i = 0; i < _contracts.Count; i++)
-			{
+            {
                 if (_contracts[i].ContractId == subscriber.Contract.ContractId)
                 {
                     foreach (var item in _ats.Ports)
@@ -129,8 +112,10 @@ namespace CheckPoint3ATS
                             item.Mode = PortMode.Off;
                             break;
                         }
-                        
                     }
+
+                    subscriber.GetStatisticEvent -= GetStatisticEventHandler;
+                    subscriber.PayEvent -= PayEventHandler;
                     subscriber.PhoneNumber = 0;
                     subscriber.Contract = null;
                     _terminals.Add(subscriber.Terminal);
@@ -140,8 +125,49 @@ namespace CheckPoint3ATS
                     _billingSystem.DelSubscriber(_contracts[i].ContractId);
                     break;
                 }
-			}
-           
+            }
+        }
+
+        protected void PayEventHandler(object obj, EventArgsForSubscriberPay args)
+        {
+            foreach (var variable in _billingSystem.SubscribersStatistics)
+            {
+                if (args.ContractId == variable.AccountNumber)
+                {
+                    variable.AddPayment(new Payment() {AmountOfMoney = args.AmountOfPay, PayDay = _billingSystem.Date});
+                    variable.Balance += args.AmountOfPay;
+                    break;
+                }
+            }
+        }
+
+        protected void PhoneVerification(int phoneNumber)
+        {
+            string str = _ats.NumberOfATS.ToString();
+            string str1 = phoneNumber.ToString();
+
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] != str1[i])
+                {
+                    throw new Exception("phone number should start with the station number");
+                }
+            }
+        }
+
+        protected List<ICallInfo> GetStatisticEventHandler(ISubscriber sender)
+        {
+            List<ICallInfo> listCallInfo = new List<ICallInfo>();
+
+            foreach (var variable in _billingSystem.SubscribersStatistics)
+            {
+                if (sender.Contract.ContractId == variable.AccountNumber)
+                {
+                    listCallInfo = variable.CallsInfo.ToList();
+                }
+            }
+
+            return listCallInfo;
         }
     }
 }

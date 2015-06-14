@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CheckPoint3ATS
+﻿namespace CheckPoint3ATS
 {
-    interface ITariffPlan
+    public interface ITariffPlan
     {
         string Name { get; set; }
         int LicenseFee { get; set; }
