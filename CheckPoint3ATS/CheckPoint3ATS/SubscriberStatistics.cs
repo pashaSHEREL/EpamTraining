@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,34 +8,27 @@ namespace CheckPoint3ATS
 {
     public class SubscriberStatistics : ISubscriberStatistics
     {
-        private readonly List<ICallInfo> _callsInfo = new List<ICallInfo>();
+        private int _balance;
         private List<IPayment> _payments = new List<IPayment>();
         private readonly int _accountNumber;
+        private readonly List<ICallInfo> _callsInfo = new List<ICallInfo>();
         private readonly int _phoneNumber;
-        private readonly ITariffPlan _tariffPlan;
-        private int _balance;
-
-        public event EventHandler<EventArgs> PaymentIsMade;
-
-        protected void OnPaymetIsMade()
-        {
-            if (PaymentIsMade!=null)
-            {
-                PaymentIsMade(this, null);
-            }
-        }
+        private IStandartTariffPlan _tariffPlan;
+        private DateTime _changeTariffPlanDay;
 
         public SubscriberStatistics()
         {
-            _tariffPlan = new TariffPlan();
+            _tariffPlan = new StandartTariffPlan();
         }
 
-        public SubscriberStatistics(int accountNumber, int phoneNumber, ITariffPlan tariffPlan)
+        public SubscriberStatistics(int accountNumber, int phoneNumber, IStandartTariffPlan tariffPlan)
         {
             _accountNumber = accountNumber;
             _phoneNumber = phoneNumber;
             _tariffPlan = tariffPlan;
         }
+
+        public event EventHandler<EventArgs> PaymentIsMade;
 
         public int AccountNumber
         {
@@ -58,9 +50,10 @@ namespace CheckPoint3ATS
             get { return _phoneNumber; }
         }
 
-        public ITariffPlan TariffPlan
+        public IStandartTariffPlan TariffPlan
         {
             get { return _tariffPlan; }
+            set { _tariffPlan = value; }
         }
 
         public ReadOnlyCollection<ICallInfo> CallsInfo
@@ -73,6 +66,12 @@ namespace CheckPoint3ATS
             get { return new ReadOnlyCollection<IPayment>(_payments); }
         }
 
+        public DateTime ChangeTariffPlanDay
+        {
+            get { return _changeTariffPlanDay; }
+            set { _changeTariffPlanDay = value; }
+        }
+
         public void AddCallInfo(ICallInfo callInfo)
         {
             _callsInfo.Add(callInfo);
@@ -81,6 +80,14 @@ namespace CheckPoint3ATS
         public void AddPayment(IPayment payment)
         {
             _payments.Add(payment);
+        }
+
+        protected void OnPaymetIsMade()
+        {
+            if (PaymentIsMade != null)
+            {
+                PaymentIsMade(this, null);
+            }
         }
     }
 }

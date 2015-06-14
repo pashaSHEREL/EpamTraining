@@ -7,13 +7,13 @@ namespace CheckPoint3ATS
 {
     public class BillingSystem : IBillingSystem
     {
-        private List<ISubscriberStatistics> _subscribersStatistics = new List<ISubscriberStatistics>();
-        private DateTime _date;
         private const int PayDay = 25;
+        private DateTime _date;
         private List<int> _listOfDebtors = new List<int>();
-
+        private List<ISubscriberStatistics> _subscribersStatistics = new List<ISubscriberStatistics>();
+        private ICallCost _callCost;
         public event EventHandler<EventArgs> PayDateEvent;
-        public event EventHandler<EventArgs> PaymentIsMade; 
+        public event EventHandler<EventArgs> PaymentIsMadeEvent;
 
         public ReadOnlyCollection<ISubscriberStatistics> SubscribersStatistics
         {
@@ -62,15 +62,15 @@ namespace CheckPoint3ATS
 
         protected void OnPaymentIsMade(object obj, EventArgs e)
         {
-            if (PaymentIsMade!=null)
+            if (PaymentIsMadeEvent != null)
             {
-                PaymentIsMade(obj, e);
+                PaymentIsMadeEvent(obj, e);
             }
         }
 
         protected void PaymentIsMadeEventHandler(object obj, EventArgs e)
         {
-            OnPaymentIsMade(obj,e);
+            OnPaymentIsMade(obj, e);
         }
 
         protected void FinishCallOnAtsEventHadler(object obj, EventArgsForATSFinishCall args)
@@ -94,15 +94,24 @@ namespace CheckPoint3ATS
 
         protected void CreateCallInfo(EventArgsForATSFinishCall args, ISubscriberStatistics item, bool outgoingCall)
         {
+            if (item.TariffPlan is IFreeMinutesTariffPlan)
+            {
+                _callCost = new CostCallWithFreeMinutes();
+            }
+            else
+            {
+                _callCost = new CostCallWithoutFreeMinutes();
+            }
+
             TimeSpan durationCall = ((CallInfoForATS) args.CallInfo).StopCall -
                                     ((CallInfoForATS) args.CallInfo).StartCall;
 
             int phoneNumber = outgoingCall
-                ? ((CallInfoForATS)args.CallInfo).NumberOfIncomingCall
+                ? ((CallInfoForATS) args.CallInfo).NumberOfIncomingCall
                 : ((CallInfoForATS) args.CallInfo).NumberOfOutgoingCall;
 
             int costCall = outgoingCall
-                ? GetCallCost(item, durationCall)
+                ? _callCost.GetCostCall((int) durationCall.TotalMinutes, item)
                 : 0;
 
             item.AddCallInfo(new CallInfoForBilling()
@@ -116,35 +125,6 @@ namespace CheckPoint3ATS
             });
         }
 
-        protected int GetCallCost(ISubscriberStatistics item, TimeSpan durationCall)
-        {
-            int costCall;
-
-            int sumMinutes =
-                item.CallsInfo.OfType<CallInfoForBilling>()
-                    .Sum(callInfoBilling => (int) callInfoBilling.DurationCall.TotalMinutes);
-
-            if (sumMinutes >= item.TariffPlan.FreeMinute)
-            {
-                costCall = (int) durationCall.TotalMinutes*item.TariffPlan.PricePerMinute;
-            }
-            else
-            {
-                if ((sumMinutes + durationCall.TotalMinutes) <= item.TariffPlan.FreeMinute)
-                {
-                    costCall = 0;
-                }
-                else
-                {
-                    costCall = (sumMinutes + (int) durationCall.TotalMinutes - item.TariffPlan.FreeMinute)*
-                               item.TariffPlan.PricePerMinute;
-                }
-            }
-
-            return costCall;
-        }
-
-
         protected void OnPayDateEvent()
         {
             if (PayDateEvent != null)
@@ -156,10 +136,12 @@ namespace CheckPoint3ATS
         protected void ChangeTimeEventHandler(object obj, EventArgs e)
         {
             Time time = obj as Time;
+
             if (time != null)
             {
                 Date = time.Days;
             }
+
             if (_date.Day >= PayDay)
             {
                 _listOfDebtors = _subscribersStatistics.Where(x => x.Balance < 0).Select(x => x.PhoneNumber).ToList();

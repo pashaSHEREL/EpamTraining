@@ -7,12 +7,9 @@ namespace CheckPoint3ATS
 {
     public class Subscriber : ISubscriber
     {
-        private readonly string _nameL;
-        private readonly string _nameF;
         private readonly string _address;
-
-        public event Func<ISubscriber, List<ICallInfo>> GetStatisticEvent;
-        public event EventHandler<EventArgsForSubscriberPay> PayEvent; 
+        private readonly string _nameF;
+        private readonly string _nameL;
 
         public Subscriber()
         {
@@ -24,6 +21,10 @@ namespace CheckPoint3ATS
             _nameF = nameF;
             _address = address;
         }
+
+        public event Func<ISubscriber, List<ICallInfo>> GetStatisticEvent;
+        public event EventHandler<EventArgsForSubscriberPay> PayEvent;
+        public event EventHandler<EventArgsForSubscriberChangeTariffPlan> ChangeTariffPlanEvent; 
 
         public string NameL
         {
@@ -41,9 +42,7 @@ namespace CheckPoint3ATS
         }
 
         public int PhoneNumber { get; set; }
-
         public ITerminal Terminal { get; set; }
-
         public IContract Contract { get; set; }
 
         public void Pay(int amountOfMoney)
@@ -67,16 +66,6 @@ namespace CheckPoint3ATS
         {
             var stat = Sort(startDate, endDate, x => ((CallInfoForBilling) x).PhoneNumber);
             ViewStatistic(stat);
-        }
-
-        public void DisconnectFromPort()
-        {
-            Terminal.DisconnectFromPort(this);
-        }
-
-        public void ConnectFromPort()
-        {
-            Terminal.ConnectFromPort(this);
         }
 
         public PortMode Call(int numberPhone)
@@ -127,7 +116,7 @@ namespace CheckPoint3ATS
         {
             if (Contract != null)
             {
-                Terminal.HangUpPhone(this, new EventArgForTerminalEndCall(PhoneNumber));
+                Terminal.HangUpPhone(this, new EventArgsForTerminalEndCall(PhoneNumber));
             }
             else
             {
@@ -135,9 +124,32 @@ namespace CheckPoint3ATS
             }
         }
 
+        public void DisconnectFromPort()
+        {
+            Terminal.DisconnectFromPort(this);
+        }
+
+        public void ConnectFromPort()
+        {
+            Terminal.ConnectFromPort(this);
+        }
+
+        public void ChangeTariffPlan(IStandartTariffPlan tariffPlan)
+        {
+            OnChangeTariffPlanEvent(tariffPlan);
+        }
+
+        protected void OnChangeTariffPlanEvent(IStandartTariffPlan tariffPlan)
+        {
+            if (ChangeTariffPlanEvent!=null)
+            {
+                ChangeTariffPlanEvent(this, new EventArgsForSubscriberChangeTariffPlan(tariffPlan, this.Contract));
+            }
+        }
+
         protected void OnPayEvent(EventArgsForSubscriberPay args)
         {
-            if (PayEvent!=null)
+            if (PayEvent != null)
             {
                 PayEvent(this, args);
             }

@@ -4,15 +4,9 @@ namespace CheckPoint3ATS
 {
     public class Terminal : ITerminal
     {
-        private readonly string _model;
         private readonly int _cost;
+        private readonly string _model;
         private readonly int _terminalId;
-
-        public event Func<ISubscriber, PortMode> PickUpEvent;
-        public event Func<ISubscriber, int, PortMode> DialingEvent;
-        public event EventHandler<EventArgForTerminalEndCall> HangUpPhoneEvent;
-        public event EventHandler<EventArgs> DisconnectFromPortEvent;
-        public event EventHandler<EventArgs> ConnectFromPortEvent;
 
         public Terminal()
         {
@@ -24,6 +18,12 @@ namespace CheckPoint3ATS
             _cost = cost;
             _terminalId = terminalId;
         }
+
+        public event Func<ISubscriber, PortMode> PickUpEvent;
+        public event Func<ISubscriber, int, PortMode> DialingEvent;
+        public event EventHandler<EventArgsForTerminalEndCall> HangUpPhoneEvent;
+        public event EventHandler<EventArgs> DisconnectFromPortEvent;
+        public event EventHandler<EventArgs> ConnectFromPortEvent;
 
         public string Model
         {
@@ -60,9 +60,9 @@ namespace CheckPoint3ATS
             return OnDialingEvent(sender, phoneNumber);
         }
 
-        public void HangUpPhone(object sender, EventArgForTerminalEndCall arg)
+        public void HangUpPhone(object sender, EventArgsForTerminalEndCall args)
         {
-            OnHangUpPhoneEvent(sender, arg);
+            OnHangUpPhoneEvent(sender, args);
         }
 
         protected void OnConnectFromPort(ISubscriber sender)
@@ -105,11 +105,11 @@ namespace CheckPoint3ATS
             return portMode;
         }
 
-        protected void OnHangUpPhoneEvent(object sender, EventArgForTerminalEndCall arg)
+        protected void OnHangUpPhoneEvent(object sender, EventArgsForTerminalEndCall args)
         {
             if (HangUpPhoneEvent != null)
             {
-                HangUpPhoneEvent(sender, arg);
+                HangUpPhoneEvent(sender, args);
             }
         }
     }

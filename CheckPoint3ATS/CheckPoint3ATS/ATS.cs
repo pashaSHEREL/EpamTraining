@@ -2,18 +2,16 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading;
 
 namespace CheckPoint3ATS
 {
     public class ATS : IATS
     {
-        private readonly List<IPort> _ports = new List<IPort>();
+        private DateTime _date;
+        private Random _random = new Random();
         private readonly Dictionary<IPort, IPort> _listOfConnections = new Dictionary<IPort, IPort>();
         private readonly int _numberOfAts;
-        private DateTime _date;
-
-        public event EventHandler<EventArgsForATSFinishCall> FinishCallEvent;
+        private readonly List<IPort> _ports = new List<IPort>();
 
         public ATS()
         {
@@ -24,6 +22,8 @@ namespace CheckPoint3ATS
             _numberOfAts = numberOfAts;
             _date = date;
         }
+
+        public event EventHandler<EventArgsForATSFinishCall> FinishCallEvent;
 
         public ReadOnlyCollection<IPort> Ports
         {
@@ -48,21 +48,7 @@ namespace CheckPoint3ATS
         public void RegistryBilling(IBillingSystem billingSystem)
         {
             billingSystem.PayDateEvent += PayDateEventHandler;
-            billingSystem.PaymentIsMade += PaymentIsMadeEventHandler;
-        }
-
-        public void AddPort(IPort port)
-        {
-            bool errorPort = _ports.Any(x => port.Number == x.Number);
-
-            if (errorPort)
-            {
-                throw new Exception("With this port number is already available");
-            }
-            else
-            {
-                _ports.Add(port);
-            }
+            billingSystem.PaymentIsMadeEvent += PaymentIsMadeEventHandler;
         }
 
         public void RegistryTerminal(ISubscriber subscriber)
@@ -81,6 +67,20 @@ namespace CheckPoint3ATS
             subscriber.Terminal.HangUpPhoneEvent -= HangUpPhoneEventHandler;
             subscriber.Terminal.DisconnectFromPortEvent -= DisconnectFromPortEventHandler;
             subscriber.Terminal.ConnectFromPortEvent -= ConnectFromPortEventHandler;
+        }
+
+        public void AddPort(IPort port)
+        {
+            bool errorPort = _ports.Any(x => port.Number == x.Number);
+
+            if (errorPort)
+            {
+                throw new Exception("With this port number is already available");
+            }
+            else
+            {
+                _ports.Add(port);
+            }
         }
 
         protected void PayDateEventHandler(object obj, EventArgs e)
@@ -103,7 +103,7 @@ namespace CheckPoint3ATS
         {
             ISubscriberStatistics subscriberStat = obj as ISubscriberStatistics;
 
-            if (subscriberStat!=null)
+            if (subscriberStat != null)
             {
                 foreach (var variable in _ports)
                 {
@@ -113,7 +113,6 @@ namespace CheckPoint3ATS
                     }
                 }
             }
-            
         }
 
         protected void ChangeTimeEventHandler(object obj, EventArgs e)
@@ -255,20 +254,20 @@ namespace CheckPoint3ATS
             return portMode;
         }
 
-        private static PortMode ActionForPortModeNoPortDefault(IPort outgoingCallPort)
+        protected PortMode ActionForPortModeNoPortDefault(IPort outgoingCallPort)
         {
             outgoingCallPort.Mode = PortMode.NoPort;
             return outgoingCallPort.Mode;
         }
 
-        private PortMode ActionForPortModeConnected(IPort outgoingCallPort, ICallInfo call)
+        protected PortMode ActionForPortModeConnected(IPort outgoingCallPort, ICallInfo call)
         {
             outgoingCallPort.Mode = PortMode.ShortBeeps;
             OnFinisCallEvent(this, new EventArgsForATSFinishCall(call));
             return outgoingCallPort.Mode;
         }
 
-        private PortMode ActionForPortModeTone(IPort outgoingCallPort, ICallInfo call, IPort incomingCallPort)
+        protected PortMode ActionForPortModeTone(IPort outgoingCallPort, ICallInfo call, IPort incomingCallPort)
         {
             outgoingCallPort.Mode = PortMode.ShortBeeps;
 
@@ -280,13 +279,13 @@ namespace CheckPoint3ATS
             return outgoingCallPort.Mode;
         }
 
-        private PortMode ActionForPortModeOffPause(IPort outgoingCallPort)
+        protected PortMode ActionForPortModeOffPause(IPort outgoingCallPort)
         {
             outgoingCallPort.Mode = PortMode.NotAvailable;
             return outgoingCallPort.Mode;
         }
 
-        private PortMode ActionForPortModeOn(IPort outgoingCallPort, IPort incomingCallPort)
+        protected PortMode ActionForPortModeOn(IPort outgoingCallPort, IPort incomingCallPort)
         {
             outgoingCallPort.Mode = PortMode.LongBeeps;
             incomingCallPort.Mode = PortMode.LongBeeps;
@@ -306,17 +305,14 @@ namespace CheckPoint3ATS
             return outgoingCallPort.Mode;
         }
 
-        private ICallInfo CreateCallInfo(IPort outgoingCallPort, IPort incomingCallPort, bool zeroCall)
+        protected ICallInfo CreateCallInfo(IPort outgoingCallPort, IPort incomingCallPort, bool zeroCall)
         {
-            Random rH = new Random();
-
-            int tH = rH.Next(0, 24);
-            int tM = rH.Next(0, 60);
-            int tS = rH.Next(0, 60);
+            int tH = _random.Next(0, 24);
+            int tM = _random.Next(0, 60);
+            int tS = _random.Next(0, 60);
 
             TimeSpan start = new TimeSpan(tH, tM, tS);
-            TimeSpan stop = new TimeSpan(rH.Next(tH, 24), rH.Next(tM, 60), rH.Next(tS, 60));
-            Thread.Sleep(10);
+            TimeSpan stop = new TimeSpan(_random.Next(tH, 24), _random.Next(tM, 60), _random.Next(tS, 60));
 
             if (zeroCall)
             {
@@ -343,7 +339,7 @@ namespace CheckPoint3ATS
             }
         }
 
-        protected void HangUpPhoneEventHandler(object sender, EventArgForTerminalEndCall arg)
+        protected void HangUpPhoneEventHandler(object sender, EventArgsForTerminalEndCall args)
         {
             ICallInfo call = new CallInfoForATS();
             Dictionary<IPort, IPort> listOfConnectionsCopy = _listOfConnections.ToDictionary(item => item.Key,
@@ -351,8 +347,8 @@ namespace CheckPoint3ATS
 
             foreach (var item in listOfConnectionsCopy)
             {
-                if (item.Key.PhoneNumber == arg.NumberPhone
-                    || item.Value.PhoneNumber == arg.NumberPhone)
+                if (item.Key.PhoneNumber == args.NumberPhone
+                    || item.Value.PhoneNumber == args.NumberPhone)
                 {
                     item.Key.StopTimer();
                     item.Value.StopTimer();
@@ -376,7 +372,7 @@ namespace CheckPoint3ATS
 
             foreach (var item in _ports)
             {
-                if (item.PhoneNumber == arg.NumberPhone && item.Mode != PortMode.Off)
+                if (item.PhoneNumber == args.NumberPhone && item.Mode != PortMode.Off)
                 {
                     item.Mode = PortMode.On;
                 }

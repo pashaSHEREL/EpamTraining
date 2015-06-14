@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -7,10 +8,10 @@ namespace CheckPoint3ATS
 {
     public class CompanyOperator : ICompanyOperator
     {
-        private readonly string _name;
         private readonly IATS _ats = new ATS();
         private readonly IBillingSystem _billingSystem = new BillingSystem();
         private readonly List<IContract> _contracts = new List<IContract>();
+        private readonly string _name;
         private readonly List<ITerminal> _terminals = new List<ITerminal>();
 
         public CompanyOperator()
@@ -38,7 +39,7 @@ namespace CheckPoint3ATS
             get { return _name; }
         }
 
-        public void ConcludeContract(ISubscriber subscriber, int phoneNumber, ITariffPlan tariffPlan)
+        public void ConcludeContract(ISubscriber subscriber, int phoneNumber, IStandartTariffPlan tariffPlan)
         {
             if (_contracts.Any(x => x.PhoneNumber == phoneNumber))
             {
@@ -60,29 +61,17 @@ namespace CheckPoint3ATS
                     TariffPlan = tariffPlan
                 });
 
-                subscriber.PhoneNumber = phoneNumber;
-                subscriber.Contract = _contracts.Last();
-                subscriber.Terminal = _terminals[0];
-                subscriber.GetStatisticEvent += GetStatisticEventHandler;
-                subscriber.PayEvent += PayEventHandler;
-                _terminals.RemoveAt(0);
+                RegistrySubscriber(subscriber, phoneNumber);
 
-                foreach (var item in _ats.Ports)
-                {
-                    if (item.Status == PortStatus.Free)
-                    {
-                        item.PhoneNumber = phoneNumber;
-                        item.Status = PortStatus.Busy;
-                        item.Mode = PortMode.On;
-                        break;
-                    }
-                }
+                SwitchOnAtsPort(phoneNumber);
 
                 _ats.RegistryTerminal(subscriber);
+
                 _billingSystem.AddSubscriber(new SubscriberStatistics(
                     _contracts.Last().ContractId,
                     _contracts.Last().PhoneNumber,
-                    _contracts.Last().TariffPlan));
+                    _contracts.Last().TariffPlan
+                    ));
             }
             else
             {
@@ -103,27 +92,91 @@ namespace CheckPoint3ATS
             {
                 if (_contracts[i].ContractId == subscriber.Contract.ContractId)
                 {
-                    foreach (var item in _ats.Ports)
-                    {
-                        if (item.PhoneNumber == subscriber.PhoneNumber)
-                        {
-                            item.PhoneNumber = 0;
-                            item.Status = PortStatus.Free;
-                            item.Mode = PortMode.Off;
-                            break;
-                        }
-                    }
+                    SwitchOfAtsPort(subscriber);
 
-                    subscriber.GetStatisticEvent -= GetStatisticEventHandler;
-                    subscriber.PayEvent -= PayEventHandler;
-                    subscriber.PhoneNumber = 0;
-                    subscriber.Contract = null;
-                    _terminals.Add(subscriber.Terminal);
-                    subscriber.Terminal = null;
-                    _contracts.RemoveAt(i);
+                    UnRegistrySubscriber(subscriber, i);
+
                     _ats.UnRegistryTerminal(subscriber);
                     _billingSystem.DelSubscriber(_contracts[i].ContractId);
                     break;
+                }
+            }
+        }
+
+        protected void UnRegistrySubscriber(ISubscriber subscriber, int i)
+        {
+            subscriber.ChangeTariffPlanEvent -= ChangeTariffPlanEventHandler;
+            subscriber.GetStatisticEvent -= GetStatisticEventHandler;
+            subscriber.PayEvent -= PayEventHandler;
+            subscriber.PhoneNumber = 0;
+            subscriber.Contract = null;
+            _terminals.Add(subscriber.Terminal);
+            subscriber.Terminal = null;
+            _contracts.RemoveAt(i);
+        }
+
+        protected void SwitchOfAtsPort(ISubscriber subscriber)
+        {
+            foreach (var item in _ats.Ports)
+            {
+                if (item.PhoneNumber == subscriber.PhoneNumber)
+                {
+                    item.PhoneNumber = 0;
+                    item.Status = PortStatus.Free;
+                    item.Mode = PortMode.Off;
+                    break;
+                }
+            }
+        }
+
+        protected void SwitchOnAtsPort(int phoneNumber)
+        {
+            foreach (var item in _ats.Ports)
+            {
+                if (item.Status == PortStatus.Free)
+                {
+                    item.PhoneNumber = phoneNumber;
+                    item.Status = PortStatus.Busy;
+                    item.Mode = PortMode.On;
+                    break;
+                }
+            }
+        }
+
+        protected void RegistrySubscriber(ISubscriber subscriber, int phoneNumber)
+        {
+            subscriber.PhoneNumber = phoneNumber;
+            subscriber.Contract = _contracts.Last();
+            subscriber.Terminal = _terminals[0];
+            subscriber.GetStatisticEvent += GetStatisticEventHandler;
+            subscriber.PayEvent += PayEventHandler;
+            subscriber.ChangeTariffPlanEvent += ChangeTariffPlanEventHandler;
+            _terminals.RemoveAt(0);
+        }
+
+        protected void ChangeTariffPlanEventHandler(object obj, EventArgsForSubscriberChangeTariffPlan e)
+        {
+            foreach (var item in _billingSystem.SubscribersStatistics)
+            {
+                if (e.GetContract.ContractId == item.AccountNumber)
+                {
+                    if ((_billingSystem.Date - item.ChangeTariffPlanDay).Days > 30)
+                    {
+                        item.ChangeTariffPlanDay = _billingSystem.Date;
+                        item.TariffPlan = e.TariffPlan;
+
+                        foreach (var variable in _contracts)
+                        {
+                            if (variable.ContractId == item.AccountNumber)
+                            {
+                                variable.TariffPlan = e.TariffPlan;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("The tariff plan can not change more than 1 time per month");
+                    }
                 }
             }
         }

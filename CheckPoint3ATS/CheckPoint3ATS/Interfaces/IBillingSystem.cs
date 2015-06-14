@@ -8,10 +8,8 @@ namespace CheckPoint3ATS
         ReadOnlyCollection<ISubscriberStatistics> SubscribersStatistics { get; }
         ReadOnlyCollection<int> ListOfDebtors { get; }
         DateTime Date { get; set; }
-
         event EventHandler<EventArgs> PayDateEvent;
-        event EventHandler<EventArgs> PaymentIsMade;
-
+        event EventHandler<EventArgs> PaymentIsMadeEvent;
         void RegistrationATS(IATS ats);
         void InstallTime(Time time);
         void AddSubscriber(ISubscriberStatistics subcriberStat);

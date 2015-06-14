@@ -5,7 +5,6 @@ namespace CheckPoint3ATS
     public class Time
     {
         private DateTime _days;
-        public event EventHandler<EventArgs> ChangeTimeEvent;
 
         public Time(DateTime days)
         {
@@ -16,6 +15,8 @@ namespace CheckPoint3ATS
         {
             get { return _days; }
         }
+
+        public event EventHandler<EventArgs> ChangeTimeEvent;
 
         public void ChangeTime(int days)
         {

@@ -9,12 +9,11 @@ namespace CheckPoint3ATS
         int AccountNumber { get; }
         int Balance { get; set; }
         int PhoneNumber { get; }
-        ITariffPlan TariffPlan { get; }
+        IStandartTariffPlan TariffPlan { get; set; }
         ReadOnlyCollection<ICallInfo> CallsInfo { get; }
         ReadOnlyCollection<IPayment> Payments { get; }
-
+        DateTime ChangeTariffPlanDay { get; set; }
         event EventHandler<EventArgs> PaymentIsMade;
-
         void AddCallInfo(ICallInfo callInfo);
         void AddPayment(IPayment payment);
     }

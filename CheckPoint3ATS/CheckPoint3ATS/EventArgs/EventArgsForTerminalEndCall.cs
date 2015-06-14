@@ -2,13 +2,13 @@
 
 namespace CheckPoint3ATS
 {
-    public class EventArgForTerminalEndCall : EventArgs
+    public class EventArgsForTerminalEndCall : EventArgs
     {
-        public EventArgForTerminalEndCall()
+        public EventArgsForTerminalEndCall()
         {
         }
 
-        public EventArgForTerminalEndCall(int numberPhone)
+        public EventArgsForTerminalEndCall(int numberPhone)
         {
             NumberPhone = numberPhone;
         }

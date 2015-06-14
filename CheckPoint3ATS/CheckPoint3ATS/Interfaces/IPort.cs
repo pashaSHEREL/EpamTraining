@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
 
 namespace CheckPoint3ATS
 {
@@ -33,9 +29,7 @@ namespace CheckPoint3ATS
         int PhoneNumber { get; set; }
         PortStatus Status { get; set; }
         PortMode Mode { get; set; }
-
         event EventHandler<EventArgs> FinishTimerEvent;
-
         void StartTimer();
         void StopTimer();
     }

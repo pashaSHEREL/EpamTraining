@@ -8,8 +8,6 @@ namespace CheckPoint3ATS
         private readonly int _number;
         private readonly Timer _timer = new Timer(1000000);
 
-        public event EventHandler<EventArgs> FinishTimerEvent;
-
         public Port()
         {
         }
@@ -19,15 +17,15 @@ namespace CheckPoint3ATS
             _number = number;
         }
 
+        public event EventHandler<EventArgs> FinishTimerEvent;
+
         public int Number
         {
             get { return _number; }
         }
 
         public int PhoneNumber { get; set; }
-
         public PortStatus Status { get; set; }
-
         public PortMode Mode { get; set; }
 
         public void StartTimer()
