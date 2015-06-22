@@ -1,0 +1,6 @@
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\CheckPoint4\bin\Debug\CheckPoint4.dll.config
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\CheckPoint4\bin\Debug\CheckPoint4.dll
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\CheckPoint4\bin\Debug\CheckPoint4.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\CheckPoint4\obj\Debug\CheckPoint4.dll
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\CheckPoint4\obj\Debug\CheckPoint4.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\CheckPoint4\obj\Debug\Model.csprojResolveAssemblyReference.cache

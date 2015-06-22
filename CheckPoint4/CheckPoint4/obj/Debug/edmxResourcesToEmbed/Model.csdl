@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OrdersModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="OrdersEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="OrdersModel.Customer" />
+    <EntitySet Name="Items" EntityType="OrdersModel.Item" />
+    <EntitySet Name="OrderItems" EntityType="OrdersModel.OrderItem" />
+    <EntitySet Name="Orders" EntityType="OrdersModel.Order" />
+    <AssociationSet Name="FK_Orders_Customers" Association="OrdersModel.FK_Orders_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItem_Items" Association="OrdersModel.FK_OrderItem_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="OrderItem" EntitySet="OrderItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderItem_Orders" Association="OrdersModel.FK_OrderItem_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderItem" EntitySet="OrderItems" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="Int32" Nullable="false" />
+    <Property Name="first_name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="last_name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="address" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="phone_number" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="email" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <NavigationProperty Name="Orders" Relationship="OrdersModel.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="item_id" />
+    </Key>
+    <Property Name="item_id" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="cost" Type="Int32" />
+    <NavigationProperty Name="OrderItems" Relationship="OrdersModel.FK_OrderItem_Items" FromRole="Items" ToRole="OrderItem" />
+  </EntityType>
+  <EntityType Name="OrderItem">
+    <Key>
+      <PropertyRef Name="order_id" />
+      <PropertyRef Name="item_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" />
+    <Property Name="item_id" Type="Int32" Nullable="false" />
+    <Property Name="item_quantity" Type="Int32" />
+    <NavigationProperty Name="Item" Relationship="OrdersModel.FK_OrderItem_Items" FromRole="OrderItem" ToRole="Items" />
+    <NavigationProperty Name="Order" Relationship="OrdersModel.FK_OrderItem_Orders" FromRole="OrderItem" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="order_id" />
+    </Key>
+    <Property Name="order_id" Type="Int32" Nullable="false" />
+    <Property Name="date" Type="DateTime" />
+    <Property Name="time" Type="Time" />
+    <Property Name="customer_id" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="OrdersModel.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
+    <NavigationProperty Name="OrderItems" Relationship="OrdersModel.FK_OrderItem_Orders" FromRole="Orders" ToRole="OrderItem" />
+  </EntityType>
+  <Association Name="FK_Orders_Customers">
+    <End Role="Customers" Type="OrdersModel.Customer" Multiplicity="0..1" />
+    <End Role="Orders" Type="OrdersModel.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItem_Items">
+    <End Role="Items" Type="OrdersModel.Item" Multiplicity="1" />
+    <End Role="OrderItem" Type="OrdersModel.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="item_id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="item_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderItem_Orders">
+    <End Role="Orders" Type="OrdersModel.Order" Multiplicity="1" />
+    <End Role="OrderItem" Type="OrdersModel.OrderItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="order_id" />
+      </Principal>
+      <Dependent Role="OrderItem">
+        <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
