@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Objects;
-using System.Linq;
-using System.Text;
-using CheckPoint4;
 
 namespace DAL
 {
-    public abstract class BaseRepository<T, K, C> : IBaseRepository<K> where T : class
+    public abstract class Repository<T, K, C> : IRepository<K> where T : class
         where K : class
         where C : ObjectContext, new()
     {
@@ -20,20 +16,15 @@ namespace DAL
             return _map.ConvertAllToObject(all);
         }
 
-        public void Delete(K obj)
-        {
-            Func<T, bool> g = new Func<T, bool>(x => x.Equals(_map.ConvertToEntity(obj)));
-            var l = _context.CreateObjectSet<T>().FirstOrDefault(g);
-            _context.DeleteObject(l);
-        }
-
         public void Add(K obj)
         {
             _context.CreateObjectSet<T>().AddObject(_map.ConvertToEntity(obj));
         }
 
+        public abstract void Delete(K obj);
         public abstract void Update(K obj1, K obj2);
-        
+        public abstract K GetRecord(int id);
+
         public void Save()
         {
             _context.SaveChanges();

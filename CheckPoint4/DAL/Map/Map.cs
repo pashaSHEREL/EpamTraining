@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Objects;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DAL
 {
-    public abstract class Map<T, K> : IMap<T, K>
+    internal abstract class Map<T, K> : IMap<T, K>
         where T : class
         where K : class
     {
@@ -19,7 +16,7 @@ namespace DAL
 
             foreach (var item in all)
             {
-                listObj.Add(this.ConvertToObject(item));
+                listObj.Add(ConvertToObject(item));
             }
 
             return listObj;
@@ -27,7 +24,7 @@ namespace DAL
 
         public IQueryable<T> ConvertAlltoEntity(List<K> all)
         {
-            List<T> listEntity= all.Select(item => ConvertToEntity(item)).ToList();
+            List<T> listEntity = all.Select(item => ConvertToEntity(item)).ToList();
 
             return listEntity.AsQueryable();
         }

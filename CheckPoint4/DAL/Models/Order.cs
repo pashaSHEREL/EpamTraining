@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace DAL
+namespace Models
 {
-    public class ObjectOrder
+    public class Order
     {
         public int OrderId { get; set; }
-
         public DateTime? Date { get; set; }
-
         public TimeSpan? Time { get; set; }
-
         public int? CustomerId { get; set; }
     }
 }

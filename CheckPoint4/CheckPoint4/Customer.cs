@@ -278,27 +278,6 @@ namespace CheckPoint4
             }
         }
 
-        public override bool Equals(object obj)
-        {
-            Customer customer = obj as Customer;
-            bool b = false;
-
-            if (customer!=null)
-            {
-                if (customer.customer_id==this.customer_id)
-                {
-                    b = true;
-                }
-            }
-
-            return b;
-        }
-
-        public override int GetHashCode()
-        {
-            return this.customer_id.GetHashCode();
-        }
-
         #endregion
     }
 }

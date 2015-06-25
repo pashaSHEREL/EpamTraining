@@ -36,7 +36,7 @@
     <Property Name="item_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="varchar" MaxLength="50" />
     <Property Name="description" Type="varchar" MaxLength="50" />
-    <Property Name="cost" Type="int" />
+    <Property Name="cost" Type="money" />
   </EntityType>
   <EntityType Name="OrderItem">
     <Key>

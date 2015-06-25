@@ -1,0 +1,15 @@
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Bll.dll
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\DAL.dll
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\CheckPoint4.dll
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Bll.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\DAL.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\CheckPoint4.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\obj\x86\Debug\Console.csprojResolveAssemblyReference.cache
+d:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Console.exe.config
+d:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Console.exe
+d:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Console.pdb
+d:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\obj\x86\Debug\Console.exe
+d:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\obj\x86\Debug\Console.pdb
+d:\repos\EpamTraining\CheckPoint4\Test2\bin\Debug\Console.exe.config
+d:\repos\EpamTraining\CheckPoint4\Test2\obj\x86\Debug\Console.exe
+d:\repos\EpamTraining\CheckPoint4\Test2\obj\x86\Debug\Console.pdb

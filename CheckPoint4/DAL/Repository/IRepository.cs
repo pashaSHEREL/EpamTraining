@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DAL
 {
-    public interface IBaseRepository<K> where K: class
+    public interface IRepository<K> where K : class
     {
         void Delete(K obj);
         void Add(K obj);
         void Update(K obj1, K obj2);
+        K GetRecord(int id);
         void Save();
         List<K> GetAll();
     }

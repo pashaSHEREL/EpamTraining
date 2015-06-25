@@ -8,8 +8,8 @@
     <ProjectGuid>{73F4F24F-6AE6-4986-B53F-06CCCF2D0F38}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Test2</RootNamespace>
-    <AssemblyName>Test2</AssemblyName>
+    <RootNamespace>Console</RootNamespace>
+    <AssemblyName>Console</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -36,25 +36,15 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CheckPoint4\Model.csproj">
-      <Project>{D41ADC21-D8DC-46F4-8AE1-92ED8AA48C74}</Project>
-      <Name>Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{B9D7D274-AF68-442A-8C24-1BC7BE968F69}</Project>
-      <Name>DAL</Name>
+    <ProjectReference Include="..\Bll\Bll.csproj">
+      <Project>{CA87897C-9249-438D-A8E4-D98FEA8F90E8}</Project>
+      <Name>Bll</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

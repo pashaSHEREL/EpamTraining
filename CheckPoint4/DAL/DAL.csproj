@@ -34,30 +34,25 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Map\Map.cs" />
-    <Compile Include="Map\MapperForItem.cs" />
-    <Compile Include="Map\MapperForOrder.cs" />
-    <Compile Include="Map\MapperForOrderItem.cs" />
-    <Compile Include="Repository\BaseRepository.cs" />
-    <Compile Include="Repository\IBaseRepository.cs" />
+    <Compile Include="Map\ItemMapper.cs" />
+    <Compile Include="Map\OrderMapper.cs" />
+    <Compile Include="Map\OrderItemMapper.cs" />
+    <Compile Include="Repository\Repository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Map\IMap.cs" />
-    <Compile Include="Map\MapperForCustomer.cs" />
-    <Compile Include="Models\ObjectCustomer.cs" />
-    <Compile Include="Models\ObjectItem.cs" />
-    <Compile Include="Models\ObjectOrder.cs" />
-    <Compile Include="Models\ObjectOrderItem.cs" />
+    <Compile Include="Map\CustomerMapper.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\RepositoryForCustomer.cs" />
-    <Compile Include="Repository\RepositoryForItem.cs" />
-    <Compile Include="Repository\RepositoryForOrder.cs" />
-    <Compile Include="Repository\RepositoryForOrderItem.cs" />
+    <Compile Include="Repository\CustomerRepository.cs" />
+    <Compile Include="Repository\ItemRepository.cs" />
+    <Compile Include="Repository\OrderRepository.cs" />
+    <Compile Include="Repository\OrderItemRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CheckPoint4\Model.csproj">

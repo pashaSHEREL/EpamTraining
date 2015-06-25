@@ -7,4 +7,6 @@ D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\DAL.dll
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\CheckPoint4.dll
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\DAL.pdb
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\CheckPoint4.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Bll.dll
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Bll.pdb
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Test2.exe.config
