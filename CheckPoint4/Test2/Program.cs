@@ -6,9 +6,8 @@ namespace Console
     {
         private static void Main(string[] args)
         {
-            DataBaseWorker dataBaseWorker = new DataBaseWorker(@"d:\test5\", @"d:\test6\");
-            dataBaseWorker.AddAllInDataBase();
-            System.Console.ReadLine();
+            Bll.IDataBaseWorker worker = new DataBaseWorker(@"d:\test1\", @"d:\test2\");
+            worker.AddAllInDataBase();
         }
     }
 }

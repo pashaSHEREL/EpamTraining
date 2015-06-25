@@ -10,6 +10,3 @@ d:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Console.exe
 d:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\bin\Debug\Console.pdb
 d:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\obj\x86\Debug\Console.exe
 d:\ws\VC#\CSharpProjects\projects\CheckPoint4\Test2\obj\x86\Debug\Console.pdb
-d:\repos\EpamTraining\CheckPoint4\Test2\bin\Debug\Console.exe.config
-d:\repos\EpamTraining\CheckPoint4\Test2\obj\x86\Debug\Console.exe
-d:\repos\EpamTraining\CheckPoint4\Test2\obj\x86\Debug\Console.pdb
