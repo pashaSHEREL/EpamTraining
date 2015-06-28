@@ -27,6 +27,7 @@ namespace DAL
             var l =
                 _context.OrderItems
                     .FirstOrDefault(x => x.order_id == obj.OrderId && x.item_id == obj.ItemId);
+
             _context.DeleteObject(l);
         }
 

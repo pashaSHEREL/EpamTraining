@@ -13,6 +13,7 @@ namespace DAL
         public override void Update(Models.Customer obj1, Models.Customer obj2)
         {
             var l = _context.Customers.FirstOrDefault(x => x.customer_id == obj1.CustomerId);
+
             if (l != null)
             {
                 l.first_name = obj2.FirstName;
@@ -21,6 +22,7 @@ namespace DAL
                 l.phone_number = obj2.PhoneNumber;
                 l.email = obj2.Email;
             }
+            
         }
 
         public override void Delete(Models.Customer obj)

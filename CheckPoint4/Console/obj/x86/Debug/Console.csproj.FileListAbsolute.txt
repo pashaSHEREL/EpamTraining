@@ -1,0 +1,12 @@
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\bin\Debug\Console.exe
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\bin\Debug\Console.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\bin\Debug\Bll.dll
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\bin\Debug\DAL.dll
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\bin\Debug\CheckPoint4.dll
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\bin\Debug\Bll.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\bin\Debug\DAL.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\bin\Debug\CheckPoint4.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\obj\x86\Debug\Console.csprojResolveAssemblyReference.cache
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\obj\x86\Debug\Console.exe
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\obj\x86\Debug\Console.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Console\bin\Debug\Console.exe.config
