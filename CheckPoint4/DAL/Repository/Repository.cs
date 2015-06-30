@@ -10,7 +10,7 @@ namespace DAL
         protected C _context = new C();
         protected IMap<T, K> _map;
 
-        public List<K> GetAll()
+        public IEnumerable<K> GetAll()
         {
             var all = _context.CreateObjectSet<T>();
             return _map.ConvertAllToObject(all);

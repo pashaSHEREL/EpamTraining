@@ -9,6 +9,6 @@ namespace DAL
         void Update(K obj1, K obj2);
         K GetRecord(int id);
         void Save();
-        List<K> GetAll();
+        IEnumerable<K> GetAll();
     }
 }

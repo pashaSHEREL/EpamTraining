@@ -7,3 +7,4 @@ D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Bll\bin\Debug\CheckPoint4.pdb
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Bll\bin\Debug\DAL.pdb
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Bll\obj\Debug\Bll.dll
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Bll\obj\Debug\Bll.pdb
+D:\ws\VC#\CSharpProjects\projects\CheckPoint4\Bll\bin\Debug\Bll.dll.config

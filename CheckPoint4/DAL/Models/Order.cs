@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace Models
+namespace DAL.Models
 {
     public class Order
     {
@@ -8,5 +9,7 @@ namespace Models
         public DateTime? Date { get; set; }
         public TimeSpan? Time { get; set; }
         public int? CustomerId { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
+        public Customer Customer { get; set; }
     }
 }

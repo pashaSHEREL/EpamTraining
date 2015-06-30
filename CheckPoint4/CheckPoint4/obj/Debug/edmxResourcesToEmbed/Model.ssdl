@@ -46,12 +46,13 @@
     <Property Name="order_id" Type="int" Nullable="false" />
     <Property Name="item_id" Type="int" Nullable="false" />
     <Property Name="item_quantity" Type="int" />
+    <Property Name="total_cost" Type="money" />
   </EntityType>
   <EntityType Name="Orders">
     <Key>
       <PropertyRef Name="order_id" />
     </Key>
-    <Property Name="order_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="order_id" Type="int" Nullable="false" />
     <Property Name="date" Type="date" />
     <Property Name="time" Type="time" />
     <Property Name="customer_id" Type="int" />

@@ -22,7 +22,6 @@ namespace DAL
                 l.phone_number = obj2.PhoneNumber;
                 l.email = obj2.Email;
             }
-            
         }
 
         public override void Delete(Models.Customer obj)

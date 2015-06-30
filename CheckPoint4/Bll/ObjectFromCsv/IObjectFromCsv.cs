@@ -8,5 +8,7 @@ namespace Bll
         int CustomerId { get; set; }
         int ItemId { get; set; }
         int TotalCost { get; set; }
+        int Quantity { get; set; }
+        int OrderNumber { get; set; }
     }
 }

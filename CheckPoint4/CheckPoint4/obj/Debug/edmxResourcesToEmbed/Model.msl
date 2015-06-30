@@ -26,6 +26,7 @@
     <EntitySetMapping Name="OrderItems">
       <EntityTypeMapping TypeName="OrdersModel.OrderItem">
         <MappingFragment StoreEntitySet="OrderItem">
+          <ScalarProperty Name="total_cost" ColumnName="total_cost" />
           <ScalarProperty Name="order_id" ColumnName="order_id" />
           <ScalarProperty Name="item_id" ColumnName="item_id" />
           <ScalarProperty Name="item_quantity" ColumnName="item_quantity" />

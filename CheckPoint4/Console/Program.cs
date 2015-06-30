@@ -1,13 +1,30 @@
-﻿using Bll;
+﻿using System.Collections.Generic;
+using System.IO;
+using Bll;
+using System.Threading.Tasks;
+using System.Configuration;
+
 
 namespace Console
 {
-    class Program
+
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            IDataBaseWorker worker = new DataBaseWorker(@"d:\test1\", @"d:\test2\");
-            worker.AddAllInDataBase();
+            string directoryForRead = ConfigurationManager.AppSettings["directoryForRead"];
+            string directoryMoveTo = ConfigurationManager.AppSettings["directoryMoveTo"];
+            IDataBaseWorker worker = new DataBaseWorker(directoryForRead, directoryMoveTo);
+
+            DirectoryInfo directory = new DirectoryInfo(directoryForRead);
+            List<Task> tasks = new List<Task>();
+
+            foreach (var item in directory.GetFiles())
+            {
+                tasks.Add(Task.Factory.StartNew(worker.AddAllInDataBase, item.FullName));
+            }
+
+            Task.WaitAll(tasks.ToArray());
         }
     }
 }

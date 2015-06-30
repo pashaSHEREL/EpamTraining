@@ -2,104 +2,71 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using DAL;
-using Models;
+using DAL.Models;
 using Microsoft.VisualBasic.FileIO;
 
 namespace Bll
 {
     public class DataBaseWorker : IDataBaseWorker
     {
-        private List<ObjectFromCsv> _listCsvObjects = new List<ObjectFromCsv>();
-        private readonly DirectoryInfo _directory;
-        private readonly DirectoryInfo _directoryForReadFiles;
+        private readonly DirectoryInfo _directoryForReadFile;
+        private readonly DirectoryInfo _directoryMoveToFiles;
 
         public DataBaseWorker(string directory, string directoryForReadFiles)
         {
-            _directory = new DirectoryInfo(directory);
-            if (!_directory.Exists)
+            _directoryForReadFile = new DirectoryInfo(directory);
+            if (!_directoryForReadFile.Exists)
             {
                 throw new Exception("Directory does not exist.");
             }
 
-            _directoryForReadFiles = new DirectoryInfo(directoryForReadFiles);
-            if (!_directoryForReadFiles.Exists)
+            _directoryMoveToFiles = new DirectoryInfo(directoryForReadFiles);
+            if (!_directoryMoveToFiles.Exists)
             {
-                _directoryForReadFiles.Create();
+                _directoryMoveToFiles.Create();
             }
         }
 
-        public void AddAllInDataBase()
+        public void AddAllInDataBase(object fullNameFile)
         {
-            StartReadFiles();
+            IEnumerable<IObjectFromCsv> listCsvObjects = new List<IObjectFromCsv>();
+            listCsvObjects = ReadFile(fullNameFile).ToList();
 
-            foreach (var item in _directory.GetFiles())
-            {
-                item.MoveTo(string.Format("{0}{1}", _directoryForReadFiles, item));
-            }
+
+            FileInfo fileInfo = new FileInfo((string) fullNameFile);
+            fileInfo.MoveTo(string.Format("{0}{1}", _directoryMoveToFiles.FullName, fileInfo.Name));
 
             OrderRepository orderRepository = new OrderRepository();
-            OrderItemRepository orderItemRepository = new OrderItemRepository();
-            int? quantity = null;
-            Item itemObj=new Item();
-            Order orderObj=new Order();
+            List<OrderItem> listOrderItems = new List<OrderItem>();
 
-            foreach (var csvObject in _listCsvObjects)
+            IEnumerable<IGrouping<int, IObjectFromCsv>> groupeById = listCsvObjects.GroupBy(x => x.OrderNumber);
+
+            foreach (var item in groupeById)
             {
-                orderRepository.Add(new Order()
+                foreach (var objectCsv in item)
                 {
-                    Date = csvObject.Date,
-                    CustomerId = csvObject.CustomerId
-                });
-                orderRepository.Save();
-
-                itemObj = new ItemRepository().GetRecord(csvObject.ItemId);
-                orderObj = new OrderRepository().GetAll().LastOrDefault();
-
-                quantity = null;
-
-                if (itemObj.Cost != null && itemObj.Cost != 0)
-                {
-                    quantity = csvObject.TotalCost / itemObj.Cost;
-                }
-
-                if (orderObj != null && itemObj != null)
-                {
-                    orderItemRepository.Add(new OrderItem()
+                    listOrderItems.Add(new OrderItem()
                     {
-                        OrderId = orderObj.OrderId,
-                        ItemId = itemObj.ItemId,
-                        Quantity = quantity
+                        ItemId = objectCsv.ItemId,
+                        Quantity = objectCsv.Quantity,
+                        TotalCost = objectCsv.TotalCost
                     });
                 }
+                orderRepository.Add(new Order()
+                {
+                    OrderId = item.Key,
+                    CustomerId = item.First().CustomerId,
+                    Date = item.First().Date,
+                    OrderItems = listOrderItems
+                });
+                listOrderItems.Clear();
             }
-            orderItemRepository.Save();
+            orderRepository.Save();
         }
 
-        protected void StartReadFiles()
+        protected IEnumerable<IObjectFromCsv> ReadFile(object fileFullName)
         {
-            List<Task<IEnumerable<ObjectFromCsv>>> tasks = new List<Task<IEnumerable<ObjectFromCsv>>>();
-
-            foreach (var item in GetFilesNames())
-            {
-                tasks.Add(Task.Factory.StartNew<IEnumerable<ObjectFromCsv>>(ReadFile, item));
-            }
-
-            _listCsvObjects = tasks.SelectMany(x => x.Result).ToList();
-           
-        }
-
-        protected List<string> GetFilesNames()
-        {
-            return _directory.GetFiles().Select(item => item.FullName).ToList();
-        }
-
-        protected IEnumerable<ObjectFromCsv> ReadFile(object fileFullName)
-        {
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
-            Console.WriteLine(Task.CurrentId.GetValueOrDefault());
             List<ObjectFromCsv> buf = new List<ObjectFromCsv>();
 
             using (TextFieldParser parser = new TextFieldParser((string) fileFullName))
@@ -107,7 +74,8 @@ namespace Bll
                 parser.SetDelimiters(",");
                 parser.HasFieldsEnclosedInQuotes = true;
 
-                string[] strBuf = new string[4];
+                string[] strBuf = new string[6];
+                parser.ReadFields();
 
                 while (!parser.EndOfData)
                 {
@@ -117,9 +85,12 @@ namespace Bll
                         Date = DateTime.Parse(strBuf[0]),
                         CustomerId = int.Parse(strBuf[1]),
                         ItemId = int.Parse(strBuf[2]),
-                        TotalCost = int.Parse(strBuf[3])
+                        TotalCost = int.Parse(strBuf[3]),
+                        OrderNumber = int.Parse(strBuf[4]),
+                        Quantity = int.Parse(strBuf[5])
                     });
                 }
+
                 return buf;
             }
         }

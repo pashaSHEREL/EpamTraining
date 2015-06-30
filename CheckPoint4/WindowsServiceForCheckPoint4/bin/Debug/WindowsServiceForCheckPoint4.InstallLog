@@ -53,3 +53,45 @@ Affected parameters are:
    logtoconsole = 
    logfile = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.InstallLog
    assemblypath = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe
+Uninstalling assembly 'd:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.InstallLog
+   assemblypath = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe
+Removing EventLog source WindowsServiceForCheckPoint4.
+Service WindowsServiceForCheckPoint4 is being removed from the system...
+Service WindowsServiceForCheckPoint4 was successfully removed from the system.
+Installing assembly 'd:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.InstallLog
+   assemblypath = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe
+Installing service WindowsServiceForCheckPoint4...
+Service WindowsServiceForCheckPoint4 has been successfully installed.
+Creating EventLog source WindowsServiceForCheckPoint4 in log Application...
+Committing assembly 'd:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.InstallLog
+   assemblypath = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe
+Uninstalling assembly 'd:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.InstallLog
+   assemblypath = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe
+Removing EventLog source WindowsServiceForCheckPoint4.
+Service WindowsServiceForCheckPoint4 is being removed from the system...
+Service WindowsServiceForCheckPoint4 was successfully removed from the system.
+Installing assembly 'd:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.InstallLog
+   assemblypath = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe
+Installing service WindowsServiceForCheckPoint4...
+Service WindowsServiceForCheckPoint4 has been successfully installed.
+Creating EventLog source WindowsServiceForCheckPoint4 in log Application...
+Committing assembly 'd:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.InstallLog
+   assemblypath = d:\ws\VC#\CSharpProjects\projects\CheckPoint4\WindowsServiceForCheckPoint4\bin\Debug\WindowsServiceForCheckPoint4.exe

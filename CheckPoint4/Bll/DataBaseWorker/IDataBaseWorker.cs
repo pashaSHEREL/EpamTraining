@@ -2,6 +2,6 @@
 {
     public interface IDataBaseWorker
     {
-        void AddAllInDataBase();
+        void AddAllInDataBase(object fullNameFile);
     }
 }

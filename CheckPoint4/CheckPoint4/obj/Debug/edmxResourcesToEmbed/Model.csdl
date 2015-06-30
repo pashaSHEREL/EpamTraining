@@ -50,6 +50,7 @@
     <Property Name="item_quantity" Type="Int32" />
     <NavigationProperty Name="Item" Relationship="OrdersModel.FK_OrderItem_Items" FromRole="OrderItem" ToRole="Items" />
     <NavigationProperty Name="Order" Relationship="OrdersModel.FK_OrderItem_Orders" FromRole="OrderItem" ToRole="Orders" />
+    <Property Type="Int32" Name="total_cost" />
   </EntityType>
   <EntityType Name="Order">
     <Key>

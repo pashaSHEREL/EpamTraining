@@ -90,6 +90,21 @@ namespace CheckPoint4
             }
         }
         private Nullable<int> _item_quantity;
+    
+        [DataMember]
+        public Nullable<int> total_cost
+        {
+            get { return _total_cost; }
+            set
+            {
+                if (_total_cost != value)
+                {
+                    _total_cost = value;
+                    OnPropertyChanged("total_cost");
+                }
+            }
+        }
+        private Nullable<int> _total_cost;
 
         #endregion
         #region Navigation Properties

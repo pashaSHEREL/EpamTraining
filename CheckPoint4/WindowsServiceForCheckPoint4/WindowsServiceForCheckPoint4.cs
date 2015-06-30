@@ -1,13 +1,18 @@
-﻿using System.Diagnostics;
+﻿using System.Configuration;
+using System.Diagnostics;
 using System.IO;
+using System.Security;
 using System.ServiceProcess;
+using System.Threading.Tasks;
 using Bll;
 
 namespace WindowsServiceForCheckPoint4
 {
     public partial class WindowsServiceForCheckPoint4 : ServiceBase
     {
-        private readonly FileSystemWatcher _watcher = new FileSystemWatcher {Path = @"d:\test1\", Filter = "*.csv"};
+        private static readonly string _directoryForRead = ConfigurationManager.AppSettings["directoryForRead"];
+        private static readonly string _directoryMoveTo = ConfigurationManager.AppSettings["directoryMoveTo"];
+        private readonly FileSystemWatcher _watcher = new FileSystemWatcher {Path = _directoryForRead, Filter = "*.csv"};
 
         public WindowsServiceForCheckPoint4()
         {
@@ -24,8 +29,8 @@ namespace WindowsServiceForCheckPoint4
         {
             if (e.ChangeType == WatcherChangeTypes.Created)
             {
-                Bll.IDataBaseWorker worker = new DataBaseWorker(_watcher.Path, @"d:\test2\");
-                worker.AddAllInDataBase();
+                IDataBaseWorker worker = new DataBaseWorker(_directoryForRead, _directoryMoveTo);
+                Task.Factory.StartNew(worker.AddAllInDataBase, e.FullPath);
             }
         }
 

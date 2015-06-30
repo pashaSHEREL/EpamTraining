@@ -1,4 +1,4 @@
-﻿namespace Models
+﻿namespace DAL.Models
 {
     public class Item
     {

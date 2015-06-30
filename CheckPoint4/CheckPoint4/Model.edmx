@@ -51,12 +51,13 @@
           <Property Name="order_id" Type="int" Nullable="false" />
           <Property Name="item_id" Type="int" Nullable="false" />
           <Property Name="item_quantity" Type="int" />
+          <Property Name="total_cost" Type="money" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="order_id" />
           </Key>
-          <Property Name="order_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="int" Nullable="false" />
           <Property Name="date" Type="date" />
           <Property Name="time" Type="time" />
           <Property Name="customer_id" Type="int" />
@@ -151,6 +152,7 @@
           <Property Name="item_quantity" Type="Int32" />
           <NavigationProperty Name="Item" Relationship="OrdersModel.FK_OrderItem_Items" FromRole="OrderItem" ToRole="Items" />
           <NavigationProperty Name="Order" Relationship="OrdersModel.FK_OrderItem_Orders" FromRole="OrderItem" ToRole="Orders" />
+          <Property Type="Int32" Name="total_cost" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -230,6 +232,7 @@
           <EntitySetMapping Name="OrderItems">
             <EntityTypeMapping TypeName="OrdersModel.OrderItem">
               <MappingFragment StoreEntitySet="OrderItem">
+                <ScalarProperty Name="total_cost" ColumnName="total_cost" />
                 <ScalarProperty Name="order_id" ColumnName="order_id" />
                 <ScalarProperty Name="item_id" ColumnName="item_id" />
                 <ScalarProperty Name="item_quantity" ColumnName="item_quantity" />
@@ -267,23 +270,23 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1">
+      <Diagram Name="Model1" ZoomLevel="131">
         <EntityTypeShape EntityType="OrdersModel.Customer" Width="1.5" PointX="0.75" PointY="1" Height="2.3648893229166665" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrdersModel.Item" Width="1.5" PointX="3" PointY="5.125" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrdersModel.Item" Width="1.5" PointX="3" PointY="3.5" Height="1.9802864583333335" IsExpanded="true" />
         <EntityTypeShape EntityType="OrdersModel.OrderItem" Width="1.5" PointX="5.25" PointY="1.125" Height="1.9802864583333326" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrdersModel.Order" Width="1.5" PointX="3" PointY="1" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrdersModel.Order" Width="1.5" PointX="3" PointY="1" Height="2.172587890625" IsExpanded="true" />
         <AssociationConnector Association="OrdersModel.FK_Orders_Customers" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="2.0862939453125" />
           <ConnectorPoint PointX="3" PointY="2.0862939453125" />
         </AssociationConnector>
         <AssociationConnector Association="OrdersModel.FK_OrderItem_Items" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="6.1151432291666667" />
-          <ConnectorPoint PointX="6" PointY="6.1151432291666667" />
+          <ConnectorPoint PointX="4.5" PointY="4.4901432291666667" />
+          <ConnectorPoint PointX="6" PointY="4.4901432291666667" />
           <ConnectorPoint PointX="6" PointY="3.1052864583333326" />
         </AssociationConnector>
         <AssociationConnector Association="OrdersModel.FK_OrderItem_Orders" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="2.1151432291666663" />
-          <ConnectorPoint PointX="5.25" PointY="2.1151432291666663" />
+          <ConnectorPoint PointX="4.5" PointY="2.1487939453125" />
+          <ConnectorPoint PointX="5.25" PointY="2.1487939453125" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>
