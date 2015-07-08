@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width"/>
+    <script type="text/javascript" src="/Scripts/jquery-1.7.1.min.js"> </script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("jQ", false)
+
+</head>
+
+<body>
+<header>
+    <div class="content-wrapper">
+        <div class="float-left">
+            <p class="site-title">
+                <a href="/">
+                    <img src="/Images/Logo.png"/>
+                </a>
+            </p>
+        </div>
+        <div class="float-right">
+            <section id="login">
+                @Html.Partial("_LoginPartial")
+            </section>
+            <nav>
+                <ul id="menu">
+                    <li>@Html.ActionLink("Products", "Index", "Item")</li>
+                    @if (Roles.Provider.IsUserInRole(User.Identity.Name, "Admin"))
+                    {
+                        <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
+                        <li>@Html.ActionLink("Orders", "Index", "Item")</li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<div id="body">
+    <section class="content-wrapper main-content clear-fix">
+        @RenderBody()
+    </section>
+</div>
+@RenderSection("scripts", required: false)
+</body>
+</html>

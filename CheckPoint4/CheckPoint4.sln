@@ -13,8 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Console", "Console\Console.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8425AED6-DDAD-44CE-95E9-BA5DBC61B8FD}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\..\DataBaseScript.sql = ..\..\..\..\..\DataBaseScript.sql
-		..\..\..\..\..\test2\test.csv = ..\..\..\..\..\test2\test.csv
+		..\..\..\DataBaseScript.sql = ..\..\..\DataBaseScript.sql
 	EndProjectSection
 EndProject
 Global

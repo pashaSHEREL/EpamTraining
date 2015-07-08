@@ -14,7 +14,7 @@ namespace Console
         {
             string directoryForRead = ConfigurationManager.AppSettings["directoryForRead"];
             string directoryMoveTo = ConfigurationManager.AppSettings["directoryMoveTo"];
-            IDataBaseWorker worker = new DataBaseWorker(directoryForRead, directoryMoveTo);
+            DataBaseWorker worker = new DataBaseWorker(directoryForRead, directoryMoveTo);
 
             DirectoryInfo directory = new DirectoryInfo(directoryForRead);
             List<Task> tasks = new List<Task>();

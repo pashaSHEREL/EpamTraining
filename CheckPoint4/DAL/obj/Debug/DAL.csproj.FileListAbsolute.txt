@@ -5,3 +5,10 @@ D:\ws\VC#\CSharpProjects\projects\CheckPoint4\DAL\bin\Debug\CheckPoint4.pdb
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\DAL\obj\Debug\DAL.dll
 D:\ws\VC#\CSharpProjects\projects\CheckPoint4\DAL\obj\Debug\DAL.pdb
+D:\repos\EpamTraining\CheckPoint4\DAL\bin\Debug\DAL.dll
+D:\repos\EpamTraining\CheckPoint4\DAL\bin\Debug\DAL.pdb
+D:\repos\EpamTraining\CheckPoint4\DAL\bin\Debug\CheckPoint4.dll
+D:\repos\EpamTraining\CheckPoint4\DAL\bin\Debug\CheckPoint4.pdb
+D:\repos\EpamTraining\CheckPoint4\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\repos\EpamTraining\CheckPoint4\DAL\obj\Debug\DAL.dll
+D:\repos\EpamTraining\CheckPoint4\DAL\obj\Debug\DAL.pdb

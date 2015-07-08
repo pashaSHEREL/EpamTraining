@@ -1,0 +1,12 @@
+﻿<script type="text/javascript" src="/Scripts/jquery.metadata.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.tablesorter.pager.js"></script>
+<link type="text/css" rel="stylesheet" href="/Content/bluetable/style.css">
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("table")
+            .tablesorter({ widthFixed: true, widgets: ['zebra'] });
+        $("table").tablesorterPager({ container: $("#pager") });
+    });
+</script>
