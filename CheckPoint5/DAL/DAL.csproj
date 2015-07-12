@@ -34,21 +34,20 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Map\ManagerMapper.cs" />
     <Compile Include="Map\Map.cs" />
     <Compile Include="Map\ItemMapper.cs" />
     <Compile Include="Map\OrderMapper.cs" />
     <Compile Include="Map\OrderItemMapper.cs" />
+    <Compile Include="Repository\ManagerRepository.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Map\IMap.cs" />
     <Compile Include="Map\CustomerMapper.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\Item.cs" />
-    <Compile Include="Models\Order.cs" />
-    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CustomerRepository.cs" />
     <Compile Include="Repository\ItemRepository.cs" />
@@ -56,9 +55,13 @@
     <Compile Include="Repository\OrderItemRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CheckPoint4\Model.csproj">
+    <ProjectReference Include="..\CheckPoint4\ModelsEntityLayer.csproj">
       <Project>{D41ADC21-D8DC-46F4-8AE1-92ED8AA48C74}</Project>
-      <Name>Model</Name>
+      <Name>ModelsEntityLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}</Project>
+      <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -61,7 +61,7 @@ namespace WebSite.Filters
                     }
                     if (!roles.GetRolesForUser("Admin").Contains("Admin"))
                     {
-                        roles.AddUsersToRoles(new[] { "Admin" }, new[] { "Admin" });
+                        roles.AddUsersToRoles(new[] {"Admin"}, new[] {"Admin"});
                     }
                 }
                 catch (Exception ex)

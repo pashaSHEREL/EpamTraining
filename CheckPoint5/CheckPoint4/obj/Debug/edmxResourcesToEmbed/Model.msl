@@ -16,6 +16,7 @@
     <EntitySetMapping Name="Items">
       <EntityTypeMapping TypeName="OrdersModel.Item">
         <MappingFragment StoreEntitySet="Items">
+          <ScalarProperty Name="number" ColumnName="number" />
           <ScalarProperty Name="item_id" ColumnName="item_id" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="description" ColumnName="description" />
@@ -36,10 +37,23 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="OrdersModel.Order">
         <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="manager_id" ColumnName="manager_id" />
           <ScalarProperty Name="order_id" ColumnName="order_id" />
           <ScalarProperty Name="date" ColumnName="date" />
           <ScalarProperty Name="time" ColumnName="time" />
           <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Managers">
+      <EntityTypeMapping TypeName="OrdersModel.Manager">
+        <MappingFragment StoreEntitySet="Managers">
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="manager_id" ColumnName="manager_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

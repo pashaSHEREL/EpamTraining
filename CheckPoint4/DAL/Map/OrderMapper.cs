@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CheckPoint4;
 
@@ -54,8 +55,7 @@ namespace DAL
                     date = obj.Date,
                     time = obj.Time,
                     customer_id = obj.CustomerId,
-                    OrderItems = orderItemCol,
-                    Customer = mapCustomer.ConvertToEntity(obj.Customer),
+                    OrderItems = orderItemCol
                 };
             }
             else

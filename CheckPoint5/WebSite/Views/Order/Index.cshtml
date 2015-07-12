@@ -1,0 +1,98 @@
+﻿@model IEnumerable<WebSite.Models.OrderSummary>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+@section jQ
+{
+    @Html.Partial("PartialjQTable")
+}
+
+<h2>Orders</h2>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by Date: @Html.TextBox("SearchString")
+        <Input type="submit" value="Search"/>
+    </p>
+}
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by Manager: @Html.TextBox("SearchString2")
+        <Input type="submit" value="Search"/>
+    </p>
+}
+
+<table class="footable" data-page-navigation=".pagination" data-page-size="10">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ManagerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfItems)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalCost)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfItems)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.OrderId})
+
+            </td>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="2">
+            <div class="pagination pagination-centered"></div>
+        </td>
+    </tr>
+    </tfoot>
+</table>

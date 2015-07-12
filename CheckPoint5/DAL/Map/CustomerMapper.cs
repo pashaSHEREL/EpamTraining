@@ -1,4 +1,6 @@
-﻿using CheckPoint4;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CheckPoint4;
 
 namespace DAL
 {
@@ -15,7 +17,7 @@ namespace DAL
                     LastName = entity.last_name,
                     Address = entity.address,
                     PhoneNumber = entity.phone_number,
-                    Email = entity.email
+                    Email = entity.email,
                 };
             }
             else

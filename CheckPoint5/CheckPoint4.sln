@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "CheckPoint4\Model.csproj", "{D41ADC21-D8DC-46F4-8AE1-92ED8AA48C74}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsEntityLayer", "CheckPoint4\ModelsEntityLayer.csproj", "{D41ADC21-D8DC-46F4-8AE1-92ED8AA48C74}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{B9D7D274-AF68-442A-8C24-1BC7BE968F69}"
 EndProject
@@ -9,10 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bll", "Bll\Bll.csproj", "{C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8425AED6-DDAD-44CE-95E9-BA5DBC61B8FD}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\DataBaseScript.sql = ..\..\DataBaseScript.sql
+		..\..\..\DataBase.sql = ..\..\..\DataBase.sql
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSite", "WebSite\WebSite.csproj", "{8537BFE5-A642-4D18-8255-CBB50B9B3525}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,6 +66,16 @@ Global
 		{8537BFE5-A642-4D18-8255-CBB50B9B3525}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{8537BFE5-A642-4D18-8255-CBB50B9B3525}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{8537BFE5-A642-4D18-8255-CBB50B9B3525}.Release|x86.ActiveCfg = Release|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

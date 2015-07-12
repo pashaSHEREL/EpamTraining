@@ -1,0 +1,79 @@
+﻿@model IEnumerable<WebSite.Models.CustomerSummaryPresenterModel>
+
+@{
+    ViewBag.Title = "CustomerSummary";
+}
+@section jQ
+{
+    @Html.Partial("PartialjQTable")
+}
+
+<h2>CustomerSummary</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <Input type="submit" value="Search"/>
+    </p>
+}
+
+<table class="footable" data-page-navigation=".pagination" data-page-size="10">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderCount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalSum)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalSum)
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="10">
+            <div class="pagination pagination-centered"></div>
+        </td>
+    </tr>
+    </tfoot>
+</table>
+
+

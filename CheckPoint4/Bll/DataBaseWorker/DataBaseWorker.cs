@@ -13,6 +13,17 @@ namespace Bll
         private readonly DirectoryInfo _directoryForReadFile;
         private readonly DirectoryInfo _directoryMoveToFiles;
 
+        public void My()
+        {
+            OrderRepository order=new OrderRepository();
+
+           var i= order.GetRecord(1);
+            
+                Console.WriteLine(i.OrderItems[0].TotalCost);
+            
+            
+        }
+
         public DataBaseWorker(string directory, string directoryForReadFiles)
         {
             _directoryForReadFile = new DirectoryInfo(directory);

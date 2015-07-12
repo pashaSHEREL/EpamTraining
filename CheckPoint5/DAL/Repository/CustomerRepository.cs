@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CheckPoint4;
 
 namespace DAL
@@ -8,6 +9,13 @@ namespace DAL
         public CustomerRepository()
         {
             _map = new CustomerMapper();
+        }
+
+        public IEnumerable<Models.Customer> GetAll()
+        {
+            var customers = _context.Customers.ToList();
+
+            return customers.Select(item => this.GetRecord(item.customer_id)).ToList();
         }
 
         public override void Update(Models.Customer obj1, Models.Customer obj2)
@@ -32,8 +40,14 @@ namespace DAL
 
         public override Models.Customer GetRecord(int id)
         {
-            var record = _context.Customers.FirstOrDefault(x => x.customer_id == id);
-            return _map.ConvertToObject(record);
+            OrderMapper orderMapper = new OrderMapper();
+            var record = _context.Customers.Include("Orders").FirstOrDefault(x => x.customer_id == id);
+            Models.Customer customer = _map.ConvertToObject(record);
+
+            List<Models.Order> orders = record.Orders.Select(item => orderMapper.ConvertToObject(item)).ToList();
+            customer.Orders = orders;
+
+            return customer;
         }
     }
 }

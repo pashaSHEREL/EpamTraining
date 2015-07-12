@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using CheckPoint4;
 
 namespace DAL
@@ -31,10 +32,31 @@ namespace DAL
             _context.DeleteObject(l);
         }
 
+        public IEnumerable<Models.OrderItem> GetAll()
+        {
+            return _context.OrderItems.Select(item => this.GetRecord(item.order_id)).ToList();
+        }
+
         public override Models.OrderItem GetRecord(int id)
         {
+            OrderMapper orderMapper = new OrderMapper();
+            ItemMapper itemMapper = new ItemMapper();
             var record = _context.OrderItems.FirstOrDefault(x => x.order_id == id);
-            return _map.ConvertToObject(record);
+            Models.OrderItem orderItem = _map.ConvertToObject(record);
+
+            orderItem.Order = orderMapper.ConvertToObject(record.Order);
+            orderItem.Item = itemMapper.ConvertToObject(record.Item);
+
+            return orderItem;
+        }
+
+        public override void Add(Models.OrderItem obj)
+        {
+            OrderItem orderItem = new OrderItem();
+
+            orderItem = _map.ConvertToEntity(obj);
+            orderItem.item_id = obj.Order.OrderId;
+            _context.OrderItems.AddObject(orderItem);
         }
     }
 }

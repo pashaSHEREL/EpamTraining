@@ -17,6 +17,11 @@
       <End Role="Orders" EntitySet="Orders" />
       <End Role="OrderItem" EntitySet="OrderItems" />
     </AssociationSet>
+    <EntitySet Name="Managers" EntityType="OrdersModel.Manager" />
+    <AssociationSet Name="FK_Orders_Managers" Association="OrdersModel.FK_Orders_Managers">
+      <End Role="Manager" EntitySet="Managers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Customer">
     <Key>
@@ -39,6 +44,7 @@
     <Property Name="description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
     <Property Name="cost" Type="Int32" />
     <NavigationProperty Name="OrderItems" Relationship="OrdersModel.FK_OrderItem_Items" FromRole="Items" ToRole="OrderItem" />
+    <Property Type="Int32" Name="number" />
   </EntityType>
   <EntityType Name="OrderItem">
     <Key>
@@ -62,6 +68,8 @@
     <Property Name="customer_id" Type="Int32" />
     <NavigationProperty Name="Customer" Relationship="OrdersModel.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
     <NavigationProperty Name="OrderItems" Relationship="OrdersModel.FK_OrderItem_Orders" FromRole="Orders" ToRole="OrderItem" />
+    <Property Type="Int32" Name="manager_id" />
+    <NavigationProperty Name="Manager" Relationship="OrdersModel.FK_Orders_Managers" FromRole="Order" ToRole="Manager" />
   </EntityType>
   <Association Name="FK_Orders_Customers">
     <End Role="Customers" Type="OrdersModel.Customer" Multiplicity="0..1" />
@@ -96,6 +104,30 @@
       </Principal>
       <Dependent Role="OrderItem">
         <PropertyRef Name="order_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Manager">
+    <Key>
+      <PropertyRef Name="manager_id" />
+    </Key>
+    <Property Type="Int32" Name="manager_id" Nullable="false" />
+    <Property Type="String" Name="first_name" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="last_name" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Adress" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="phone_number" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="email" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="OrdersModel.FK_Orders_Managers" FromRole="Manager" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK_Orders_Managers">
+    <End Type="OrdersModel.Manager" Role="Manager" Multiplicity="0..1" />
+    <End Type="OrdersModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manager">
+        <PropertyRef Name="manager_id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="manager_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

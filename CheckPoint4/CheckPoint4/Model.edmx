@@ -270,7 +270,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="131">
+      <Diagram Name="Model1" ZoomLevel="97">
         <EntityTypeShape EntityType="OrdersModel.Customer" Width="1.5" PointX="0.75" PointY="1" Height="2.3648893229166665" IsExpanded="true" />
         <EntityTypeShape EntityType="OrdersModel.Item" Width="1.5" PointX="3" PointY="3.5" Height="1.9802864583333335" IsExpanded="true" />
         <EntityTypeShape EntityType="OrdersModel.OrderItem" Width="1.5" PointX="5.25" PointY="1.125" Height="1.9802864583333326" IsExpanded="true" />

@@ -165,17 +165,27 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Controllers\ManagerController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerSummaryPresenterModel.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\Manager.cs" />
+    <Compile Include="Models\OrderSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bluetable\asc.gif" />
     <Content Include="Content\bluetable\bg.gif" />
     <Content Include="Content\bluetable\desc.gif" />
+    <Content Include="Content\bluetable\footable.core.css" />
+    <Content Include="Content\bluetable\footable.metro.css" />
+    <Content Include="Content\bluetable\footable.standalone.css" />
     <Content Include="Content\bluetable\jquery.tablesorter.pager.css" />
     <Content Include="Content\bluetable\style.css" />
     <Content Include="Content\Site.css" />
@@ -240,14 +250,18 @@
     <Content Include="Images\Logo.png" />
     <Content Include="Images\next.png" />
     <Content Include="Images\previous.png" />
+    <Content Include="Scripts\footable.js" />
+    <Content Include="Scripts\footable.paginate.js" />
+    <Content Include="Scripts\footable.sort.js" />
     <Content Include="Scripts\jquery-1.11.3.js" />
+    <Content Include="Scripts\jquery-submenu.js" />
     <Content Include="Scripts\jquery-1.7.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery.metadata.js" />
-    <Content Include="Scripts\jquery.tablesorter.js" />
-    <Content Include="Scripts\jquery.tablesorter.min.js" />
+    <Content Include="Scripts\jquery.graph.js" />
+    <Content Include="Scripts\jquery.grr.js" />
     <Content Include="Scripts\jquery.tablesorter.pager.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -304,13 +318,21 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CheckPoint4\Model.csproj">
+    <ProjectReference Include="..\Bll\Bll.csproj">
+      <Project>{CA87897C-9249-438D-A8E4-D98FEA8F90E8}</Project>
+      <Name>Bll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CheckPoint4\ModelsEntityLayer.csproj">
       <Project>{D41ADC21-D8DC-46F4-8AE1-92ED8AA48C74}</Project>
-      <Name>Model</Name>
+      <Name>ModelsEntityLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{B9D7D274-AF68-442A-8C24-1BC7BE968F69}</Project>
       <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}</Project>
+      <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -326,9 +348,6 @@
     <Content Include="Views\Customers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Pagination.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Shared\PartialjQTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -336,6 +355,33 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\ErrorAccess.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Customers\CustomerSummary.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Customers\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Customers\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Order\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Order\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Manager\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Manager\Edit.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Manager\Create.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Item\Graphs.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

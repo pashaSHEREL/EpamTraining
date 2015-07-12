@@ -86,6 +86,21 @@ namespace CheckPoint4
             }
         }
         private Nullable<int> _cost;
+    
+        [DataMember]
+        public Nullable<int> number
+        {
+            get { return _number; }
+            set
+            {
+                if (_number != value)
+                {
+                    _number = value;
+                    OnPropertyChanged("number");
+                }
+            }
+        }
+        private Nullable<int> _number;
 
         #endregion
         #region Navigation Properties

@@ -25,6 +25,8 @@ namespace Console
             }
 
             Task.WaitAll(tasks.ToArray());
+            worker.My();
+            System.Console.ReadLine();
         }
     }
 }

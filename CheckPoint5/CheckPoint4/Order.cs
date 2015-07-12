@@ -20,6 +20,7 @@ namespace CheckPoint4
     [DataContract(IsReference = true)]
     [KnownType(typeof(Customer))]
     [KnownType(typeof(OrderItem))]
+    [KnownType(typeof(Manager))]
     public partial class Order: IObjectWithChangeTracker, INotifyPropertyChanged
     {
         #region Primitive Properties
@@ -95,6 +96,29 @@ namespace CheckPoint4
             }
         }
         private Nullable<int> _customer_id;
+    
+        [DataMember]
+        public Nullable<int> manager_id
+        {
+            get { return _manager_id; }
+            set
+            {
+                if (_manager_id != value)
+                {
+                    ChangeTracker.RecordOriginalValue("manager_id", _manager_id);
+                    if (!IsDeserializing)
+                    {
+                        if (Manager != null && Manager.manager_id != value)
+                        {
+                            Manager = null;
+                        }
+                    }
+                    _manager_id = value;
+                    OnPropertyChanged("manager_id");
+                }
+            }
+        }
+        private Nullable<int> _manager_id;
 
         #endregion
         #region Navigation Properties
@@ -162,6 +186,23 @@ namespace CheckPoint4
             }
         }
         private TrackableCollection<OrderItem> _orderItems;
+    
+        [DataMember]
+        public Manager Manager
+        {
+            get { return _manager; }
+            set
+            {
+                if (!ReferenceEquals(_manager, value))
+                {
+                    var previousValue = _manager;
+                    _manager = value;
+                    FixupManager(previousValue);
+                    OnNavigationPropertyChanged("Manager");
+                }
+            }
+        }
+        private Manager _manager;
 
         #endregion
         #region ChangeTracking
@@ -243,6 +284,7 @@ namespace CheckPoint4
         {
             Customer = null;
             OrderItems.Clear();
+            Manager = null;
         }
 
         #endregion
@@ -288,6 +330,50 @@ namespace CheckPoint4
                 if (Customer != null && !Customer.ChangeTracker.ChangeTrackingEnabled)
                 {
                     Customer.StartTracking();
+                }
+            }
+        }
+    
+        private void FixupManager(Manager previousValue, bool skipKeys = false)
+        {
+            if (IsDeserializing)
+            {
+                return;
+            }
+    
+            if (previousValue != null && previousValue.Orders.Contains(this))
+            {
+                previousValue.Orders.Remove(this);
+            }
+    
+            if (Manager != null)
+            {
+                if (!Manager.Orders.Contains(this))
+                {
+                    Manager.Orders.Add(this);
+                }
+    
+                manager_id = Manager.manager_id;
+            }
+            else if (!skipKeys)
+            {
+                manager_id = null;
+            }
+    
+            if (ChangeTracker.ChangeTrackingEnabled)
+            {
+                if (ChangeTracker.OriginalValues.ContainsKey("Manager")
+                    && (ChangeTracker.OriginalValues["Manager"] == Manager))
+                {
+                    ChangeTracker.OriginalValues.Remove("Manager");
+                }
+                else
+                {
+                    ChangeTracker.RecordOriginalValue("Manager", previousValue);
+                }
+                if (Manager != null && !Manager.ChangeTracker.ChangeTrackingEnabled)
+                {
+                    Manager.StartTracking();
                 }
             }
         }

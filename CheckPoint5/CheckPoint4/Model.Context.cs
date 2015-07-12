@@ -100,6 +100,12 @@ namespace CheckPoint4
             get { return _orders  ?? (_orders = CreateObjectSet<Order>("Orders")); }
         }
         private ObjectSet<Order> _orders;
+    
+        public ObjectSet<Manager> Managers
+        {
+            get { return _managers  ?? (_managers = CreateObjectSet<Manager>("Managers")); }
+        }
+        private ObjectSet<Manager> _managers;
 
         #endregion
     }

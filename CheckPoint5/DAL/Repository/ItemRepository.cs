@@ -6,16 +6,19 @@ namespace DAL
 {
     public class ItemRepository : Repository<Item, Models.Item, OrdersEntities>
     {
-
         public ItemRepository()
         {
             _map = new ItemMapper();
         }
 
+        public IEnumerable<Models.Item> GetAll()
+        {
+            return _map.ConvertAllToObject(_context.Items);
+        }
+
         public override Models.Item GetRecord(int id)
         {
-            var record = _context.Items.FirstOrDefault(x => x.item_id == id);
-            return _map.ConvertToObject(record);
+            return _map.ConvertToObject(_context.Items.FirstOrDefault(x => x.item_id == id));
         }
 
         public override void Update(Models.Item obj1, Models.Item obj2)
@@ -32,8 +35,14 @@ namespace DAL
 
         public override void Delete(Models.Item obj)
         {
-            var l = _context.Items.FirstOrDefault(x => x.item_id == obj.ItemId);
-            _context.DeleteObject(l);
+            _context.DeleteObject(_context.Items.FirstOrDefault(x => x.item_id == obj.ItemId));
+        }
+
+        public IEnumerable<Models.Item> Get(int numberOfRecords, int numSkip)
+        {
+            var list =
+                _context.Items.OrderBy(x => x.item_id).Skip(numSkip).Take(numberOfRecords).Select(x => x).ToList();
+            return list.Select(x => _map.ConvertToObject(x));
         }
     }
 }

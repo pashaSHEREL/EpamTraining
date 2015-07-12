@@ -9,6 +9,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @RenderSection("jQ", false)
+    <script src="/Scripts/jquery-submenu.js"></script>
 
 </head>
 
@@ -27,12 +28,45 @@
                 @Html.Partial("_LoginPartial")
             </section>
             <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Products", "Index", "Item")</li>
+                <ul id="menu" сlass="drop-menu-main">
+                    <li>
+                        <span class="drop-down">Products<span class="arrow">&#9660;</span></span>
+                        <div class="drop-menu-main-sub ">
+                            <span class="title"></span>
+                           @Html.ActionLink("Products", "Index", "Item")
+                           @if (Roles.Provider.IsUserInRole(User.Identity.Name, "Admin"))
+                           {
+                               @Html.ActionLink("Graphs", "Graphs", "Item")
+                           }
+                        </div>
+                    </li>
                     @if (Roles.Provider.IsUserInRole(User.Identity.Name, "Admin"))
                     {
-                        <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
-                        <li>@Html.ActionLink("Orders", "Index", "Item")</li>
+                        <li>
+                            <span class="drop-down">Customers<span class="arrow">&#9660;</span></span>
+                            <div class="drop-menu-main-sub">
+                                <span class="title"></span>
+                                @Html.ActionLink("Customers", "Index", "Customers")
+                                @Html.ActionLink("CustomerSummary", "CustomerSummary", "Customers")
+                            </div>
+
+                        </li>
+                        <li>
+                            <span class="drop-down">Orders<span class="arrow">&#9660;</span></span>
+                            <div class="drop-menu-main-sub">
+                                <span class="title"></span>
+                                @Html.ActionLink("Orders", "Index", "Order")
+                            </div>
+
+                        </li>
+                        <li>
+                            <span class="drop-down">Managers<span class="arrow">&#9660;</span></span>
+                            <div class="drop-menu-main-sub">
+                                <span class="title"></span>
+                                @Html.ActionLink("Managers", "Index", "Manager")
+                            </div>
+
+                        </li>
                     }
                 </ul>
             </nav>

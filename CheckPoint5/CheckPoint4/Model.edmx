@@ -8,6 +8,7 @@
         <EntityContainer Name="OrdersModelStoreContainer">
           <EntitySet Name="Customers" EntityType="OrdersModel.Store.Customers" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Items" EntityType="OrdersModel.Store.Items" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Managers" EntityType="OrdersModel.Store.Managers" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OrderItem" EntityType="OrdersModel.Store.OrderItem" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Orders" EntityType="OrdersModel.Store.Orders" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_OrderItem_Items" Association="OrdersModel.Store.FK_OrderItem_Items">
@@ -20,6 +21,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Orders_Customers" Association="OrdersModel.Store.FK_Orders_Customers">
             <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Managers" Association="OrdersModel.Store.FK_Orders_Managers">
+            <End Role="Managers" EntitySet="Managers" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
@@ -42,6 +47,18 @@
           <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="description" Type="varchar" MaxLength="50" />
           <Property Name="cost" Type="money" />
+          <Property Name="number" Type="int" />
+        </EntityType>
+        <EntityType Name="Managers">
+          <Key>
+            <PropertyRef Name="manager_id" />
+          </Key>
+          <Property Name="manager_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adress" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OrderItem">
           <Key>
@@ -61,6 +78,7 @@
           <Property Name="date" Type="date" />
           <Property Name="time" Type="time" />
           <Property Name="customer_id" Type="int" />
+          <Property Name="manager_id" Type="int" />
         </EntityType>
         <Association Name="FK_OrderItem_Items">
           <End Role="Items" Type="OrdersModel.Store.Items" Multiplicity="1" />
@@ -98,6 +116,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Orders_Managers">
+          <End Role="Managers" Type="OrdersModel.Store.Managers" Multiplicity="0..1" />
+          <End Role="Orders" Type="OrdersModel.Store.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Managers">
+              <PropertyRef Name="manager_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="manager_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -118,6 +148,11 @@
           <AssociationSet Name="FK_OrderItem_Orders" Association="OrdersModel.FK_OrderItem_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <EntitySet Name="Managers" EntityType="OrdersModel.Manager" />
+          <AssociationSet Name="FK_Orders_Managers" Association="OrdersModel.FK_Orders_Managers">
+            <End Role="Manager" EntitySet="Managers" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Customer">
@@ -141,6 +176,7 @@
           <Property Name="description" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="cost" Type="Int32" />
           <NavigationProperty Name="OrderItems" Relationship="OrdersModel.FK_OrderItem_Items" FromRole="Items" ToRole="OrderItem" />
+          <Property Type="Int32" Name="number" />
         </EntityType>
         <EntityType Name="OrderItem">
           <Key>
@@ -164,6 +200,8 @@
           <Property Name="customer_id" Type="Int32" />
           <NavigationProperty Name="Customer" Relationship="OrdersModel.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
           <NavigationProperty Name="OrderItems" Relationship="OrdersModel.FK_OrderItem_Orders" FromRole="Orders" ToRole="OrderItem" />
+          <Property Type="Int32" Name="manager_id" />
+          <NavigationProperty Name="Manager" Relationship="OrdersModel.FK_Orders_Managers" FromRole="Order" ToRole="Manager" />
         </EntityType>
         <Association Name="FK_Orders_Customers">
           <End Role="Customers" Type="OrdersModel.Customer" Multiplicity="0..1" />
@@ -201,6 +239,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="manager_id" />
+          </Key>
+          <Property Type="Int32" Name="manager_id" Nullable="false" />
+          <Property Type="String" Name="first_name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="last_name" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Adress" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="phone_number" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="email" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="OrdersModel.FK_Orders_Managers" FromRole="Manager" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Orders_Managers">
+          <End Type="OrdersModel.Manager" Role="Manager" Multiplicity="0..1" />
+          <End Type="OrdersModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manager">
+              <PropertyRef Name="manager_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="manager_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -222,6 +284,7 @@
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="OrdersModel.Item">
               <MappingFragment StoreEntitySet="Items">
+                <ScalarProperty Name="number" ColumnName="number" />
                 <ScalarProperty Name="item_id" ColumnName="item_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -242,10 +305,23 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="OrdersModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="manager_id" ColumnName="manager_id" />
                 <ScalarProperty Name="order_id" ColumnName="order_id" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="time" ColumnName="time" />
                 <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Managers">
+            <EntityTypeMapping TypeName="OrdersModel.Manager">
+              <MappingFragment StoreEntitySet="Managers">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="manager_id" ColumnName="manager_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -272,21 +348,27 @@
     <Diagrams>
       <Diagram Name="Model1" ZoomLevel="131">
         <EntityTypeShape EntityType="OrdersModel.Customer" Width="1.5" PointX="0.75" PointY="1" Height="2.3648893229166665" IsExpanded="true" />
-        <EntityTypeShape EntityType="OrdersModel.Item" Width="1.5" PointX="3" PointY="3.5" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="OrdersModel.Item" Width="1.5" PointX="3.75" PointY="4.25" Height="2.1725878906249996" IsExpanded="true" />
         <EntityTypeShape EntityType="OrdersModel.OrderItem" Width="1.5" PointX="5.25" PointY="1.125" Height="1.9802864583333326" IsExpanded="true" />
         <EntityTypeShape EntityType="OrdersModel.Order" Width="1.5" PointX="3" PointY="1" Height="2.172587890625" IsExpanded="true" />
         <AssociationConnector Association="OrdersModel.FK_Orders_Customers" ManuallyRouted="false">
-          <ConnectorPoint PointX="2.25" PointY="2.0862939453125" />
-          <ConnectorPoint PointX="3" PointY="2.0862939453125" />
+          <ConnectorPoint PointX="2.25" PointY="2.1824446614583333" />
+          <ConnectorPoint PointX="3" PointY="2.1824446614583333" />
         </AssociationConnector>
         <AssociationConnector Association="OrdersModel.FK_OrderItem_Items" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="4.4901432291666667" />
-          <ConnectorPoint PointX="6" PointY="4.4901432291666667" />
-          <ConnectorPoint PointX="6" PointY="3.1052864583333326" />
+          <ConnectorPoint PointX="5.25" PointY="5.3362939453125" />
+          <ConnectorPoint PointX="6.03125" PointY="5.3362939453125" />
+          <ConnectorPoint PointX="6.03125" PointY="3.297587890625" />
         </AssociationConnector>
         <AssociationConnector Association="OrdersModel.FK_OrderItem_Orders" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="2.1487939453125" />
-          <ConnectorPoint PointX="5.25" PointY="2.1487939453125" />
+          <ConnectorPoint PointX="4.5" PointY="2.2112939453125" />
+          <ConnectorPoint PointX="5.25" PointY="2.2112939453125" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="OrdersModel.Manager" Width="1.5" PointX="0.625" PointY="4.5" Height="2.3648893229166656" />
+        <AssociationConnector Association="OrdersModel.FK_Orders_Managers" >
+          <ConnectorPoint PointX="0.65625" PointY="4.5" />
+          <ConnectorPoint PointX="0.65625" PointY="3.4922900390625" />
+          <ConnectorPoint PointX="3" PointY="3.4922900390625" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

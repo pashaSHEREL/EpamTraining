@@ -1,0 +1,4 @@
+D:\repos\EpamTraining\CheckPoint5\Models\bin\Debug\Models.dll
+D:\repos\EpamTraining\CheckPoint5\Models\bin\Debug\Models.pdb
+D:\repos\EpamTraining\CheckPoint5\Models\obj\Debug\Models.dll
+D:\repos\EpamTraining\CheckPoint5\Models\obj\Debug\Models.pdb

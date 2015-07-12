@@ -1,4 +1,6 @@
-﻿using CheckPoint4;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CheckPoint4;
 
 namespace DAL
 {
@@ -13,7 +15,8 @@ namespace DAL
                     ItemId = entity.item_id,
                     Cost = entity.cost,
                     Name = entity.name,
-                    Description = entity.description
+                    Description = entity.description,
+                    Number = entity.number
                 };
             }
             else
@@ -31,7 +34,8 @@ namespace DAL
                     item_id = obj.ItemId,
                     cost = obj.Cost,
                     description = obj.Description,
-                    name = obj.Name
+                    name = obj.Name,
+                    number = obj.Number
                 };
             }
             else

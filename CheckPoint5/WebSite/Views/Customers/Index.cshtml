@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DAL.Models.Customer>
+﻿@model IEnumerable<WebSite.Models.Customer>
 
 @section jQ
 {
@@ -11,9 +11,20 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<table class="tablesorter">
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <Input type="submit" value="Search"/>
+    </p>
+}
+
+<table class="footable" data-page-navigation=".pagination" data-page-size="10">
     <thead>
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerId)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
@@ -40,6 +51,9 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.CustomerId)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.FirstName)
                 </td>
                 <td>
@@ -56,12 +70,16 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new {id = item.CustomerId})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.CustomerId})
                 </td>
             </tr>
         }
     }
     </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="10">
+            <div class="pagination pagination-centered"></div>
+        </td>
+    </tr>
+    </tfoot>
 </table>
-
-@Html.Partial("Pagination")

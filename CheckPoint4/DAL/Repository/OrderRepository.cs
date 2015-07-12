@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using CheckPoint4;
 
 namespace DAL
@@ -31,7 +32,7 @@ namespace DAL
 
         public override Models.Order GetRecord(int id)
         {
-            var record = _context.Orders.FirstOrDefault(x => x.order_id == id);
+            var record = _context.Orders.Include("Customer").Include("OrderItems").FirstOrDefault(x => x.order_id == id);
             return _map.ConvertToObject(record);
         }
     }

@@ -37,20 +37,24 @@
     <Reference Include="System.Data.Entity" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataBaseWorker\DataBaseWorker.cs" />
-    <Compile Include="DataBaseWorker\IDataBaseWorker.cs" />
-    <Compile Include="ObjectFromCsv\IObjectFromCsv.cs" />
-    <Compile Include="ObjectFromCsv\ObjectFromCsv.cs" />
+    <Compile Include="CustomerBll.cs" />
+    <Compile Include="ItemBll.cs" />
+    <Compile Include="ManagerBll.cs" />
+    <Compile Include="OrderBll.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CheckPoint4\Model.csproj">
+    <ProjectReference Include="..\CheckPoint4\ModelsEntityLayer.csproj">
       <Project>{D41ADC21-D8DC-46F4-8AE1-92ED8AA48C74}</Project>
-      <Name>Model</Name>
+      <Name>ModelsEntityLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{B9D7D274-AF68-442A-8C24-1BC7BE968F69}</Project>
       <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}</Project>
+      <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

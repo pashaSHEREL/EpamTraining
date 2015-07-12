@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DAL.Models.Item>
+﻿@model IEnumerable<WebSite.Models.Item>
 
 @section jQ
 {
@@ -7,12 +7,29 @@
 
 <h2>Products</h2>
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (Roles.Provider.IsUserInRole(User.Identity.Name, "Admin"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
 </p>
 
-<table class="tablesorter">
+@using (Html.BeginForm())
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString")
+        <Input type="submit" value="Search"/>
+    </p>
+}
+
+<table class="footable" data-page-navigation=".pagination" data-page-size="2">
     <thead>
     <tr>
+        @if (Roles.Provider.IsUserInRole(User.Identity.Name, "Admin"))
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.ItemId)
+            </th>
+        }
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
@@ -22,7 +39,13 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        @if (Roles.Provider.IsUserInRole(User.Identity.Name, "Admin"))
+        {
+            <th></th>
+        }
     </tr>
     </thead>
     <tbody>
@@ -32,6 +55,12 @@
         foreach (var item in Model)
         {
             <tr>
+                @if (Roles.Provider.IsUserInRole(User.Identity.Name, "Admin"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemId)
+                    </td>
+                }
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -42,21 +71,28 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    
-                        @if (Roles.Provider.IsUserInRole(User.Identity.Name, "Admin"))
-                        {
-                            @Html.ActionLink("Edit", "Edit", new {id = item.ItemId}); @:|
-                            @Html.ActionLink("Delete", "Delete", new {id = item.ItemId});       
-                        }
-                   
+                    @Html.DisplayFor(modelItem => item.Number)
                 </td>
+                @if (Roles.Provider.IsUserInRole(User.Identity.Name, "Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new {id = item.ItemId})
+                    </td>
+                }
             </tr>
         }
     }
     </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="10">
+            <div class="pagination pagination-centered"></div>
+        </td>
+    </tr>
+    </tfoot>
 </table>
 
-@Html.Partial("Pagination")
+
 
 
 

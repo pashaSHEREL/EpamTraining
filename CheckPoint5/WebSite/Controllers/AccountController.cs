@@ -17,7 +17,6 @@ namespace WebSite.Controllers
     [InitializeSimpleMembership]
     public class AccountController : Controller
     {
-       
         //
         // GET: /Account/Login
         [AllowAnonymous]
