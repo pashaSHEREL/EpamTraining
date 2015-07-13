@@ -186,7 +186,6 @@
     <Content Include="Content\bluetable\footable.core.css" />
     <Content Include="Content\bluetable\footable.metro.css" />
     <Content Include="Content\bluetable\footable.standalone.css" />
-    <Content Include="Content\bluetable\jquery.tablesorter.pager.css" />
     <Content Include="Content\bluetable\style.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -261,8 +260,6 @@
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery.metadata.js" />
     <Content Include="Scripts\jquery.graph.js" />
-    <Content Include="Scripts\jquery.grr.js" />
-    <Content Include="Scripts\jquery.tablesorter.pager.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
@@ -326,10 +323,6 @@
       <Project>{D41ADC21-D8DC-46F4-8AE1-92ED8AA48C74}</Project>
       <Name>ModelsEntityLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL\DAL.csproj">
-      <Project>{B9D7D274-AF68-442A-8C24-1BC7BE968F69}</Project>
-      <Name>DAL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{00CB3266-770D-42CD-89EA-2B5AB8F2B6DD}</Project>
       <Name>Models</Name>
@@ -381,7 +374,7 @@
     <Content Include="Views\Manager\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Item\Graphs.cshtml" />
+    <Content Include="Views\Order\Graphs.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -32,7 +32,7 @@ namespace DAL
             _context.DeleteObject(l);
         }
 
-        public IEnumerable<Models.OrderItem> GetAll()
+        public override IEnumerable<Models.OrderItem> GetAll()
         {
             return _context.OrderItems.Select(item => this.GetRecord(item.order_id)).ToList();
         }

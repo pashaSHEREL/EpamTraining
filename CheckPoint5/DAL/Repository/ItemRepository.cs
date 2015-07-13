@@ -11,7 +11,7 @@ namespace DAL
             _map = new ItemMapper();
         }
 
-        public IEnumerable<Models.Item> GetAll()
+        public override IEnumerable<Models.Item> GetAll()
         {
             return _map.ConvertAllToObject(_context.Items);
         }

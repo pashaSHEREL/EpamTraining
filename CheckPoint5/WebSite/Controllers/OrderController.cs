@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Bll;
-using WebSite.Models;
+
 
 namespace WebSite.Controllers
 {
@@ -124,6 +123,24 @@ namespace WebSite.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Graphs()
+        {
+            return View();
+        }
+
+        public ActionResult GetDateAndCost()
+        {
+            List<int?[]> p = new List<int?[]>();
+
+            foreach (var item in _orderBll.GetAll().GroupBy(x => x.Date.Value.Month))
+            {
+                int? totalSum = item.Sum(x => x.TotalCost);
+                p.Add(new[] { item.Key, item.First().Date.Value.Year, totalSum });
+            }
+            
+            return Json(new { result = p }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DAL
             _map = new CustomerMapper();
         }
 
-        public IEnumerable<Models.Customer> GetAll()
+        public override IEnumerable<Models.Customer> GetAll()
         {
             var customers = _context.Customers.ToList();
 

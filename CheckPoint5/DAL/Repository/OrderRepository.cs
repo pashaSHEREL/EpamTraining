@@ -31,7 +31,7 @@ namespace DAL
             _context.DeleteObject(l);
         }
 
-        public IEnumerable<Models.Order> GetAll()
+        public override IEnumerable<Models.Order> GetAll()
         {
             return _context.Orders.ToList().Select(item => this.GetRecord(item.order_id)).ToList();
         }

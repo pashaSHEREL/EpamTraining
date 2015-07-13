@@ -602,7 +602,7 @@
 
             $table
                 .find('> tbody > tr:not(.' + cls.detail + ')').data('detail_created', false).end()
-                .find('* > thead > tr:last-child > th')
+                .find('> thead > tr:last-child > th')
                 .each(function () {
                     var data = ft.columns[$(this).index()], selector = '', first = true;
                     $.each(data.matches, function (m, match) {
@@ -623,7 +623,7 @@
                       else $column.removeClass('footable-visible').hide();
                     }
 
-                    if ($table.find('* > thead > tr.footable-group-row').length === 1) {
+                    if ($table.find('> thead > tr.footable-group-row').length === 1) {
                         var $groupcols = $table.find('> thead > tr:last-child > th[data-group="' + data.group + '"]:visible, > thead > tr:last-child > th[data-group="' + data.group + '"]:visible'),
                             $group = $table.find('> thead > tr.footable-group-row > th[data-group="' + data.group + '"], > thead > tr.footable-group-row > td[data-group="' + data.group + '"]'),
                             groupspan = 0;
@@ -655,13 +655,13 @@
 
             // adding .footable-first-column and .footable-last-column to the first and last th and td of each row in order to allow
             // for styling if the first or last column is hidden (which won't work using :first-child or :last-child)
-            $table.find('* > thead > tr > th.footable-last-column,  > tbody > tr > td.footable-last-column').removeClass('footable-last-column');
-            $table.find('* > thead > tr > th.footable-first-column,  > tbody > tr > td.footable-first-column').removeClass('footable-first-column');
-            $table.find('* > thead > tr,  > tbody > tr')
-                .find('* > th.footable-visible:last,  > td.footable-visible:last')
+            $table.find('> thead > tr > th.footable-last-column, > tbody > tr > td.footable-last-column').removeClass('footable-last-column');
+            $table.find('> thead > tr > th.footable-first-column, > tbody > tr > td.footable-first-column').removeClass('footable-first-column');
+            $table.find('> thead > tr, > tbody > tr')
+                .find('> th.footable-visible:last, > td.footable-visible:last')
                 .addClass('footable-last-column')
                 .end()
-                .find('* > th.footable-visible:first,  > td.footable-visible:first')
+                .find('> th.footable-visible:first, > td.footable-visible:first')
                 .addClass('footable-first-column');
 
             ft.raise(evt.redrawn);
@@ -733,7 +733,7 @@
 
             if ($row.is(':hidden')) return false; //if the row is hidden for some reason (perhaps filtered) then get out of here
             ft.raise(evt.rowDetailUpdating, { 'row': $row, 'detail': $next });
-            $row.find('* > td:hidden').each(function () {
+            $row.find('> td:hidden').each(function () {
                 var index = $(this).index(), column = ft.getColumnFromTdIndex(index), name = column.name;
                 if (column.ignore === true) return true;
 
@@ -757,13 +757,13 @@
                 return true;
             });
             if (values.length === 0) return false; //return if we don't have any data to show
-            var colspan = $row.find('* > td:visible').length;
+            var colspan = $row.find('> td:visible').length;
             var exists = $next.hasClass(cls.detail);
             if (!exists) { // Create
                 $next = $('<tr class="' + cls.detail + '"><td class="' + cls.detailCell + '"><div class="' + cls.detailInner + '"></div></td></tr>');
                 $row.after($next);
             }
-            $next.find('* > td:first').attr('colspan', colspan);
+            $next.find('> td:first').attr('colspan', colspan);
             $detail = $next.find('.' + cls.detailInner).empty();
             opt.createDetail($detail, values, opt.createGroupedDetail, opt.detailSeparator, cls);
             $row.data('detail_created', true);
@@ -796,7 +796,7 @@
 
             $table.find(opt.toggleSelector).unbind(trg.toggleRow).unbind('click.footable');
 
-            $table.find('* > tbody > tr').removeClass(cls.detailShow);
+            $table.find('> tbody > tr').removeClass(cls.detailShow);
 
             $table.find('> tbody > tr.' + cls.detail).remove();
 

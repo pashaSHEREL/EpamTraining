@@ -54,7 +54,7 @@
 
 		p.setupPaging = function () {
 			var ft = p.footable,
-				$tbody = $(ft.table).find('* > tbody');
+				$tbody = $(ft.table).find('> tbody');
 
 			ft.pageInfo = new pageInfo(ft);
 
@@ -70,7 +70,7 @@
 			var page = [];
 			var lastPage = [];
 			info.pages = [];
-			var rows = tbody.find('* > tr:not(.footable-filtered, .footable-row-detail)');
+			var rows = tbody.find('> tr:not(.footable-filtered,.footable-row-detail)');
 			rows.each(function (i, row) {
 				page.push(row);
 				if (i === pageCount - 1) {
@@ -193,7 +193,7 @@
 		p.paginate = function (ft, newPage) {
 			var info = ft.pageInfo;
 			if (info.currentPage !== newPage) {
-				var $tbody = $(ft.table).find('* > tbody');
+				var $tbody = $(ft.table).find('> tbody');
 
 				//raise a pre-pagin event so that we can cancel the paging if needed
 				var event = ft.raise('footable_paging', { page: newPage, size: info.pageSize });
@@ -220,7 +220,7 @@
 		p.fillPage = function (ft, tbody, pageNumber) {
 			ft.pageInfo.currentPage = pageNumber;
 			$(ft.table).data('currentPage', pageNumber);
-			tbody.find('* > tr').hide();
+			tbody.find('> tr').hide();
 			$(ft.pageInfo.pages[pageNumber]).each(function () {
 				p.showRow(this, ft);
 			});

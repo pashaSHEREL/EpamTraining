@@ -8,6 +8,7 @@ namespace DAL
         void Add(K obj);
         void Update(K obj1, K obj2);
         K GetRecord(int id);
+        IEnumerable<K> GetAll();
         void Save();
     }
 }

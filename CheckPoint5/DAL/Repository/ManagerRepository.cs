@@ -14,7 +14,7 @@ namespace DAL
             _map = new ManagerMapper();
         }
 
-        public IEnumerable<Models.Manager> GetAll()
+        public override IEnumerable<Models.Manager> GetAll()
         {
             var managers = _context.Managers.Include("Orders");
             List<Models.Manager> listManagers = new List<Models.Manager>();

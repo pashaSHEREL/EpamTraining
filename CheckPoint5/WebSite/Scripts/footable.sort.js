@@ -43,13 +43,13 @@
                     .bind({
                         'footable_initialized.sorting': function (e) {
                             var $table = $(ft.table),
-                                $tbody = $table.find('* > tbody'),
+                                $tbody = $table.find('> tbody'),
                                 cls = ft.options.classes.sort,
                                 column, $th;
 
                             if ($table.data('sort') === false) return;
 
-                            $table.find('* > thead > tr:last-child > th,  > thead > tr:last-child > td').each(function (ec) {
+                            $table.find('> thead > tr:last-child > th, > thead > tr:last-child > td').each(function (ec) {
                                 var $th = $(this), column = ft.columns[$th.index()];
                                 if (column.sort.ignore !== true && !$th.hasClass(cls.sortable)) {
                                     $th.addClass(cls.sortable);
@@ -82,7 +82,7 @@
                             var $table = $(ft.table),
                                 cls = ft.options.classes.sort;
                             if ($table.data('sorted') >= 0) {
-                                $table.find('* > thead > tr:last-child > th').each(function(i){
+                                $table.find('> thead > tr:last-child > th').each(function(i){
                                     var $th = $(this);
                                     if ($th.hasClass(cls.sorted) || $th.hasClass(cls.descending)) {
                                         p.doSort(i);
@@ -113,7 +113,7 @@
             if ($(ft.table).data('sort') === false) return;
 
             var $table = $(ft.table),
-                $tbody = $table.find('* > tbody'),
+                $tbody = $table.find('> tbody'),
                 column = ft.columns[columnIndex],
                 $th = $table.find('> thead > tr:last-child > th:eq(' + columnIndex + ')'),
                 cls = ft.options.classes.sort,
@@ -130,7 +130,7 @@
 
             $table.data('sorted', column.index);
 
-            $table.find('* > thead > tr:last-child > th,  > thead > tr:last-child > td').not($th).removeClass(cls.sorted + ' ' + cls.descending);
+            $table.find('> thead > tr:last-child > th, > thead > tr:last-child > td').not($th).removeClass(cls.sorted + ' ' + cls.descending);
 
             if (ascending === undefined) {
                 ascending = $th.hasClass(cls.sorted);
@@ -150,7 +150,7 @@
 
         p.rows = function (ft, tbody, column) {
             var rows = [];
-            tbody.find('* > tr').each(function () {
+            tbody.find('> tr').each(function () {
                 var $row = $(this), $next = null;
                 if ($row.hasClass(ft.options.classes.detail)) return true;
                 if ($row.next().hasClass(ft.options.classes.detail)) {

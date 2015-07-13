@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Bll;
-using CheckPoint4;
-using DAL;
-using Models;
-using WebSite.Models;
-using Item = CheckPoint4.Item;
 
 namespace WebSite.Controllers
 {
@@ -127,21 +120,6 @@ namespace WebSite.Controllers
             {
                 return View();
             }
-        }
-
-        public ActionResult Graphs()
-        {
-            if (Request.IsAjaxRequest())
-            {
-                return Json(new {result = 100});
-            }
-            return View();
-        }
-
-        public ActionResult RR()
-        {  
-            List<List<int>> kList=new List<List<int>>(){new List<int>(){1,2},new List<int>(){4,7}};
-            return Json(new { result = kList }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace DAL
             _context.CreateObjectSet<T>().AddObject(_map.ConvertToEntity(obj));
         }
 
+        public abstract IEnumerable<K> GetAll();
         public abstract void Delete(K obj);
         public abstract void Update(K obj1, K obj2);
         public abstract K GetRecord(int id);

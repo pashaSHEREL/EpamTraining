@@ -10,7 +10,7 @@ namespace Bll
     public class ManagerBll
     {
         private ManagerRepository _managerRepository = new ManagerRepository();
-        private OrderRepository _orderRepository = new OrderRepository();
+       
 
         public IEnumerable<Manager> GetAll()
         {
